@@ -19,6 +19,7 @@ import { PageContactUsComponent } from './pages/page-contact-us/page-contact-us.
 import { PageFaqComponent } from './pages/page-faq/page-faq.component';
 import { PageTermsComponent } from './pages/page-terms/page-terms.component';
 import { PageTypographyComponent } from './pages/page-typography/page-typography.component';
+import { BecomeAMerchantComponent } from './pages/become-a-merchant/become-a-merchant.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { PageTypographyComponent } from './pages/page-typography/page-typography
         PageContactUsComponent,
         PageFaqComponent,
         PageTermsComponent,
-        PageTypographyComponent
+        PageTypographyComponent,
+        BecomeAMerchantComponent
     ],
     imports: [
         // modules (angular)
