@@ -7,6 +7,7 @@ import { PageTermsComponent } from './pages/page-terms/page-terms.component';
 import { PageFaqComponent } from './pages/page-faq/page-faq.component';
 import { PageComponentsComponent } from './pages/page-components/page-components.component';
 import { PageTypographyComponent } from './pages/page-typography/page-typography.component';
+import { BecomeAMerchantComponent } from './pages/become-a-merchant/become-a-merchant.component';
 
 const routes: Routes = [
     {
@@ -41,6 +42,10 @@ const routes: Routes = [
     {
         path: 'typography',
         component: PageTypographyComponent
+    },
+    {
+        path: 'become-a-merchant',
+        component: BecomeAMerchantComponent
     }
 ];
 
