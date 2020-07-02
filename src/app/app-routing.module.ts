@@ -2,25 +2,9 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
 import { PageHomeOneComponent } from "./pages/page-home-one/page-home-one.component";
-import { PageHomeTwoComponent } from "./pages/page-home-two/page-home-two.component";
 import { RootComponent } from "./components/root/root.component";
 
 const routes: Routes = [
-    // START / ONLY_FOR_DEMO_YOU_CAN_DELETE_IT
-    {
-        path: "home-two",
-        component: RootComponent,
-        data: {
-            headerLayout: "compact",
-        },
-        children: [
-            {
-                path: "",
-                component: PageHomeTwoComponent,
-            },
-        ],
-    },
-    // END / ONLY_FOR_DEMO_YOU_CAN_DELETE_IT
     {
         path: "",
         component: RootComponent,

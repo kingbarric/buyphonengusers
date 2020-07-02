@@ -118,7 +118,7 @@ import { ProductGalleryComponent } from './components/product-gallery/product-ga
         AbsoluteUrlPipe,
         ColorTypePipe,
         CurrencyFormatPipe,
-        ShareButtonsComponent,
+        ShareButtonsComponent, FormsModule, ReactiveFormsModule
     ]
 })
 export class SharedModule { }

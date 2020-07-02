@@ -1,10 +1,7 @@
 import { MobileMenuItem } from '../app/shared/interfaces/mobile-menu-item';
 
 export const mobileMenu: MobileMenuItem[] = [
-    {type: 'link', label: 'Home', url: '/', children: [
-        {type: 'link', label: 'Home 1', url: '/'},
-        {type: 'link', label: 'Home 2', url: '/home-two'}
-    ]},
+    {type: 'link', label: 'Home', url: '/'},
 
     {type: 'link', label: 'Categories', url: '/shop/catalog', children: [
         {type: 'link', label: 'Power Tools', url: '/shop/catalog', children: [
