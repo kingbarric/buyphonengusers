@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
         private wishlist: WishlistService,
         private zone: NgZone,
         private scroller: ViewportScroller,
-        private currency: CurrencyService
+        private currency: CurrencyService,
     ) {
         if (isPlatformBrowser(this.platformId)) {
             this.zone.runOutsideAngular(() => {
@@ -42,6 +42,13 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.router.events.subscribe((evt) => {
+            if (!(evt instanceof NavigationEnd)) {
+                return;
+            }
+            window.scrollTo(0, 0)
+        });
+
         // properties of the CurrencyFormatOptions interface fully complies
         // with the arguments of the built-in pipe "currency"
         // https://angular.io/api/common/CurrencyPipe

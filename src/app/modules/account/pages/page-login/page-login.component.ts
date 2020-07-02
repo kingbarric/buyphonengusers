@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CrudService } from './../../../../services/crud.service';
 import { Component } from "@angular/core";
@@ -15,7 +16,9 @@ export class PageLoginComponent {
     password: string = ''
     email: string = ''
     registerForm: FormGroup
-    constructor(private crudService: CrudService) { this.init() }
+    showAlert: string = null
+    alertType: string
+    constructor(private crudService: CrudService, private auth: AuthService) { this.init() }
 
     toggle(formToDisplay) {
         if (formToDisplay === "login") {
@@ -38,29 +41,22 @@ export class PageLoginComponent {
             email: new FormControl("", [Validators.required, Validators.email]),
             password: new FormControl("", [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl("", [Validators.required]),
-            phone: new FormControl("", [Validators.required]),
+            phoneNumber: new FormControl("", [Validators.required]),
+            username: new FormControl("", [Validators.required]),
+            userType: new FormControl("USER", [Validators.required]),
         }, {
             // validator: this.MustMatch('password', 'confirmPassword')
         })
     }
 
-    MustMatch(controlName: string, matchingControlName: string) {
-        return (formGroup: FormGroup) => {
-            const control = formGroup.controls[controlName];
-            const matchingControl = formGroup.controls[matchingControlName];
-
-            if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-                // return if another validator has already found an error on the matchingControl
-                return;
-            }
-
-            // set error on matchingControl if validation fails
-            if (control.value !== matchingControl.value) {
-                matchingControl.setErrors({ mustMatch: true });
-            } else {
-                matchingControl.setErrors(null);
-            }
+    MustMatch(password: string, confirmPassword: string) {
+        if (password === confirmPassword) {
+            return true
         }
+        this.registerForm.setErrors({
+            notSame: true
+        })
+        return false
     }
 
     login() {
@@ -68,19 +64,46 @@ export class PageLoginComponent {
             email: this.email,
             password: this.password
         }
-        this.crudService.postRequest('', data).then((res) => {
+        this.crudService.login('auth/login', data).then((res: any) => {
             console.log(res);
+            if (res.code == 0) {
+                this.auth.setLoginStatus(true)
+                this.auth.setUserObj(res)
+                this.alertType = "primary"
+                this.showAlert = res.message
+            } else {
+                this.alertType = "danger"
+                this.showAlert = res.message
+            }
         }).catch((err: any) => {
             console.log(err);
+            this.alertType = "danger"
+            this.showAlert = err.error.message
         })
     }
 
     register() {
-        this.crudService.postRequest('', this.registerForm.value).then((res) => {
-            console.log(res);
+        let password: string = this.registerForm.controls.password.value
+        let conPassword: string = this.registerForm.controls.confirmPassword.value
 
+        if (!this.MustMatch(password, conPassword)) {
+            return
+        }
+
+        this.crudService.registerUser('users/register', this.registerForm.value).then((res: any) => {
+            console.log(res);
+            if (res.code == 0) {
+                this.showAlert = res.message
+                this.alertType = "primary"
+                this.registerForm.reset()
+            }
+            else {
+                this.alertType = "danger"
+                this.showAlert = res.message
+            }
         }).catch((err: any) => {
-            console.log(err);
+            this.alertType = "danger"
+            this.showAlert = err.message
 
         })
     }

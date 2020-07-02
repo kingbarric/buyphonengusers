@@ -31,6 +31,16 @@
             >
         </div>
     </form>
+    <app-alert
+        *ngIf="showAlert"
+        class="mb-3 mt-3"
+        [type]="alertType"
+        size="lg"
+        [dismissible]="true"
+        (close)="showAlert = null;"
+    >
+        {{ showAlert }}
+    </app-alert>
     <div class="account-menu__divider"></div>
     <a
         routerLink="/account/dashboard"
