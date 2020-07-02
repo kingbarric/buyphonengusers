@@ -1,3 +1,6 @@
+import { AuthService } from './services/auth.service';
+import { UtilService } from './services/util.service';
+import { CrudService } from './services/crud.service';
 import { /*LOCALE_ID, */NgModule } from '@angular/core';
 // import { registerLocaleData } from '@angular/common';
 // import localeIt from '@angular/common/locales/it';
@@ -29,8 +32,6 @@ import { RootComponent } from './components/root/root.component';
 // pages
 import { PageHomeOneComponent } from './pages/page-home-one/page-home-one.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { PageHomeTwoComponent } from './pages/page-home-two/page-home-two.component';
-
 
 @NgModule({
     declarations: [
@@ -39,8 +40,7 @@ import { PageHomeTwoComponent } from './pages/page-home-two/page-home-two.compon
         RootComponent,
         // pages
         PageHomeOneComponent,
-        PageNotFoundComponent,
-        PageHomeTwoComponent
+        PageNotFoundComponent
     ],
     imports: [
         // modules (angular)
@@ -62,6 +62,9 @@ import { PageHomeTwoComponent } from './pages/page-home-two/page-home-two.compon
     ],
     providers: [
         // { provide: LOCALE_ID, useValue: 'it' }
+        CrudService,
+        UtilService,
+        AuthService,
     ],
     bootstrap: [AppComponent]
 })

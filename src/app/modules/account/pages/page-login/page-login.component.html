@@ -1,17 +1,13 @@
-<app-page-header
-    [header]="'My Account'"
-    [breadcrumbs]="[
+<app-page-header [header]="'My Account'" [breadcrumbs]="[
         { label: 'Home', url: '/' },
         { label: 'My Account', url: '' }
-    ]"
-></app-page-header>
+    ]"></app-page-header>
 
 <div class="block">
     <div class="container">
         <div class="center row">
             <div class="tab">
-                <span (click)="toggle('login')"
-                    ><h3
+                <span (click)="toggle('login')"><h3
                         [ngClass]="{ textColor: changeLoginColor === true }"
                         class="login"
                     >
@@ -30,21 +26,27 @@
                 <div class="card flex-grow-1 mb-md-0">
                     <div class="card-body">
                         <h3 class="card-title">Login</h3>
-                        <form>
+                        <form #loginForm="ngForm">
                             <div class="form-group">
                                 <label>Email address</label>
                                 <input
+                                    [(ngModel)]="email"
+                                    name="email"
                                     type="email"
                                     class="form-control"
                                     placeholder="Enter email"
+                                    required
                                 />
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
                                 <input
+                                    [(ngModel)]="password"
+                                    name="password"
                                     type="password"
                                     class="form-control"
                                     placeholder="Password"
+                                    required
                                 />
                                 <small class="form-text text-muted">
                                     <a href="">Forgotten Password</a>
@@ -63,23 +65,18 @@
                                             <span
                                                 class="input-check__box"
                                             ></span>
-                                            <app-icon
-                                                class="input-check__icon"
-                                                name="check-9x7"
-                                                size="9x7"
-                                            ></app-icon>
-                                        </span>
-                                    </span>
-                                    <label
-                                        class="form-check-label"
-                                        for="login-remember"
-                                        >Remember Me</label
+                <app-icon class="input-check__icon" name="check-9x7" size="9x7"></app-icon>
+                </span>
+                </span>
+                <label class="form-check-label" for="login-remember">Remember Me</label
                                     >
                                 </div>
                             </div>
                             <button
                                 type="submit"
                                 class="btn btn-primary mt-2 mt-md-3 mt-lg-4"
+                                (click)="login()"
+                                [disabled]="loginForm.invalid"
                             >
                                 Login
                             </button>
@@ -94,66 +91,38 @@
                 <div class="card flex-grow-1 mb-0">
                     <div class="card-body">
                         <h3 class="card-title">Register</h3>
-                        <form>
+                        <form [formGroup]="registerForm" (submit)="register()">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="First Name"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Last Name"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Email address</label>
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Enter email"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="Password"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Repeat Password</label>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="Password"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Enter Phone Number"
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                class="btn btn-primary mt-2 mt-md-3 mt-lg-4"
-                            >
+                <input type="text" class="form-control" placeholder="First Name" formControlName="firstname" />
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastname" />
+            </div>
+            <div class="form-group">
+                <label>Email address</label>
+                <input type="email" class="form-control" placeholder="Enter email" formControlName="email" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+            </div>
+            <div class="form-group">
+                <label>Repeat Password</label>
+                <input type="password" class="form-control" placeholder="Password" formControlName="confirmPassword" />
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" class="form-control" placeholder="Enter Phone Number" formControlName="phone" />
+            </div>
+            <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary mt-2 mt-md-3 mt-lg-4">
                                 Register
                             </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
+            </form>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>

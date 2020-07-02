@@ -1,5 +1,5 @@
 <div class="site-header">
-    <app-header-topbar></app-header-topbar>
+    <!-- <app-header-topbar></app-header-topbar> -->
 
     <div *ngIf="layout === 'classic'" class="site-header__middle container">
         <div class="site-header__logo">
@@ -10,20 +10,10 @@
         <div class="site-header__search">
             <app-search location="header"></app-search>
         </div>
-        <div class="site-header__phone">
-            <div class="site-header__phone-title">Customer Service</div>
-            <div class="site-header__phone-number">
-                {{ store.primaryPhone }}
-            </div>
-        </div>
+
     </div>
 
     <div class="site-header__nav-panel">
-        <app-header-nav
-            [departments]="layout === 'classic'"
-            [logo]="layout === 'compact'"
-            [search]="layout === 'compact'"
-            stickyMode="pullToShow"
-        ></app-header-nav>
+        <app-header-nav [departments]="layout === 'classic'" [logo]="layout === 'compact'" [search]="layout === 'compact'" stickyMode="pullToShow"></app-header-nav>
     </div>
 </div>

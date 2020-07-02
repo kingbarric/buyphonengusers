@@ -1,3 +1,4 @@
+import { CrudService } from './../../../../services/crud.service';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
@@ -7,6 +8,21 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AccountMenuComponent {
     @Output() closeMenu: EventEmitter<void> = new EventEmitter<void>();
+    email: string = ''
+    password: string = ''
+    constructor(private crudService: CrudService) { }
 
-    constructor() { }
+    login() {
+        const data = {
+            email: this.email,
+            password: this.password
+        }
+        this.crudService.postRequest('', data).then((res) => {
+            console.log(res);
+
+        }).catch((err: any) => {
+            console.log(err);
+
+        })
+    }
 }
