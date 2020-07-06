@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../../../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CrudService } from './../../../../services/crud.service';
@@ -18,7 +19,14 @@ export class PageLoginComponent {
     registerForm: FormGroup
     showAlert: string = null
     alertType: string
-    constructor(private crudService: CrudService, private auth: AuthService) { this.init() }
+    constructor(private crudService: CrudService, private auth: AuthService, private router: Router) {
+        this.auth.isLoggedIn.subscribe((obs: any) => {
+            if (obs) {
+                this.router.navigate(['/'])
+            }
+        })
+        this.init()
+    }
 
     toggle(formToDisplay) {
         if (formToDisplay === "login") {
@@ -36,8 +44,8 @@ export class PageLoginComponent {
 
     init() {
         this.registerForm = new FormGroup({
-            firstname: new FormControl("", [Validators.required]),
-            lastname: new FormControl("", [Validators.required]),
+            firstName: new FormControl("", [Validators.required]),
+            lastName: new FormControl("", [Validators.required]),
             email: new FormControl("", [Validators.required, Validators.email]),
             password: new FormControl("", [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl("", [Validators.required]),
@@ -64,11 +72,12 @@ export class PageLoginComponent {
             email: this.email,
             password: this.password
         }
-        this.crudService.login('auth/login', data).then((res: any) => {
+        this.crudService.postRequestNoAuth('auth/login', data).then((res: any) => {
             console.log(res);
             if (res.code == 0) {
                 this.auth.setLoginStatus(true)
                 this.auth.setUserObj(res)
+                window.location.reload()
                 this.alertType = "primary"
                 this.showAlert = res.message
             } else {
@@ -90,7 +99,7 @@ export class PageLoginComponent {
             return
         }
 
-        this.crudService.registerUser('users/register', this.registerForm.value).then((res: any) => {
+        this.crudService.postRequestNoAuth('users/register', this.registerForm.value).then((res: any) => {
             console.log(res);
             if (res.code == 0) {
                 this.showAlert = res.message

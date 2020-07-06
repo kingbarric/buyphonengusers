@@ -10,12 +10,14 @@ import { CrudService } from './crud.service';
 export class AuthService {
 
     isLoggedIn: BehaviorSubject<boolean>;
-
+    user: BehaviorSubject<any>;
     constructor() {
         this.isLoggedIn = new BehaviorSubject<boolean>(null);
+        this.user = new BehaviorSubject<any>(null);
 
         if (this.getToken()) {
             this.isLoggedIn.next(true);
+            this.user.next(this.getUserObject())
         } else {
             this.isLoggedIn.next(false);
         }
@@ -43,5 +45,12 @@ export class AuthService {
     getUserObject() {
         const user = JSON.parse(localStorage.getItem("session"));
         return user;
+    }
+
+    logout() {
+        this.isLoggedIn.next(false);
+        this.user.next(null)
+        localStorage.removeItem("session")
+        // window.location.reload()
     }
 }

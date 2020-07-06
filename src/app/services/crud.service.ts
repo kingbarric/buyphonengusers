@@ -11,10 +11,10 @@ export class CrudService {
     private baseUrl: string;
     private headers: HttpHeaders;
     rootUrl: string;
-    constructor(private http: HttpClient, private utilService: UtilService,private auth:AuthService) {
+    constructor(private http: HttpClient, private utilService: UtilService, private auth: AuthService) {
         // this.rootUrl = "http://172.20.10.4:8082/";
         // this.rootUrl = "http://192.168.43.115:8082/";
-        this.rootUrl = "http://fbe1d88280d4.ngrok.io/";
+        this.rootUrl = "http://8c3968c37b36.ngrok.io/";
         this.baseUrl = `${this.rootUrl}api/`;
         this.setHeaderWithToken();
     }
@@ -41,15 +41,16 @@ export class CrudService {
             .toPromise();
     }
 
-    registerUser(url, data): Promise<object> {
+
+    postRequestNoAuth(url, data): Promise<object> {
         return this.http
             .post(`${this.rootUrl}${url}`, data, { headers: this.headers })
             .toPromise();
     }
 
-    login(url, data): Promise<object> {
-        return this.http
-            .post(`${this.rootUrl}${url}`, data, { headers: this.headers })
+    getRequestNoAuth(url) {
+              return this.http
+            .get(`${this.rootUrl}${url}`, { headers: this.headers })
             .toPromise();
     }
 
