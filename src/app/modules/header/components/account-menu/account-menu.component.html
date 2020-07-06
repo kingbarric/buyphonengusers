@@ -1,5 +1,5 @@
 <div class="account-menu">
-    <form #loginForm="ngForm" class="account-menu__form">
+    <form *ngIf="!loggedIn" #loginForm="ngForm" class="account-menu__form">
         <div class="account-menu__form-title">Log In to Your Account</div>
         <div class="form-group">
             <label for="header-signin-email" class="sr-only">Email address</label
@@ -31,46 +31,58 @@
             >
         </div>
     </form>
-    <div class="account-menu__divider"></div>
-    <a
-        routerLink="/account/dashboard"
-        class="account-menu__user"
-        (click)="closeMenu.emit()"
+    <app-alert
+        *ngIf="showAlert"
+        class="mb-3 mt-3"
+        [type]="alertType"
+        size="lg"
+        [dismissible]="true"
+        (close)="showAlert = null"
     >
-        <div class="account-menu__user-avatar">
-            <img src="assets/images/avatars/avatar-3.jpg" alt="" />
-        </div>
-        <div class="account-menu__user-info">
-            <div class="account-menu__user-name">Helena Garcia</div>
-            <div class="account-menu__user-email">stroyka@example.com</div>
-        </div>
-    </a>
+        {{ showAlert }}
+    </app-alert>
+    <div class="account-menu__divider"></div>
+    <div *ngIf="loggedIn" class="">
+        <a
+            routerLink="/account/dashboard"
+            class="account-menu__user"
+            (click)="closeMenu.emit()"
+        >
+            <div class="account-menu__user-avatar">
+                <img src="assets/images/avatars/avatar-3.jpg" alt="" />
+            </div>
+            <div class="account-menu__user-info">
+                <div class="account-menu__user-name">{{userObj?.firstName}} {{userObj?.lastName}}</div>
+                <div class="account-menu__user-email">{{userObj?.email}}</div>
+            </div>
+        </a>
             <div class="account-menu__divider"></div>
             <ul class="account-menu__links">
                 <li>
                     <a routerLink="/account/profile" (click)="closeMenu.emit()">Edit Profile</a
-            >
-        </li>
-        <li>
-            <a routerLink="/account/orders" (click)="closeMenu.emit()"
-                >Order History</a
-            >
-        </li>
-        <li>
-            <a routerLink="/account/addresses" (click)="closeMenu.emit()"
-                >Addresses</a
-            >
-        </li>
-        <li>
-            <a routerLink="/account/password" (click)="closeMenu.emit()"
-                >Password</a
-            >
-        </li>
-    </ul>
-    <div class="account-menu__divider"></div>
-    <ul class="account-menu__links">
-        <li>
-            <a routerLink="/account/login" (click)="closeMenu.emit()">Logout</a>
+                >
+            </li>
+            <li>
+                <a routerLink="/account/orders" (click)="closeMenu.emit()"
+                    >Order History</a
+                >
+            </li>
+            <li>
+                <a routerLink="/account/addresses" (click)="closeMenu.emit()"
+                    >Addresses</a
+                >
+            </li>
+            <li>
+                <a routerLink="/account/password" (click)="closeMenu.emit()"
+                    >Password</a
+                >
+            </li>
+        </ul>
+        <div class="account-menu__divider"></div>
+        <ul class="account-menu__links">
+            <li>
+                <a (click)="logout(); closeMenu.emit()">Logout</a>
                 </li>
             </ul>
         </div>
+</div>

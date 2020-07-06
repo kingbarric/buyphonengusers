@@ -17,21 +17,6 @@ export class UtilService {
   );
   constructor(private router: Router) {}
 
-  getToken() {
-    if (localStorage.getItem("userObj") !== null) {
-      return JSON.parse(localStorage.getItem("userObj")).token;
-    }
-
-    if (sessionStorage.getItem("userObj") !== null) {
-      return JSON.parse(sessionStorage.getItem("userObj")).token;
-    }
-    return null;
-  }
-
-  getUserObject() {
-    const user = JSON.parse(localStorage.getItem("userObj"));
-    return user;
-  }
 
 //   toast(messageType: any, message: any) {
 //     this.Toast = Swal.mixin({

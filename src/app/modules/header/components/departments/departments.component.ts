@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
     AfterViewChecked, AfterViewInit,
     Component,
@@ -10,12 +11,11 @@ import {
 } from '@angular/core';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { departments } from '../../../../../data/header-departments';
-import { NavigationLink } from '../../../../shared/interfaces/navigation-link';
-import { isPlatformBrowser } from '@angular/common';
-import { HeaderService } from '../../../../shared/services/header.service';
 import { fromMatchMedia } from '../../../../shared/functions/rxjs/fromMatchMedia';
 import { fromOutsideTouchClick } from '../../../../shared/functions/rxjs/fromOutsideTouchClick';
+import { NavigationLink } from '../../../../shared/interfaces/navigation-link';
+import { HeaderService } from '../../../../shared/services/header.service';
+import { CrudService } from './../../../../services/crud.service';
 
 @Component({
     selector: 'app-header-departments',
@@ -30,7 +30,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy, AfterViewInit, A
     @ViewChildren('submenuElement') submenuElements: QueryList<ElementRef>;
     @ViewChildren('itemElement') itemElements: QueryList<ElementRef>;
 
-    items: NavigationLink[] = departments;
+    items: any[] = [];
     hoveredItem: NavigationLink = null;
 
     isOpen = false;
@@ -48,7 +48,10 @@ export class DepartmentsComponent implements OnInit, OnDestroy, AfterViewInit, A
         private el: ElementRef,
         private header: HeaderService,
         private zone: NgZone,
-    ) { }
+        private crud: CrudService
+    ) {
+        this.getCategories()
+    }
 
     ngOnInit(): void {
         const root = this.element.querySelector('.departments') as HTMLElement;
@@ -345,5 +348,44 @@ export class DepartmentsComponent implements OnInit, OnDestroy, AfterViewInit, A
         }
 
         return elements[index].nativeElement as HTMLDivElement;
+    }
+
+    getCategories() {
+        this.crud.getRequestNoAuth('exp/categorieswithsubs').then((res: any[]) => {
+            this.items = this.arrangeMenu(res)
+            console.log(res);
+        }).catch((err: any) =>
+            console.log(err)
+        )
+    }
+
+    arrangeMenu(menuList: any[]) {
+        let menu = menuList.map((menu: any) => {
+            let item = {}
+            if (menu.subCategories.length > 0 && menu.subCategories) {
+                item = {
+                    label: menu.categoryName, url: '/shop/catalog', menu: {
+                        type: 'megamenu',
+                        size: 'nl',
+                        // image: 'assets/images/megamenu/megamenu-1.jpg',
+                        columns: [{
+                            size: 4, items: [
+                                {
+                                    label: menu.categoryName, url: '/shop/catalog?hol=hel', items: menu.subCategories.map((subs:any) => {
+                                        return item = {
+                                            label: subs.name, url: '/shop/catalog'
+                                        }
+                                    })
+                                },
+                                    ]
+                        }]
+                    }
+                }
+            } else {
+                item = { label: menu.categoryName, url: '/shop/catalog' }
+            }
+            return item
+        })
+        return menu
     }
 }
