@@ -13,6 +13,7 @@ export class AccountMenuComponent implements OnInit {
     email: string = ''
     password: string = ''
     showAlert: string = null
+    activateAccount: boolean = null
     alertType: string;
     userObj: any = null;
     loggedIn: boolean = false
@@ -47,10 +48,15 @@ export class AccountMenuComponent implements OnInit {
             if (res.code == 0) {
                 this.auth.setLoginStatus(true)
                 this.auth.setUserObj(res)
-                window.location.reload()
                 this.alertType = "primary"
+                this.userObj = res
+            } if (res.code == 2) {
+                localStorage.setItem("email", this.email)
+                this.alertType = "warning"
                 this.showAlert = res.message
-            } else {
+                this.activateAccount = true
+            }
+            else {
                 this.alertType = "danger"
                 this.showAlert = res.message
             }

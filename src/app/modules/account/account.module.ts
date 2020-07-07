@@ -21,6 +21,7 @@ import { PageOrderDetailsComponent } from "./pages/page-order-details/page-order
 import { PageEditAddressComponent } from "./pages/page-edit-address/page-edit-address.component";
 import { UserModule } from "./user/user.module";
 import { MerchantModule } from "./merchant/merchant.module";
+import { PageActivateAccountComponent } from './pages/page-activate-account/page-activate-account.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { MerchantModule } from "./merchant/merchant.module";
         PageProfileComponent,
         PageOrderDetailsComponent,
         PageEditAddressComponent,
+        PageActivateAccountComponent,
     ],
     imports: [
         // modules (angular)

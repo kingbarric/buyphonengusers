@@ -33,6 +33,7 @@ import { RootComponent } from './components/root/root.component';
 import { PageHomeOneComponent } from './pages/page-home-one/page-home-one.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
+
 @NgModule({
     declarations: [
         // components
@@ -43,6 +44,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
         PageNotFoundComponent
     ],
     imports: [
+
+
         // modules (angular)
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         BrowserAnimationsModule,
@@ -58,7 +61,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
         HeaderModule,
         MobileModule,
         SharedModule,
-        WidgetsModule
+        WidgetsModule,
+
     ],
     providers: [
         // { provide: LOCALE_ID, useValue: 'it' }

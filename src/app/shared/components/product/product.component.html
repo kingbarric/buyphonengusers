@@ -8,14 +8,10 @@
         <!-- .product__info -->
         <div class="product__info">
             <div class="product__wishlist-compare">
-                <button type="button" class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip" data-placement="right" title="Wishlist"
-                        appClick (click)="addToWishlist()"
-                        [ngClass]="{'btn-loading': addingToWishlist}">
+                <button type="button" class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip" data-placement="right" title="Wishlist" appClick (click)="addToWishlist()" [ngClass]="{'btn-loading': addingToWishlist}">
                     <app-icon name="wishlist-16" size="16"></app-icon>
                 </button>
-                <button type="button" class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip" data-placement="right" title="Compare"
-                        appClick (click)="addToCompare()"
-                        [ngClass]="{'btn-loading': addingToCompare}">
+                <button type="button" class="btn btn-sm btn-light btn-svg-icon" data-toggle="tooltip" data-placement="right" title="Compare" appClick (click)="addToCompare()" [ngClass]="{'btn-loading': addingToCompare}">
                     <app-icon name="compare-16" size="16"></app-icon>
                 </button>
             </div>
@@ -29,8 +25,7 @@
                 </div>
             </div>
             <div class="product__description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh
-                lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi.
             </div>
             <ul class="product__features">
                 <li>Speed: 750 RPM</li>
@@ -112,21 +107,15 @@
                             <app-input-number aria-label="Quantity" class="product__quantity" size="lg" [min]="1" [formControl]="quantity"></app-input-number>
                         </div>
                         <div class="product__actions-item product__actions-item--addtocart">
-                            <button type="button" class="btn btn-primary btn-lg"
-                                    [ngClass]="{'btn-loading': addingToCart}"
-                                    appClick (click)="addToCart()">Add to cart</button>
+                            <button type="button" class="btn btn-primary btn-lg" [ngClass]="{'btn-loading': addingToCart}" appClick (click)="addToCart()">Add to cart</button>
                         </div>
                         <div class="product__actions-item product__actions-item--wishlist">
-                            <button type="button" class="btn btn-secondary btn-svg-icon btn-lg" data-toggle="tooltip" title="Wishlist"
-                                    [ngClass]="{'btn-loading': addingToWishlist}"
-                                    appClick (click)="addToWishlist()">
+                            <button type="button" class="btn btn-secondary btn-svg-icon btn-lg" data-toggle="tooltip" title="Wishlist" [ngClass]="{'btn-loading': addingToWishlist}" appClick (click)="addToWishlist()">
                                 <app-icon name="wishlist-16" size="16"></app-icon>
                             </button>
                         </div>
                         <div class="product__actions-item product__actions-item--compare">
-                            <button type="button" class="btn btn-secondary btn-svg-icon btn-lg" data-toggle="tooltip" title="Compare"
-                                    [ngClass]="{'btn-loading': addingToCompare}"
-                                    appClick (click)="addToCompare()">
+                            <button type="button" class="btn btn-secondary btn-svg-icon btn-lg" data-toggle="tooltip" title="Compare" [ngClass]="{'btn-loading': addingToCompare}" appClick (click)="addToCompare()">
                                 <app-icon name="compare-16" size="16"></app-icon>
                             </button>
                         </div>
@@ -144,14 +133,6 @@
                     <a href="" appClick>Chainsaws</a>
                 </div>
             </div>
-
-            <app-share-buttons
-                class="product__share-buttons"
-                [buttons]="['facebook', {type: 'twitter', label: 'Tweet'}, 'pinterest']"
-                [pageUrl]="root.product(product)|absoluteUrl:'angular'"
-                [pageTitle]="product.name"
-                [pageImage]="product.images[0]|absoluteUrl:'html'"
-            ></app-share-buttons>
         </div>
     </div>
 </div>

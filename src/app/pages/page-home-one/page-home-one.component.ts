@@ -3,7 +3,7 @@ import { CrudService } from './../../services/crud.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { posts } from '../../../data/blog-posts';
 import { Brand } from '../../shared/interfaces/brand';
-import { Observable, Subject, merge, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, merge, BehaviorSubject, of } from 'rxjs';
 import { ShopService } from '../../shared/api/shop.service';
 import { Product } from '../../shared/interfaces/product';
 import { Category } from '../../shared/interfaces/category';
@@ -28,13 +28,13 @@ interface ProductsCarouselData {
 })
 export class PageHomeOneComponent implements OnInit, OnDestroy {
     destroy$: Subject<void> = new Subject<void>();
-    bestsellers$: Observable<Product[]>;
-    brands$: Observable<Brand[]>;
+    bestsellers$: Observable<any[]>;
+    brands$: Observable<any[]>;
     popularCategories$: Observable<Category[]>;
 
-    columnTopRated$: Observable<Product[]>;
-    columnSpecialOffers$: Observable<Product[]>;
-    columnBestsellers$: Observable<Product[]>;
+    columnTopRated$: Observable<any[]>;
+    columnSpecialOffers$: Observable<any[]>;
+    columnBestsellers$: Observable<any[]>;
 
     posts = posts;
 
@@ -47,8 +47,13 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.getFeaturedProduct()
-        this.bestsellers$ = this.shop.getBestsellers(7);
+        this.getFeaturedProduct();
+        this.getBestsellers();
+        this.getLastestProduct()
+        this.getColumnBestSellers()
+        this.getColumnSpecialOffers()
+        this.getColumnTopRated()
+        this.bestsellers$ = of([]);
         this.brands$ = this.shop.getPopularBrands();
         this.popularCategories$ = this.shop.getCategoriesBySlug([
             'power-tools',
@@ -58,52 +63,23 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
             'measurement',
             'clothes-and-ppe',
         ], 1);
-        this.columnTopRated$ = this.shop.getTopRated(3);
-        this.columnSpecialOffers$ = this.shop.getSpecialOffers(3);
-        this.columnBestsellers$ = this.shop.getBestsellers(3);
+        this.columnTopRated$ = of([]);
+        this.columnSpecialOffers$ =of([])
+        this.columnBestsellers$ = of([]);
 
         this.featuredProducts = {
             abort$: new Subject<void>(),
-            loading: false,
+            loading: true,
             products: [],
-            groups: [
-                {
-                    name: 'All',
-                    current: true,
-                    products$: this.shop.getLatestProducts(null, 8),
-                },
-            ],
+            groups: [],
         };
-        this.groupChange(this.featuredProducts, this.featuredProducts.groups[0]);
 
         this.latestProducts = {
             abort$: new Subject<void>(),
-            loading: false,
+            loading: true,
             products: [],
-            groups: [
-                {
-                    name: 'All',
-                    current: true,
-                    products$: this.shop.getLatestProducts(null, 8),
-                },
-                {
-                    name: 'Power Tools',
-                    current: false,
-                    products$: this.shop.getLatestProducts('power-tools', 8),
-                },
-                {
-                    name: 'Hand Tools',
-                    current: false,
-                    products$: this.shop.getLatestProducts('hand-tools', 8),
-                },
-                {
-                    name: 'Plumbing',
-                    current: false,
-                    products$: this.shop.getLatestProducts('plumbing', 8),
-                },
-            ],
+            groups: [],
         };
-        this.groupChange(this.latestProducts, this.latestProducts.groups[0]);
     }
 
     ngOnDestroy(): void {
@@ -125,10 +101,46 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
         });
     }
 
+getColumnTopRated(){
+    this.crud.getRequestNoAuth('exp/featuredproduct/0/3').then((res: any) => {
+        console.log(res.content);
+        this.columnTopRated$ = of(res.content)
+    }).catch((err: any) => {
+        console.log(err);
+    })
+}
+
+getColumnSpecialOffers(){
+    this.crud.getRequestNoAuth('exp/featuredproduct/0/3').then((res: any) => {
+        console.log(res.content);
+        this.columnSpecialOffers$ = of(res.content)
+    }).catch((err: any) => {
+        console.log(err);
+    })
+}
+
+getColumnBestSellers(){
+    this.crud.getRequestNoAuth('exp/featuredproduct/0/3').then((res: any) => {
+        console.log(res.content);
+        this.columnBestsellers$ = of(res.content)
+    }).catch((err: any) => {
+        console.log(err);
+    })
+}
+
+    getBestsellers() {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/10').then((res: any) => {
+            console.log(res.content);
+            this.bestsellers$ = of(res.content)
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
+
     getFeaturedProduct() {
         this.crud.getRequestNoAuth('exp/featuredproduct/0/10').then((res: any) => {
-            console.log(res);
-
+            console.log(res.content);
+            let products = of(res.content)
             this.featuredProducts = {
                 abort$: new Subject<void>(),
                 loading: false,
@@ -137,9 +149,7 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
                     {
                         name: 'All',
                         current: true,
-                        products$: new Observable((obs) => {
-                            obs.next(res.content)
-                        })
+                        products$: products,
                     },
                 ],
             };
@@ -148,4 +158,31 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
             console.log(err);
         })
     }
+
+
+
+    getLastestProduct() {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/10').then((res: any) => {
+            console.log(res.content);
+            let products = of(res.content)
+            this.latestProducts = {
+                abort$: new Subject<void>(),
+                loading: false,
+                products: [],
+                groups: [
+                    {
+                        name: 'All',
+                        current: true,
+                        products$: products,
+                    },
+                ],
+            };
+            this.groupChange(this.latestProducts, this.latestProducts.groups[0]);
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
 }
+
+
+

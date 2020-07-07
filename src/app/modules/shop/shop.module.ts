@@ -29,6 +29,7 @@ import { PageWishlistComponent } from './pages/page-wishlist/page-wishlist.compo
 import { ProductSidebarComponent } from './components/product-sidebar/product-sidebar.component';
 import { PageOrderSuccessComponent } from './pages/page-order-success/page-order-success.component';
 
+
 @NgModule({
     declarations: [
         // components
@@ -57,7 +58,8 @@ import { PageOrderSuccessComponent } from './pages/page-order-success/page-order
         BlocksModule,
         SharedModule,
         ShopRoutingModule,
-        WidgetsModule
+        WidgetsModule,
+
     ]
 })
 export class ShopModule { }

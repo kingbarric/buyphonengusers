@@ -18,6 +18,7 @@ export class PageLoginComponent {
     email: string = ''
     registerForm: FormGroup
     showAlert: string = null
+    activateAccount: boolean = false
     alertType: string
     constructor(private crudService: CrudService, private auth: AuthService, private router: Router) {
         this.auth.isLoggedIn.subscribe((obs: any) => {
@@ -80,6 +81,10 @@ export class PageLoginComponent {
                 window.location.reload()
                 this.alertType = "primary"
                 this.showAlert = res.message
+            } if (res.code == 2) {
+                this.alertType = "warning"
+                this.showAlert = res.message
+                this.activateAccount = true
             } else {
                 this.alertType = "danger"
                 this.showAlert = res.message
