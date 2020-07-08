@@ -45,6 +45,7 @@ import { ProductGalleryComponent } from './components/product-gallery/product-ga
 // payment gateways
 import { AngularRaveModule } from 'angular-rave';
 import { Angular4PaystackModule } from 'angular4-paystack';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { Angular4PaystackModule } from 'angular4-paystack';
         ColorTypePipe,
         CurrencyFormatPipe,
         ProductGalleryComponent,
+        LoadingSpinnerComponent,
     ],
     imports: [
         // modules (angular)
@@ -131,7 +133,8 @@ import { Angular4PaystackModule } from 'angular4-paystack';
         ShareButtonsComponent, FormsModule, ReactiveFormsModule,
            // payment gateway
         Angular4PaystackModule,
-        AngularRaveModule
+        AngularRaveModule,
+        LoadingSpinnerComponent
     ],
     schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })

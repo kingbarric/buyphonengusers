@@ -129,7 +129,7 @@ getColumnBestSellers(){
 }
 
     getBestsellers() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/10').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
             console.log(res.content);
             this.bestsellers$ = of(res.content)
         }).catch((err: any) => {
@@ -138,7 +138,7 @@ getColumnBestSellers(){
     }
 
     getFeaturedProduct() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/10').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
             console.log(res.content);
             let products = of(res.content)
             this.featuredProducts = {
@@ -162,7 +162,7 @@ getColumnBestSellers(){
 
 
     getLastestProduct() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/10').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
             console.log(res.content);
             let products = of(res.content)
             this.latestProducts = {

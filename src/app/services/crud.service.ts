@@ -14,7 +14,7 @@ export class CrudService {
     constructor(private http: HttpClient, private utilService: UtilService, private auth: AuthService) {
         // this.rootUrl = "http://172.20.10.4:8082/";
         // this.rootUrl = "http://192.168.43.115:8082/";
-        this.rootUrl = "http://89a2fca10f99.ngrok.io/";
+        this.rootUrl = "http://298bc7d0e4b5.ngrok.io/";
         this.baseUrl = `${this.rootUrl}api/`;
         this.setHeaderWithToken();
     }

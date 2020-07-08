@@ -18,7 +18,7 @@ import { Subject } from 'rxjs';
 export class ProductCardComponent implements OnInit, OnDestroy, OnChanges {
     private destroy$: Subject<void> = new Subject();
 
-    @Input() product: Product;
+    @Input() product: any;
     @Input() layout: 'grid-sm'|'grid-nl'|'grid-lg'|'list'|'horizontal'|null = null;
 
     addingToCart = false;

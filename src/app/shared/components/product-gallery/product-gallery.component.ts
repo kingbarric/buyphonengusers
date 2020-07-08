@@ -17,15 +17,15 @@ export interface ProductGalleryItem {
     styleUrls: ['./product-gallery.component.scss']
 })
 export class ProductGalleryComponent implements OnInit {
-    items: ProductGalleryItem[] = [];
+    items: any[] = [];
 
-    currentItem: ProductGalleryItem = null;
+    currentItem: any = null;
 
     carouselOptions: Partial<OwlCarouselOConfig> = {
         dots: false,
         autoplay: false,
         responsive: {
-            0: {items: 1}
+            0: { items: 1 }
         },
         rtl: this.direction.isRTL()
     };
@@ -36,17 +36,19 @@ export class ProductGalleryComponent implements OnInit {
         margin: 10,
         items: 5,
         responsive: {
-            480: {items: 5},
-            380: {items: 4},
-            0: {items: 3}
+            480: { items: 5 },
+            380: { items: 4 },
+            0: { items: 3 }
         },
         rtl: this.direction.isRTL()
     };
 
     @Input() productLayout: ProductLayout;
 
-    @Input() set images(images: string[]) {
-        this.items = images.map((image, index) => ({id: `image-${index}`, image}));
+    @Input() set images(images: any[]) {
+             this.items = images.map((image, index) =>
+            ({ id: `image-${index}`, image: image.imageUrl })
+        );
         this.currentItem = this.items[0] || null;
     }
 
@@ -56,7 +58,7 @@ export class ProductGalleryComponent implements OnInit {
 
     @ViewChild('thumbnailsCarousel', { read: CarouselComponent }) thumbnailsCarousel: CarouselComponent;
 
-    @ViewChildren('imageElement', {read: ElementRef}) imageElements: QueryList<ElementRef>;
+    @ViewChildren('imageElement', { read: ElementRef }) imageElements: QueryList<ElementRef>;
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,

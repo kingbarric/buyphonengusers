@@ -12,22 +12,22 @@
 
 
     <div class="product-card__image product-image">
-        <a appClick [routerLink]="root.product(product)" *ngIf="product?.images?.length" class="product-image__body">
-            <img class="product-image__img" [src]="product?.images[0]" onerror="this.src=''" alt="">
+        <a appClick [routerLink]="'shop/product/'+product.id" *ngIf="product?.images?.length" class="product-image__body">
+            <img class="product-image__img" [src]="product?.images[0].imageUrl" alt="">
         </a>
-        <a appClick [routerLink]="root.product(product)" *ngIf="!product?.images?.length" class="product-image__body">
+        <a appClick [routerLink]="'shop/product/'+product.id" *ngIf="!product?.images?.length" class="product-image__body">
             <img class="product-image__img" src="../../../../assets/images/_dummy/32461.jpg" alt="">
         </a>
     </div>
     <div class="product-card__info">
         <div class="product-card__name">
-            <a appClick [routerLink]="root.product(product)">{{ product?.name }}</a>
+            <a appClick [routerLink]="'shop/product/'+product.id">{{ product?.name }}</a>
         </div>
         <div class="product-card__rating">
-            <app-rating [value]="product?.rating"></app-rating>
-            <div class="product-card__rating-legend">{{ product?.reviews }} Reviews</div>
+            <app-rating [value]="product?.totalRatings"></app-rating>
+            <div class="product-card__rating-legend">{{ product?.totalReviews }} Reviews</div>
         </div>
-        <ul *ngIf="featuredAttributes.length" class="product-card__features-list">
+        <!-- <ul *ngIf="featuredAttributes.length" class="product-card__features-list">
             <li *ngFor="let attribute of featuredAttributes">
                 {{ attribute?.name }}:
                 <ng-container *ngFor="let value of attribute.values; let last = last">
@@ -35,20 +35,21 @@
                     <ng-container *ngIf="!last">, </ng-container>
                 </ng-container>
             </li>
-        </ul>
+        </ul> -->
     </div>
     <div class="product-card__actions">
         <div class="product-card__availability">
             Availability:
-            <span *ngIf="product?.availability === 'in-stock'" class="text-success">In Stock</span>
+            <span *ngIf="product?.quantity > 0" class="text-success">In Stock</span>
+            <span *ngIf="product?.quantity <= 0" class="text-success">Out Of Stock</span>
         </div>
         <div class="product-card__prices">
-            <ng-container *ngIf="product?.compareAtPrice">
-                <span class="product-card__new-price">{{ product?.price|currencyFormat }}</span>{{ ' ' }}
-                <span class="product-card__old-price">{{ product?.compareAtPrice|currencyFormat }}</span>
+            <ng-container *ngIf="product?.saleDiscountPrice">
+                <span class="product-card__new-price">&#8358;{{ product?.salePrice }}</span>{{ ' ' }}
+                <span class="product-card__old-price">&#8358;{{ product?.saleDiscountPrice }}</span>
             </ng-container>
-            <ng-container *ngIf="!product?.compareAtPrice">
-                {{ product?.price|currencyFormat }}
+            <ng-container *ngIf="!product?.saleDiscountPrice">
+                &#8358;{{ product?.salePrice }}
             </ng-container>
         </div>
         <div class="product-card__buttons">
@@ -58,10 +59,10 @@
                 <app-icon name="wishlist-16" size="16"></app-icon>
                 <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
             </button>
-            <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__compare" type="button" appClick (click)="addToCompare()" [ngClass]="{'btn-loading': addingToCompare}">
+            <!-- <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__compare" type="button" appClick (click)="addToCompare()" [ngClass]="{'btn-loading': addingToCompare}">
                 <app-icon name="compare-16" size="16"></app-icon>
                 <span class="fake-svg-icon fake-svg-icon--compare-16"></span>
-            </button>
+            </button> -->
         </div>
     </div>
 </div>

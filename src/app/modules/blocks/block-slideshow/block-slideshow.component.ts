@@ -24,9 +24,9 @@ export class BlockSlideshowComponent {
         {
             title: 'Big choice of<br>Plumbing products',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
-            image_classic: 'assets/images/_home/home-1.jpg',
-            image_full: 'assets/images/_home/home-1.jpg',
-            image_mobile: 'assets/images/_home/home-1.jpg'
+            image_classic: 'assets/images/_home/home-3.jpg',
+            image_full: 'assets/images/_home/home-3.jpg',
+            image_mobile: 'assets/images/_home/home-3.jpg'
         },
         {
             title: 'Screwdrivers<br>Professional Tools',
@@ -38,9 +38,9 @@ export class BlockSlideshowComponent {
         {
             title: 'One more<br>Unique header',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
-            image_classic: 'assets/images/_home/home-3.jpg',
-            image_full: 'assets/images/_home/home-3.jpg',
-            image_mobile: 'assets/images/_home/home-3.jpg'
+            image_classic: 'assets/images/_home/home-1.jpg',
+            image_full: 'assets/images/_home/home-1.jpg',
+            image_mobile: 'assets/images/_home/home-1.jpg'
         }
     ];
 
