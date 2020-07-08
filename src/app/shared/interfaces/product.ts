@@ -34,6 +34,7 @@ export interface Product {
     name: string;
     sku: string;
     price: number;
+    salePrice?:number;
     compareAtPrice: number|null;
     images: string[];
     badges: string[];

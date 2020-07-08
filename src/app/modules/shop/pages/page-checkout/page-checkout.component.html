@@ -58,19 +58,6 @@
                             />
                         </div>
                         <div class="form-group">
-                            <label for="checkout-country">Country</label>
-                            <select id="checkout-country" class="form-control">
-                                <option>Select a country...</option>
-                                <option>United States</option>
-                                <option>Russia</option>
-                                <option>Italy</option>
-                                <option>France</option>
-                                <option>Ukraine</option>
-                                <option>Germany</option>
-                                <option>Australia</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="checkout-street-address"
                                 >Street Address</label
                             >
@@ -214,9 +201,9 @@
                                         {{ item.quantity }}
                                     </td>
                                     <td>
-                                        {{
-                                            item.product.price * item.quantity
-                                                | currencyFormat
+                                        &#8358;{{
+                                            item.product.salePrice *
+                                                item.quantity
                                         }}
                                     </td>
                                 </tr>
@@ -227,27 +214,17 @@
                             >
                                 <tr>
                                     <th>Subtotal</th>
-                                    <td>
-                                        {{
-                                            cart.subtotal$
-                                                | async
-                                                | currencyFormat
-                                        }}
-                                    </td>
+                                    <td>&#8358;{{ cart.subtotal$ | async }}</td>
                                 </tr>
                                 <tr *ngFor="let total of cart.totals$ | async">
                                     <th>{{ total.title }}</th>
-                                    <td>{{ total.price | currencyFormat }}</td>
+                                    <td>&#8358;{{ total.price }}</td>
                                 </tr>
                             </tbody>
                             <tfoot class="checkout__totals-footer">
                                 <tr>
                                     <th>Total</th>
-                                    <td>
-                                        {{
-                                            cart.total$ | async | currencyFormat
-                                        }}
-                                    </td>
+                                    <td>&#8358;{{ cart.total$ | async }}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -387,7 +364,7 @@
                         </button>
 
                         <button
-                        *ngIf="paymentType == 'flutterwave'"
+                            *ngIf="paymentType == 'flutterwave'"
                             class="btn btn-primary btn-xl btn-block"
                             angular-rave
                             [raveOptions]="paymentOptions"
@@ -396,7 +373,7 @@
                         </button>
 
                         <button
-                        *ngIf="paymentType == 'paystack'"
+                            *ngIf="paymentType == 'paystack'"
                             angular4-paystack
                             class="btn btn-primary btn-xl btn-block"
                             [paystackOptions]="options"
@@ -404,7 +381,7 @@
                             (close)="paymentCancel()"
                             (callback)="paymentDone($event)"
                         >
-                        Place Order
+                            Place Order
                         </button>
                         <!-- payment gateway -->
                     </div>

@@ -132,19 +132,19 @@ export class CartService {
 
         this.data.items.forEach(item => {
             quantity += item.quantity;
-            subtotal += item.product.price * item.quantity;
+            subtotal += item.product.salePrice * item.quantity;
         });
 
         const totals: CartTotal[] = [];
 
         totals.push({
             title: 'Shipping',
-            price: 25,
+            price: 0,
             type: 'shipping'
         });
         totals.push({
             title: 'Tax',
-            price: subtotal * 0.20,
+            price: subtotal * 0.075,
             type: 'tax'
         });
 

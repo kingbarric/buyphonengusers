@@ -40,7 +40,7 @@ export const navigation: NavigationLink[] = [
             ]}
         ]
     }},
-    {label: 'Shop', url: '/shop/catalog/power-tools'},
+    {label: 'Shop', url: '/shop/catalog'},
       {label: 'Blog', url: '/blog'},
     { label: 'Help', url: '/site' }
 ];

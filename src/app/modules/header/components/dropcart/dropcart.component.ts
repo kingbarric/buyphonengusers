@@ -9,7 +9,7 @@ import { RootService } from '../../../../shared/services/root.service';
     styleUrls: ['./dropcart.component.scss']
 })
 export class DropcartComponent {
-    removedItems: CartItem[] = [];
+    removedItems: any[] = [];
 
     @Output() closeMenu: EventEmitter<void> = new EventEmitter<void>();
 
@@ -18,7 +18,7 @@ export class DropcartComponent {
         public root: RootService
     ) { }
 
-    remove(item: CartItem): void {
+    remove(item: any): void {
         if (this.removedItems.includes(item)) {
             return;
         }

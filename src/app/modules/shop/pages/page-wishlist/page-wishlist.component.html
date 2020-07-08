@@ -18,48 +18,48 @@
     <div class="container">
         <table class="wishlist">
             <thead class="wishlist__head">
-            <tr class="wishlist__row">
-                <th class="wishlist__column wishlist__column--image">Image</th>
-                <th class="wishlist__column wishlist__column--product">Product</th>
-                <th class="wishlist__column wishlist__column--stock">Stock Status</th>
-                <th class="wishlist__column wishlist__column--price">Price</th>
-                <th class="wishlist__column wishlist__column--tocart"></th>
-                <th class="wishlist__column wishlist__column--remove"></th>
-            </tr>
+                <tr class="wishlist__row">
+                    <th class="wishlist__column wishlist__column--image">Image</th>
+                    <th class="wishlist__column wishlist__column--product">Product</th>
+                    <th class="wishlist__column wishlist__column--stock">Stock Status</th>
+                    <th class="wishlist__column wishlist__column--price">Price</th>
+                    <th class="wishlist__column wishlist__column--tocart"></th>
+                    <th class="wishlist__column wishlist__column--remove"></th>
+                </tr>
             </thead>
             <tbody class="wishlist__body">
-            <tr *ngFor="let product of wishlist.items$|async" class="wishlist__row">
-                <td class="wishlist__column wishlist__column--image">
-                    <div class="product-image">
-                        <a
-                            *ngIf="product.images?.length"
-                            [routerLink]="root.product(product)"
-                            class="product-image__body"
-                        >
-                            <img class="product-image__img" [src]="product.images[0]" alt="">
-                        </a>
-                    </div>
-                </td>
-                <td class="wishlist__column wishlist__column--product">
-                    <a [routerLink]="root.product(product)" class="wishlist__product-name">{{ product.name }}</a>
-                    <div class="wishlist__product-rating">
-                        <app-rating [value]="product.rating"></app-rating>
-                        <div class="wishlist__product-rating-legend">{{ product.reviews }} Reviews</div>
-                    </div>
-                </td>
-                <td class="wishlist__column wishlist__column--stock">
-                    <div class="badge badge-success">In Stock</div>
-                </td>
-                <td class="wishlist__column wishlist__column--price">{{ product.price|currencyFormat }}</td>
-                <td class="wishlist__column wishlist__column--tocart">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="addToCart(product)" [ngClass]="{'btn-loading': addedToCartProducts.includes(product)}">Add To Cart</button>
-                </td>
-                <td class="wishlist__column wishlist__column--remove">
-                    <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="remove(product)" [ngClass]="{'btn-loading': removedProducts.includes(product)}">
+                <tr *ngFor="let product of wishlist.items$|async" class="wishlist__row">
+                    <td class="wishlist__column wishlist__column--image">
+                        <div class="product-image">
+                            <a *ngIf="product.images?.length" [routerLink]="root.product(product)" class="product-image__body">
+                                <img class="product-image__img" [src]="product.images[0].imageUrl" alt="">
+                            </a>
+                            <a *ngIf="!product.images?.length" [routerLink]="root.product(product)" class="product-image__body">
+                                <img class="product-image__img" src="../../../../../assets/images/_dummy/32461.jpg" alt="">
+                            </a>
+                        </div>
+                    </td>
+                    <td class="wishlist__column wishlist__column--product">
+                        <a [routerLink]="root.product(product)" class="wishlist__product-name">{{ product.name }}</a>
+                        <div class="wishlist__product-rating">
+                            <app-rating [value]="product.totalRatings"></app-rating>
+                            <div class="wishlist__product-rating-legend">{{ product.totalReviews }} Reviews</div>
+                        </div>
+                    </td>
+                    <td class="wishlist__column wishlist__column--stock">
+                        <div *ngIf="product.quantity> 0" class="badge badge-success">In Stock</div>
+                        <div *ngIf="product.quantity < 1" class="badge badge-danger">Out of Stock</div>
+                    </td>
+                    <td class="wishlist__column wishlist__column--price">&#8358;{{ product.salePrice }}</td>
+                    <td class="wishlist__column wishlist__column--tocart">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="addToCart(product)" [ngClass]="{'btn-loading': addedToCartProducts.includes(product)}">Add To Cart</button>
+                    </td>
+                    <td class="wishlist__column wishlist__column--remove">
+                        <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="remove(product)" [ngClass]="{'btn-loading': removedProducts.includes(product)}">
                         <app-icon name="cross-12" size="12"></app-icon>
                     </button>
-                </td>
-            </tr>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

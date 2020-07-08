@@ -371,7 +371,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy, AfterViewInit, A
                         columns: [{
                             size: 4, items: [
                                 {
-                                    label: menu.categoryName, url: '/shop/catalog?hol=hel', items: menu.subCategories.map((subs:any) => {
+                                    label: menu.categoryName, url: '/shop/catalog', items: menu.subCategories.map((subs:any) => {
                                         return item = {
                                             label: subs.name, url: '/shop/catalog'
                                         }
