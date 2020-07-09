@@ -37,7 +37,7 @@ export class RootService {
         throw Error('Provided category with unknown type.');
     }
 
-    product(product: Partial<Product>): string {
+    product(product:any): string {
         const basePath = '/shop/products';
 
         if ('slug' in product) {

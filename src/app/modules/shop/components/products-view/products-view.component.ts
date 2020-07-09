@@ -1,3 +1,4 @@
+import { CrudService } from './../../../../services/crud.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ShopSidebarService } from '../../services/shop-sidebar.service';
 import { PageCategoryService } from '../../services/page-category.service';
@@ -21,11 +22,12 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
 
     listOptionsForm: FormGroup;
     filtersCount = 0;
-
+products:any[] = []
     constructor(
         private fb: FormBuilder,
         public sidebar: ShopSidebarService,
         public pageService: PageCategoryService,
+        private crud:CrudService
     ) { }
 
     ngOnInit(): void {
@@ -48,6 +50,16 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 this.listOptionsForm.setValue({page, limit, sort}, {emitEvent: false});
             }
         );
+        this.getProducts()
+    }
+
+    getProducts(){
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
+            console.log(res.content);
+            this.products = res.content
+        }).catch((err: any) => {
+            console.log(err);
+        })
     }
 
     ngOnDestroy(): void {

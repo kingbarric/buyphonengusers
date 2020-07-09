@@ -17,18 +17,15 @@
                 <div class="view-options__layout">
                     <div class="layout-switcher">
                         <div class="layout-switcher__list">
-                            <button title="Grid" type="button" class="layout-switcher__button"
-                                    [ngClass]="{'layout-switcher__button--active': layout === 'grid'}" (click)="setLayout('grid')">
+                            <button title="Grid" type="button" class="layout-switcher__button" [ngClass]="{'layout-switcher__button--active': layout === 'grid'}" (click)="setLayout('grid')">
 
                                 <app-icon name="layout-grid-16x16" size="16"></app-icon>
                             </button>
-                            <button title="Grid With Features" type="button" class="layout-switcher__button"
-                                    [ngClass]="{'layout-switcher__button--active': layout === 'grid-with-features'}" (click)="setLayout('grid-with-features')">
+                            <button title="Grid With Features" type="button" class="layout-switcher__button" [ngClass]="{'layout-switcher__button--active': layout === 'grid-with-features'}" (click)="setLayout('grid-with-features')">
 
                                 <app-icon name="layout-grid-with-details-16x16" size="16"></app-icon>
                             </button>
-                            <button title="List" type="button" class="layout-switcher__button"
-                                    [ngClass]="{'layout-switcher__button--active': layout === 'list'}" (click)="setLayout('list')">
+                            <button title="List" type="button" class="layout-switcher__button" [ngClass]="{'layout-switcher__button--active': layout === 'list'}" (click)="setLayout('list')">
 
                                 <app-icon name="layout-list-16x16" size="16"></app-icon>
                             </button>
@@ -36,9 +33,7 @@
                     </div>
                 </div>
                 <div class="view-options__legend">
-                    Showing {{ this.pageService.from }}–{{ this.pageService.to }}
-                    of {{ this.pageService.total }}
-                    results
+                    Showing {{ this.pageService.from }}–{{ this.pageService.to }} of {{ this.pageService.total }} results
                 </div>
                 <div class="view-options__divider"></div>
                 <div class="view-options__control">
@@ -65,7 +60,7 @@
 
         <div class="products-view__list products-list" [attr.data-layout]="layout != 'list' ? grid : layout" [attr.data-with-features]="layout == 'grid-with-features' ? 'true' : 'false'">
             <div class="products-list__body">
-                <div *ngFor="let product of pageService.items" class="products-list__item">
+                <div *ngFor="let product of products" class="products-list__item">
                     <app-product-card [product]="product"></app-product-card>
                 </div>
             </div>
