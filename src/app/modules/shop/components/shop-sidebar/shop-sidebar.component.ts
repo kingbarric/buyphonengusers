@@ -55,7 +55,7 @@ export class ShopSidebarComponent implements OnInit, OnDestroy {
     }
 
     getBestSellers() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/5').then((res: any) => {
             console.log(res.content);
             this.bestsellers$ = of(res.content)
         }).catch((err: any) => {

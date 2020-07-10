@@ -36,20 +36,19 @@
                                     }}"
                                 >
                                     <app-icon
-                                        *ngIf="item.type == 'parent'"
+                                        *ngIf="item?.type == 'parent'"
                                         class="filter-categories__arrow"
                                         name="arrow-rounded-left-6x9"
                                         size="6x9"
                                     ></app-icon>
                                     <a
-                                        [routerLink]="
-                                            this.root.category(item.category)
-                                        "
+                                        [routerLink]="'/shop/catalog'"
+                                        [queryParams]="{ category: item.slug }"
                                         >{{ item.name }}</a
                                     >
                                     <div
                                         class="filter-categories__counter"
-                                        *ngIf="item.type === 'child'"
+                                        *ngIf="item?.type === 'child'"
                                     >
                                         {{ item.count }}
                                     </div>
@@ -87,11 +86,13 @@
                                     }}</span
                                 >
                                 –
-                                <span class="filter-price__max-value">&#8358;{{
-                                    rightToLeft
-                                        ? slider.value
-                                        : slider.highValue
-                                }}</span>
+                                <span class="filter-price__max-value"
+                                    >&#8358;{{
+                                        rightToLeft
+                                            ? slider.value
+                                            : slider.highValue
+                                    }}</span
+                                >
                             </div>
                         </div>
 

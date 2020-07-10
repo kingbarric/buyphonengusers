@@ -18,7 +18,7 @@ export class PageCategoryService {
     isLoading$: Observable<boolean> = this.isLoadingSource.asObservable();
 
     // list
-    private listState: ProductsList;
+    public listState: ProductsList;
     private listSource: BehaviorSubject<ProductsList> = new BehaviorSubject<ProductsList>(this.listState);
 
     list$: Observable<ProductsList> = this.listSource.pipe(filter(x => x !== null));

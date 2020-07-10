@@ -17,7 +17,7 @@ export class RootService {
         return `/shop/catalog`;
     }
 
-    category(category: Partial<Category>): string {
+    category(category:any): string {
         if (category.type === 'shop') {
             const basePath = this.shop();
 

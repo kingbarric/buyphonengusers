@@ -1,3 +1,4 @@
+import { CrudService } from './../../../services/crud.service';
 import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DirectionService } from '../../../shared/services/direction.service';
@@ -11,12 +12,12 @@ import {
     FilterItem, RadioFilter
 } from '../../../shared/interfaces/filter';
 import { RootService } from '../../../shared/services/root.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { PageCategoryService } from '../../shop/services/page-category.service';
 import { map, takeUntil } from 'rxjs/operators';
 
 interface FormFilterValues {
-    [filterSlug: string]: [number, number] | {[itemSlug: string]: boolean} | string;
+    [filterSlug: string]: [number, number] | { [itemSlug: string]: boolean } | string;
 }
 
 @Component({
@@ -25,11 +26,56 @@ interface FormFilterValues {
     styleUrls: ['./widget-filters.component.scss']
 })
 export class WidgetFiltersComponent implements OnInit, OnDestroy {
-    @Input() offcanvas: 'always'|'mobile' = 'mobile';
+    @Input() offcanvas: 'always' | 'mobile' = 'mobile';
 
     destroy$: Subject<void> = new Subject<void>();
 
-    filters: Filter[];
+    filters: any[] = [
+        {
+            name: "Categories",
+            root: true,
+            slug: "categories",
+            type: "categories",
+            items: []
+        },
+        {
+            max: 5000000,
+            min: 0,
+            name: "Price",
+            slug: "price",
+            type: "range",
+            value: [0, 5000000]
+        },
+        {
+            name: "Brand",
+            slug: "brand",
+            type: "check",
+            items: [],
+            value: []
+        },
+        {
+            name: "With Discount",
+            slug: "discount",
+            type: "radio",
+            value: "any", items: [
+                {
+                    count: 16,
+                    name: "Any",
+                    slug: "any"
+                },
+                {
+                    count: 15,
+                    name: "No",
+                    slug: "no"
+                }, {
+                    count: 1,
+                    name: "Yes",
+                    slug: "yes"
+                }
+            ]
+        }
+    ]
+
     filtersForm: FormGroup;
     isPlatformBrowser = isPlatformBrowser(this.platformId);
     rightToLeft = false;
@@ -40,24 +86,60 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         public root: RootService,
         public pageCategory: PageCategoryService,
+        private crud: CrudService
     ) {
         this.rightToLeft = this.direction.isRTL();
     }
 
     ngOnInit(): void {
+        this.getCat()
+        this.prepareFilter()
+        this.getBrands()
+    }
+
+    prepareFilter() {
         this.pageCategory.list$.pipe(
             map(x => x.filters),
             takeUntil(this.destroy$),
         ).subscribe(filters => {
+            console.log(filters);
             this.filters = filters;
             this.filtersForm = this.makeFiltersForm(filters);
-
-            this.filtersForm.valueChanges.subscribe(formValues => {
-                this.pageCategory.updateOptions({
-                    filterValues: this.convertFormToFilterValues(filters, formValues)
-                });
-            });
         });
+    }
+
+    getCat() {
+        this.crud.getRequestNoAuth('exp/categorywithproductcount').then((res: any) => {
+            console.log(res);
+            this.filters.forEach((filter) => {
+                if (filter.slug == 'categories') {
+                    filter.items = this.makeCatObj(res)
+                }
+            })
+            this.filtersForm = this.makeFiltersForm(this.filters);
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
+
+    makeCatObj(cats: any[]) {
+        let category: any[] = cats.map((cat) => {
+            return {
+                count: cat.count,
+                name: cat.categoryName,
+                slug: cat.categoryId,
+                type: "child"
+            }
+        })
+        return category
+    }
+
+    getBrands() {
+        this.crud.getRequestNoAuth('exp/findallbrand').then((res: any) => {
+            console.log(res);
+        }).catch((err: any) => {
+            console.log(err);
+        })
     }
 
     ngOnDestroy(): void {
@@ -65,7 +147,7 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    trackBySlug(index: number, item: {slug: string}): any {
+    trackBySlug(index: number, item: { slug: string }): any {
         return item.slug;
     }
 
@@ -88,7 +170,7 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
         return this.fb.group(filtersFromGroup);
     }
 
-    makeListFilterForm(filter: CheckFilter|ColorFilter): FormGroup {
+    makeListFilterForm(filter: CheckFilter | ColorFilter): FormGroup {
         const group = {};
 
         filter.items.forEach(item => {
@@ -97,9 +179,9 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
             // A timeout is needed because sometimes a state change is ignored if performed immediately.
             setTimeout(() => {
                 if (this.isItemDisabled(filter, item)) {
-                    control.disable({emitEvent: false});
+                    control.disable({ emitEvent: false });
                 } else {
-                    control.enable({emitEvent: false});
+                    control.enable({ emitEvent: false });
                 }
             }, 0);
 
@@ -109,7 +191,7 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
         return this.fb.group(group);
     }
 
-    isItemDisabled(filter: CheckFilter|RadioFilter|ColorFilter, item: FilterItem|ColorFilterItem): boolean {
+    isItemDisabled(filter: CheckFilter | RadioFilter | ColorFilter, item: FilterItem | ColorFilterItem): boolean {
         return item.count === 0 && (filter.type === 'radio' || !filter.value.includes(item.slug));
     }
 
