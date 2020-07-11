@@ -29,7 +29,7 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
     @Input() offcanvas: 'always' | 'mobile' = 'mobile';
 
     destroy$: Subject<void> = new Subject<void>();
-
+range
     filters: any[] = [
         {
             name: "Categories",
@@ -93,7 +93,7 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getCat()
-        this.prepareFilter()
+        // this.prepareFilter()
         this.getBrands()
     }
 
@@ -110,7 +110,6 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
 
     getCat() {
         this.crud.getRequestNoAuth('exp/categorywithproductcount').then((res: any) => {
-            console.log(res);
             this.filters.forEach((filter) => {
                 if (filter.slug == 'categories') {
                     filter.items = this.makeCatObj(res)
@@ -135,11 +134,28 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
     }
 
     getBrands() {
-        this.crud.getRequestNoAuth('exp/findallbrand').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/brandwithproductcount').then((res: any) => {
             console.log(res);
+            this.filters.forEach((filter) => {
+                if (filter.slug == 'brand') {
+                    filter.items = this.makeBrandObj(res)
+                }
+            })
+            this.filtersForm = this.makeFiltersForm(this.filters);
         }).catch((err: any) => {
             console.log(err);
         })
+    }
+
+    makeBrandObj(brands: any[]) {
+        let allBrands = brands.map((brand) => {
+            return {
+                count: brand.count,
+                name: brand.name,
+                slug: brand.id
+            }
+        })
+        return allBrands
     }
 
     ngOnDestroy(): void {

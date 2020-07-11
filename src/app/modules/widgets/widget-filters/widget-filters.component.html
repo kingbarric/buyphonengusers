@@ -137,7 +137,8 @@
                                         </span>
                                     </span>
 
-                                    <span class="filter-list__title">{{
+                                    <span  [routerLink]="'/shop/catalog'"
+                                    [queryParams]="{ brand: item.slug }" class="filter-list__title">{{
                                         item.name
                                     }}</span>
                                     <span class="filter-list__counter">{{
@@ -247,7 +248,7 @@
         </div>
     </div>
     <div class="widget-filters__actions d-flex">
-        <button class="btn btn-secondary btn-sm" (click)="reset()">
+        <button class="btn btn-secondary btn-sm" (click)="reset()" routerLink="/shop/catalog">
             Reset
         </button>
     </div>

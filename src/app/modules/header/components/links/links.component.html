@@ -1,16 +1,8 @@
 <ul class="nav-links__list">
-    <li
-        *ngFor="let item of items"
-        class="nav-links__item"
-        [ngClass]="{
+    <li *ngFor="let item of items" class="nav-links__item" [ngClass]="{
             'nav-links__item--has-submenu': item.menu,
             'nav-links__item--hover': hoveredItem === item
-        }"
-        (mouseenter)="onItemMouseEnter(item)"
-        (mouseleave)="onItemMouseLeave(item)"
-        (appOutsideTouchClick)="onOutsideTouchClick(item)"
-        #itemElement
-    >
+        }" (mouseenter)="onItemMouseEnter(item)" (mouseleave)="onItemMouseLeave(item)" (appOutsideTouchClick)="onOutsideTouchClick(item)" #itemElement>
 
         <ng-template #link>
             <div class="nav-links__item-body">
@@ -26,20 +18,10 @@
             <ng-container [ngTemplateOutlet]="link"></ng-container>
         </a>
 
-        <div
-            *ngIf="item.menu && item.menu.type == 'menu'"
-            class="nav-links__submenu nav-links__submenu--type--menu"
-            [ngClass]="{'nav-links__submenu--open': hoveredItem === item}"
-            #submenuElement
-        >
+        <div *ngIf="item.menu && item.menu.type == 'menu'" class="nav-links__submenu nav-links__submenu--type--menu" [ngClass]="{'nav-links__submenu--open': hoveredItem === item}" #submenuElement>
             <app-header-menu [items]="item.menu.items" (itemClick)="onSubItemClick()"></app-header-menu>
         </div>
-        <div
-            *ngIf="item.menu && item.menu.type == 'megamenu'"
-            class="nav-links__submenu nav-links__submenu--type--megamenu nav-links__submenu--size--{{ item.menu.size }}"
-            [ngClass]="{'nav-links__submenu--open': hoveredItem === item}"
-            #submenuElement
-        >
+        <div *ngIf="item.menu && item.menu.type == 'megamenu'" class="nav-links__submenu nav-links__submenu--type--megamenu nav-links__submenu--size--{{ item.menu.size }}" [ngClass]="{'nav-links__submenu--open': hoveredItem === item}" #submenuElement>
             <app-header-megamenu [menu]="item.menu" (itemClick)="onSubItemClick()"></app-header-megamenu>
         </div>
     </li>

@@ -22,10 +22,10 @@ export class RootService {
             const basePath = this.shop();
 
             if ('slug' in category) {
-                return `${basePath}/${category.slug}`;
+                return `${basePath}`;
             }
             if ('id' in category) {
-                return `${basePath}/${category.id}`;
+                return `${basePath}`;
             }
 
             throw Error('Provide category with "path", "slug" or "id".');
@@ -79,10 +79,10 @@ export class RootService {
     }
 
     terms(): string {
-        return '/site/terms';
+        return '/terms';
     }
 
     notFound(): string {
-        return `/site/not-found`;
+        return `/not-found`;
     }
 }

@@ -48,9 +48,8 @@ export class AccountMenuComponent implements OnInit {
             if (res.code == 0) {
                 this.auth.setLoginStatus(true)
                 this.auth.setUserObj(res)
-                this.alertType = "primary"
                 this.userObj = res
-            } if (res.code == 2) {
+            }else if (res.code == 2) {
                 localStorage.setItem("email", this.email)
                 this.alertType = "warning"
                 this.showAlert = res.message
