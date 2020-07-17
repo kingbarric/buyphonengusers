@@ -9,12 +9,12 @@ export class LayoutComponent {
     links: { label: string; url: string }[] = [
         { label: "dashboard", url: "./dashboard" },
         { label: "Orders", url: "./orders" },
-        { label: "Order Tracking", url: "./order-tracking" },
-        { label: "Whishlist", url: "./whishlist" },
+        // { label: "Order Tracking", url: "./order-details" },
+        { label: "Whishlist", url: "/shop/wishlist" },
         { label: "Profile", url: "./profile" },
         { label: "Notification", url: "./notification" },
-        { label: "Safety", url: "./safety" },
+        { label: "Change Password", url: "./update-password" },
     ];
 
-    constructor() {}
+    constructor() { }
 }

@@ -19,6 +19,10 @@ import { map, takeUntil } from 'rxjs/operators';
 interface FormFilterValues {
     [filterSlug: string]: [number, number] | { [itemSlug: string]: boolean } | string;
 }
+interface filter {
+    lowest: number,
+    highest: number, touched?: boolean
+}
 
 @Component({
     selector: 'app-widget-filters',
@@ -29,7 +33,7 @@ export class WidgetFiltersComponent implements OnInit, OnDestroy {
     @Input() offcanvas: 'always' | 'mobile' = 'mobile';
 
     destroy$: Subject<void> = new Subject<void>();
-range
+    range
     filters: any[] = [
         {
             name: "Categories",
@@ -53,33 +57,13 @@ range
             items: [],
             value: []
         },
-        {
-            name: "With Discount",
-            slug: "discount",
-            type: "radio",
-            value: "any", items: [
-                {
-                    count: 16,
-                    name: "Any",
-                    slug: "any"
-                },
-                {
-                    count: 15,
-                    name: "No",
-                    slug: "no"
-                }, {
-                    count: 1,
-                    name: "Yes",
-                    slug: "yes"
-                }
-            ]
-        }
+
     ]
 
     filtersForm: FormGroup;
     isPlatformBrowser = isPlatformBrowser(this.platformId);
     rightToLeft = false;
-
+    filterObj: filter
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private direction: DirectionService,
@@ -89,12 +73,18 @@ range
         private crud: CrudService
     ) {
         this.rightToLeft = this.direction.isRTL();
+        this.getFilterPrice();
     }
 
     ngOnInit(): void {
         this.getCat()
         // this.prepareFilter()
-        this.getBrands()
+        this.getBrands();
+
+    }
+
+    getFilterPrice() {
+        this.pageCategory.filterObs.subscribe((value: filter) => this.filterObj = value)
     }
 
     prepareFilter() {
@@ -156,6 +146,11 @@ range
             }
         })
         return allBrands
+    }
+
+    priceChange(_) {
+        this.filterObj.touched = true
+        this.pageCategory.setFilterValue(this.filterObj)
     }
 
     ngOnDestroy(): void {

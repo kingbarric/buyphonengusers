@@ -45,8 +45,8 @@ export class PageLoginComponent {
 
     init() {
         this.registerForm = new FormGroup({
-            firstName: new FormControl("", [Validators.required]),
-            lastName: new FormControl("", [Validators.required]),
+            firstname: new FormControl("", [Validators.required]),
+            lastname: new FormControl("", [Validators.required]),
             email: new FormControl("", [Validators.required, Validators.email]),
             password: new FormControl("", [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl("", [Validators.required]),

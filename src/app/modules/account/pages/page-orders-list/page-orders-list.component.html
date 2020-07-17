@@ -16,10 +16,16 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let order of orders">
-                        <td><a [routerLink]="'/account/orders/' + order.id">#{{ order.id }}</a></td>
-                        <td>{{ order.date }}</td>
+                        <td>
+                            <a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a
+                            >
+                        </td>
+                        <td>{{ order.dateOrdered | date: "medium" }}</td>
                         <td>{{ order.status }}</td>
-                        <td>{{ order.total|currencyFormat }} for {{ order.quantity }} item(s)</td>
+                        <td>
+                            &#8358;{{ order.totalPrice }} for
+                            {{ order.totalQuantity }} item(s)
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -27,6 +33,24 @@
     </div>
     <div class="card-divider"></div>
     <div class="card-footer">
-        <app-pagination [total]="3"></app-pagination>
+        <app-pagination
+            [siblings]="1"
+            (pageChange)="changePage($event)"
+            [total]="totalPages"
+        ></app-pagination>
     </div>
 </div>
+
+<ng-template #modal>
+    <div class="quickview">
+        <button
+            class="quickview__close"
+            type="button"
+            appClick
+            (click)="modalRef.hide()"
+        >
+            <app-icon name="cross-20" size="20"></app-icon>
+        </button>
+        <app-page-order-details [orderDetails]="orderDetails"></app-page-order-details>
+    </div>
+</ng-template>

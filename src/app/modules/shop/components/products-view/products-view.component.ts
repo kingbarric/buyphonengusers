@@ -4,7 +4,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ShopSidebarService } from '../../services/shop-sidebar.service';
 import { PageCategoryService } from '../../services/page-category.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 export type Layout = 'grid' | 'grid-with-features' | 'list';
@@ -23,7 +23,9 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
 
     listOptionsForm: FormGroup;
     filtersCount = 0;
-    products: any[] = []
+    products: any[] = [];
+    limit:number = 20;
+    page:number = 0;
     constructor(
         private fb: FormBuilder,
         public sidebar: ShopSidebarService,
@@ -51,6 +53,8 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
             sort: this.fb.control(this.pageService.sort),
         });
         this.listOptionsForm.valueChanges.subscribe(value => {
+            console.log(value);
+
             value.limit = parseFloat(value.limit);
 
             this.pageService.updateOptions(value);
@@ -64,36 +68,57 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 this.listOptionsForm.setValue({ page, limit, sort }, { emitEvent: false });
             }
         );
+
+        this.pageService.filterObs.pipe(
+            distinctUntilChanged((prev, curr) => prev != curr), debounceTime(500)).subscribe((filterObj) => {
+            if (filterObj.touched) {
+                this.getProductbetweenRange(filterObj.highest, filterObj.lowest)
+            }
+            })
+    }
+
+    checker(e){
+        console.log(e);
+    }
+
+    getProductbetweenRange(highest, lowest) {
+        this.pageService.setIsLoading(true)
+        this.crud.getRequestNoAuth(`exp/searchpricebetween/${lowest}/${highest}/${this.page}/${this.limit}`).then((res: any) => {
+            console.log(res.content);
+            this.products = res.content
+        }).catch((err: any) => {
+            console.log(err);
+        }).finally(() => this.pageService.setIsLoading(false))
     }
 
     getProducts() {
         this.pageService.setIsLoading(true)
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
+        this.crud.getRequestNoAuth(`exp/featuredproduct/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res.content);
             this.products = res.content
         }).catch((err: any) => {
             console.log(err);
-        }).finally(()=> this.pageService.setIsLoading(false))
+        }).finally(() => this.pageService.setIsLoading(false))
     }
 
     getProductByBrandId(brandId) {
         this.pageService.setIsLoading(true)
-        this.crud.getRequestNoAuth(`exp/productbybrandid/${brandId}/0/20`).then((res: any) => {
+        this.crud.getRequestNoAuth(`exp/productbybrandid/${brandId}/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res.content);
             this.products = res.content
         }).catch((err: any) => {
             console.log(err);
-        }).finally(()=> this.pageService.setIsLoading(false))
+        }).finally(() => this.pageService.setIsLoading(false))
     }
 
     getProductByCatId(catId) {
         this.pageService.setIsLoading(true)
-        this.crud.getRequestNoAuth(`exp/productbycategoryid/${catId}/0/20`).then((res: any) => {
+        this.crud.getRequestNoAuth(`exp/productbycategoryid/${catId}/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res.content);
             this.products = res.content
         }).catch((err: any) => {
             console.log(err);
-        }).finally(()=> this.pageService.setIsLoading(false))
+        }).finally(() => this.pageService.setIsLoading(false))
     }
 
     ngOnDestroy(): void {

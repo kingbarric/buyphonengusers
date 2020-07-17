@@ -63,14 +63,17 @@
                             <div class="filter-price__slider">
                                 <div class="ng5-slider-custom">
                                     <ng5-slider
-                                        [formControlName]="filter.slug"
+                                        (valueChange)="priceChange($event)"
+                                        (highValueChange)="priceChange($event)"
+                                        [(value)]="filterObj.lowest"
+                                        [(highValue)]="filterObj.highest"
                                         [options]="{
                                             animate: false,
                                             mouseEventsInterval: 10,
                                             rightToLeft: rightToLeft,
                                             floor: filter.min,
                                             ceil: filter.max,
-                                            step: 1
+                                            step: 10
                                         }"
                                         #slider
                                     ></ng5-slider>
@@ -137,10 +140,12 @@
                                         </span>
                                     </span>
 
-                                    <span  [routerLink]="'/shop/catalog'"
-                                    [queryParams]="{ brand: item.slug }" class="filter-list__title">{{
-                                        item.name
-                                    }}</span>
+                                    <span
+                                        [routerLink]="'/shop/catalog'"
+                                        [queryParams]="{ brand: item.slug }"
+                                        class="filter-list__title"
+                                        >{{ item.name }}</span
+                                    >
                                     <span class="filter-list__counter">{{
                                         item.count
                                     }}</span>
@@ -248,7 +253,11 @@
         </div>
     </div>
     <div class="widget-filters__actions d-flex">
-        <button class="btn btn-secondary btn-sm" (click)="reset()" routerLink="/shop/catalog">
+        <button
+            class="btn btn-secondary btn-sm"
+            (click)="reset()"
+            routerLink="/shop/catalog"
+        >
             Reset
         </button>
     </div>

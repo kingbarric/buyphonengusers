@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Notifications</h5>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+        <div class="table-responsive-sm">
+            <table>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td>
+                            <a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a
+                            >
+                        </td>
+                        <td>{{ order.dateOrdered | date: "medium" }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>
+                            &#8358;{{ order.totalPrice }} for
+                            {{ order.totalQuantity }} item(s)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-footer">
+        <app-pagination
+            [siblings]="1"
+            (pageChange)="changePage($event)"
+            [total]="totalPages"
+        ></app-pagination>
+    </div>
+</div>
+
+<ng-template #modal>
+    <div class="quickview">
+        <button
+            class="quickview__close"
+            type="button"
+            appClick
+            (click)="modalRef.hide()"
+        >
+            <app-icon name="cross-20" size="20"></app-icon>
+        </button>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ipsam
+            eveniet, odit mollitia non exercitationem eum neque molestias quam
+            dicta nulla libero incidunt odio rem nam repudiandae corrupti
+            maiores nostrum.
+        </p>
+    </div>
+</ng-template>

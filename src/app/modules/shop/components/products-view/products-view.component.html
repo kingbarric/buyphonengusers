@@ -67,7 +67,7 @@
         </div>
 
         <div class="products-view__pagination">
-            <app-pagination formControlName="page" [siblings]="2" [total]="pageService.pages"></app-pagination>
+            <app-pagination formControlName="page" [siblings]="1" (pageChange)="checker($event)" [total]="pageService.pages"></app-pagination>
         </div>
     </div>
 

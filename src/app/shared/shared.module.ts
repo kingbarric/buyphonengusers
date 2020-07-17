@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 // modules (third-party)
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -94,10 +93,10 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         ModalModule.forRoot(),
 
         // payment gateway
-        Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
+        Angular4PaystackModule.forRoot('pk_test_aaa309b3d565cd77e0dbddc094111958ad01fc92'),
         AngularRaveModule.forRoot({
-            key: 'FLWPUBK-XXXXXXXXXXXXXXXXXXX',
-            isTest: true,
+            key: 'FLWPUBK-46c6083ab64817e431df77b3c92a24cc-X',
+            isTest: false,
         }),
     ],
     exports: [
@@ -134,7 +133,9 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
            // payment gateway
         Angular4PaystackModule,
         AngularRaveModule,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        CommonModule,
+        // BrowserModule
     ],
     schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
