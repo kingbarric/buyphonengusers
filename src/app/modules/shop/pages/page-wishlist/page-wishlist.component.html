@@ -42,7 +42,7 @@
                     <td class="wishlist__column wishlist__column--product">
                         <a [routerLink]="root.product(product)" class="wishlist__product-name">{{ product.name }}</a>
                         <div class="wishlist__product-rating">
-                            <app-rating [value]="product.totalRatings"></app-rating>
+                            <app-rating [value]="product.averageRatings"></app-rating>
                             <div class="wishlist__product-rating-legend">{{ product.totalReviews }} Reviews</div>
                         </div>
                     </td>

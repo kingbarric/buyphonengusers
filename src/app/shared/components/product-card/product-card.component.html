@@ -24,7 +24,7 @@
             <a appClick [routerLink]="root.product(product)">{{ product?.name }}</a>
         </div>
         <div class="product-card__rating">
-            <app-rating [value]="product?.totalRatings"></app-rating>
+            <app-rating [value]="product?.averageRatings"></app-rating>
             <div class="product-card__rating-legend">{{ product?.totalReviews }} Reviews</div>
         </div>
         <ul class="product-card__features-list">
