@@ -149,7 +149,7 @@ export class CartService {
 
         totals.push({
             title: 'Shipping',
-            price: 0,
+            price: 1000,
             type: 'shipping'
         });
         totals.push({

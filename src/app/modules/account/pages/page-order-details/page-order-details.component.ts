@@ -13,6 +13,10 @@ export class PageOrderDetailsComponent implements OnInit {
     constructor() { }
     ngOnInit() {
         console.log(this.orderDetails);
-
+// this.processOrder()
     }
+
+    // processOrder(){
+    //     this.orderDetails.
+    // }
 }

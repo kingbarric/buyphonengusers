@@ -18,8 +18,9 @@ export class PageNotificationComponent implements OnInit {
     totalPages: number = 0;
     @ViewChild('modal', { read: TemplateRef }) template: TemplateRef<any>;
     modalRef: BsModalRef;
-    notification: any[] = [];
-
+    notifications: any[] = [];
+    notification: any = null
+    unreadNotificationCount: number = 0;
     constructor(private crud: CrudService, private util: UtilService, private auth: AuthService, private router: Router, private quickview: QuickviewService,
         private modalService: BsModalService) { }
 
@@ -35,20 +36,42 @@ export class PageNotificationComponent implements OnInit {
     getNotification() {
         this.crud.getRequest(`notification/findforuser/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res);
-            // this.orders = res.content
-            // this.totalPages = res.totalPages
+            this.notifications = res.content
+            this.totalPages = res.totalPages;
+            this.countUnreadNotifications()
         }).catch((err: any) => {
             console.log(err);
         })
     }
 
-    showDetails(orderDetails: any) {
+
+    readMessage(notificationId) {
+        this.crud.getRequest(`notification/updatestatus/${notificationId}`).then((res: any) => {
+            console.log(res);
+            this.getNotification();
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
+
+    showDetails(notification: any) {
         if (this.modalRef) {
             this.modalRef.hide();
         }
-
-        // this.orderDetails = orderDetails;
+        this.notification = notification;
+        if (!notification.isRead) {
+            this.readMessage(notification.id)
+        }
         this.modalRef = this.modalService.show(this.template, { class: 'modal-dialog-centered modal-xl' });
     }
 
+
+    countUnreadNotifications() {
+        this.unreadNotificationCount = 0
+        this.notifications.forEach((notification: any) => {
+            if (!notification.isRead) {
+                this.unreadNotificationCount++
+            }
+        })
+    }
 }

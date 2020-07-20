@@ -67,6 +67,6 @@
         <button class="quickview__close" type="button" appClick (click)="modalRef.hide()">
             <app-icon name="cross-20" size="20"></app-icon>
         </button>
-        <app-page-order-details></app-page-order-details>
+        <app-page-order-details [orderDetails]="orderDetails"></app-page-order-details>
     </div>
 </ng-template>

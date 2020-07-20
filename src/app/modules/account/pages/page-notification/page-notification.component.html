@@ -1,22 +1,21 @@
 <div class="card">
     <div class="card-header">
-        <h5>Notifications</h5>
+        <h5>Notifications({{unreadNotificationCount}})</h5>
     </div>
     <div class="card-divider"></div>
     <div class="card-table">
         <div class="table-responsive-sm">
             <table>
                 <tbody>
-                    <tr *ngFor="let order of orders">
+                    <tr style="cursor: pointer;" (click)="showDetails(notification)" *ngFor="let notification of notifications">
                         <td>
-                            <a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a
-                            >
+                            <span *ngIf="!notification?.isRead" class="dot"></span>
                         </td>
-                        <td>{{ order.dateOrdered | date: "medium" }}</td>
-                        <td>{{ order.status }}</td>
                         <td>
-                            &#8358;{{ order.totalPrice }} for
-                            {{ order.totalQuantity }} item(s)
+                            {{ notification?.dateReceived | date: "medium" }}
+                        </td>
+                        <td>
+                            {{ notification?.topic }}
                         </td>
                     </tr>
                 </tbody>
@@ -25,29 +24,23 @@
     </div>
     <div class="card-divider"></div>
     <div class="card-footer">
-        <app-pagination
-            [siblings]="1"
-            (pageChange)="changePage($event)"
-            [total]="totalPages"
-        ></app-pagination>
+        <app-pagination [siblings]="1" (pageChange)="changePage($event)" [total]="totalPages"></app-pagination>
     </div>
 </div>
 
 <ng-template #modal>
     <div class="quickview">
-        <button
-            class="quickview__close"
-            type="button"
-            appClick
-            (click)="modalRef.hide()"
-        >
-            <app-icon name="cross-20" size="20"></app-icon>
-        </button>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ipsam
-            eveniet, odit mollitia non exercitationem eum neque molestias quam
-            dicta nulla libero incidunt odio rem nam repudiandae corrupti
-            maiores nostrum.
-        </p>
+        <!-- <div class="card"> -->
+        <button class="quickview__close" type="button" appClick (click)="modalRef.hide()">
+                <app-icon name="cross-20" size="20"></app-icon>
+            </button>
+        <div class="">
+            <h5 class="">
+                {{ notification?.topic }}
+            </h5>
+        </div>
+        <div class="card-divider mb-4"></div>
+        <div [innerHTML]="notification?.message" class=""></div>
     </div>
+    <!-- </div> -->
 </ng-template>

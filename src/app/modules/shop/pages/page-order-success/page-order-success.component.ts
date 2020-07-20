@@ -24,7 +24,7 @@ export class PageOrderSuccessComponent implements OnInit {
         private crud: CrudService,
     ) {
         if (!history.state.orderInfo) {
-            this.router.navigate(['../cart'], { relativeTo: this.route }).then();
+            this.router.navigate(['/account/orders'], { relativeTo: this.route }).then();
         }
         // this.order = JSON.parse(localStorage.getItem('order'))
         // console.log(this.order)

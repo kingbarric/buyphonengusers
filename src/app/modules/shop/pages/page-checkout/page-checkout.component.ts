@@ -33,6 +33,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
     orderDetails: any[] = []
     states: any[] = States;
     otherFees: any[] = []
+    vat: number = 0;
+    shipping: number = 0;
     constructor(
         public root: RootService,
         public cart: CartService,
@@ -130,7 +132,9 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             totalQuantity: this.totalQuantity,
             transactionRef: this.ref,
             orderProfile: this.userObj,
-            orderDetails: this.orderDetails
+            orderDetails: this.orderDetails,
+            vat:this.vat,
+            shippingFee: this.shipping
         }
         this.crud.postRequest('order/makeorder', data).then((res: any) => {
             this.router.navigateByUrl('shop/cart/checkout/success', { state: { orderInfo: res, otherFees: this.otherFees } })
@@ -154,6 +158,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         this.cart.totals$.subscribe((totals: any) => {
             console.log(totals);
             this.otherFees = totals
+            this.shipping = this.otherFees[0].price;
+            this.vat = this.otherFees[1].price;
         })
     }
 
