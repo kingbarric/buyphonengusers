@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CrudService } from './../../../../services/crud.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
@@ -24,14 +25,20 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     listOptionsForm: FormGroup;
     filtersCount = 0;
     products: any[] = [];
-    limit:number = 20;
-    page:number = 0;
+    limit: number = 20;
+    page: number = 0;
+    totalPages: number = 0;
+    queryType: 'all' | 'brand' | 'category' | 'price' = 'all'
+    filterObj: any = null
+    brandId: string = null;
+    categoryId: string = null;
     constructor(
         private fb: FormBuilder,
         public sidebar: ShopSidebarService,
         public pageService: PageCategoryService,
         private crud: CrudService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {
         this.route.queryParams.subscribe((params) => {
             console.log(params);
@@ -71,54 +78,94 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
 
         this.pageService.filterObs.pipe(
             distinctUntilChanged((prev, curr) => prev != curr), debounceTime(500)).subscribe((filterObj) => {
-            if (filterObj.touched) {
-                this.getProductbetweenRange(filterObj.highest, filterObj.lowest)
-            }
+                if (filterObj.touched) {
+                    this.filterObj = filterObj
+                    this.getProductbetweenRange(filterObj.highest, filterObj.lowest)
+                }
             })
     }
 
-    checker(e){
-        console.log(e);
+    pageEvent(page) {
+        this.page = parseInt(page) - 1;
+        if (this.queryType == 'all') {
+            this.getProducts()
+            return
+        }
+        if (this.queryType == 'brand' && this.brandId) {
+            this.getProductByBrandId(this.brandId)
+            return
+        }
+        if (this.queryType == 'category' && this.categoryId) {
+            this.getProductByCatId(this.categoryId)
+            return
+        }
+        if (this.queryType == 'price' && this.filterObj) {
+            this.getProductbetweenRange(this.filterObj.highest, this.filterObj.lowest)
+            return
+        }
+        this.getProducts()
     }
 
     getProductbetweenRange(highest, lowest) {
+        if (this.queryType != 'price') {
+            this.page = 0;
+            this.queryType = 'price'
+        }
         this.pageService.setIsLoading(true)
         this.crud.getRequestNoAuth(`exp/searchpricebetween/${lowest}/${highest}/${this.page}/${this.limit}`).then((res: any) => {
-            console.log(res.content);
+            console.log(res);
             this.products = res.content
+            this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => this.pageService.setIsLoading(false))
+        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     getProducts() {
+        if (this.queryType != 'all') {
+            this.page = 0;
+            this.queryType = 'all'
+        }
         this.pageService.setIsLoading(true)
         this.crud.getRequestNoAuth(`exp/featuredproduct/${this.page}/${this.limit}`).then((res: any) => {
-            console.log(res.content);
-            this.products = res.content
+            console.log(res);
+            this.products = res.content;
+            this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => this.pageService.setIsLoading(false))
+        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     getProductByBrandId(brandId) {
+        if (this.queryType != 'brand') {
+            this.page = 0;
+            this.queryType = 'brand'
+        }
+        this.brandId = brandId
         this.pageService.setIsLoading(true)
         this.crud.getRequestNoAuth(`exp/productbybrandid/${brandId}/${this.page}/${this.limit}`).then((res: any) => {
-            console.log(res.content);
+            console.log(res);
             this.products = res.content
+            this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => this.pageService.setIsLoading(false))
+        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     getProductByCatId(catId) {
+        if (this.queryType != 'category') {
+            this.page = 0;
+            this.queryType = 'category'
+        }
+        this.categoryId = catId
         this.pageService.setIsLoading(true)
         this.crud.getRequestNoAuth(`exp/productbycategoryid/${catId}/${this.page}/${this.limit}`).then((res: any) => {
-            console.log(res.content);
-            this.products = res.content
+            console.log(res);
+            this.products = res.content;
+            this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => this.pageService.setIsLoading(false))
+        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     ngOnDestroy(): void {
@@ -131,6 +178,6 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     }
 
     resetFilters(): void {
-        this.pageService.updateOptions({ filterValues: {} });
+        this.router.navigate(["shop/catalog"])
     }
 }
