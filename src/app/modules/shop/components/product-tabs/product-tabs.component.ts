@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../services/auth.service';
 import { CrudService } from './../../../../services/crud.service';
 import { Component, Input, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { ProductFeaturesSection } from '../../../../shared/interfaces/product';
@@ -10,12 +11,12 @@ import { Review } from '../../../../shared/interfaces/review';
     templateUrl: './product-tabs.component.html',
     styleUrls: ['./product-tabs.component.scss']
 })
-export class ProductTabsComponent implements OnInit,OnChanges {
+export class ProductTabsComponent implements OnInit, OnChanges {
     @Input() withSidebar = false;
     @Input() tab: 'description' | 'specification' | 'reviews' = 'description';
     @Input() product: any = null;
     reviews: Review[] = reviews;
-    reviewss:any[]= []
+    reviewss: any[] = []
     rating: any = 5
     review: string = ''
     buttonBusy: boolean = false;
@@ -23,18 +24,38 @@ export class ProductTabsComponent implements OnInit,OnChanges {
     alertType: 'primary' | 'danger' | 'success';
     pageNo: number = 0;
     limit: number = 5;
-    totalPages:number = 0
-    constructor(private crud: CrudService) { }
+    totalPages: number = 0;
+    isReviewed: boolean = true;
+    isPurchased: boolean = false;
+    loggedIn: boolean = false;
+    constructor(private crud: CrudService, private auth: AuthService) { }
 
     ngOnInit() {
-
+        this.auth.isLoggedIn.asObservable().subscribe((val: boolean) => {
+            if (val) {
+                this.loggedIn = val
+            }
+        })
     }
 
+
+
     ngOnChanges(changes: SimpleChanges) {
-        if (this.product?.id  != null || this.product?.id != undefined) {
+        if (this.product?.id != null || this.product?.id != undefined) {
             this.getReviews()
-          }
-      }
+            this.checkisRated()
+        }
+    }
+
+    checkisRated() {
+        this.crud.getRequest(`ratingsreview/isuserratedreviewandpurchase/${this.product.id}`).then((res: any) => {
+            this.isReviewed = res.isReviewed;
+            this.isPurchased = res.isPurchased;
+            console.log(res)
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
 
     getReviews() {
         this.crud.getRequestNoAuth(`exp/findratingsreviewbyproductid/${this.product.id}/${this.pageNo}/${this.limit}`).then((res: any) => {
@@ -47,7 +68,7 @@ export class ProductTabsComponent implements OnInit,OnChanges {
         })
     }
 
-    pageEvent(page){
+    pageEvent(page) {
         this.pageNo = parseInt(page) - 1;
         this.getReviews()
     }
@@ -65,6 +86,7 @@ export class ProductTabsComponent implements OnInit,OnChanges {
             this.alertMsg = res.message
             this.review = '';
             this.rating = 5;
+            this.checkisRated();
         }).catch((err: any) => {
             console.log(err);
             this.alertType = 'danger';
