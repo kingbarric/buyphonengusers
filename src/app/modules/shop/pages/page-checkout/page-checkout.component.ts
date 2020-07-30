@@ -7,9 +7,6 @@ import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RootService } from '../../../../shared/services/root.service';
-import { PaymentInstance } from 'angular-rave';
-import { RaveOptions } from 'angular-rave';
-import { PaystackOptions } from 'angular4-paystack';
 
 @Component({
     selector: 'app-checkout',
@@ -118,6 +115,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
     }
 
     paymentDone(ref: any) {
+        console.log(ref);
+
         // this.paymentInstance.close();
         this.makeOrder()
     }

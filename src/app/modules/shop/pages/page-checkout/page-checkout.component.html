@@ -398,15 +398,14 @@
                             "
                             class="btn btn-primary btn-xl btn-block"
                             angular-rave
-                            [autoClose]="true"
-                            [customer_email]="userObj?.email"
+                                                     [customer_email]="userObj?.email"
                             [customer_phone]="userObj.phoneNumber"
                             [amount]="total"
                             [custom_title]="userObj?.orderNote"
                             [txref]="ref"
                             [currency]="'NGN'"
-                            (callback)="paymentDone($event)"
-                            (onclose)="paymentCancel()"
+                            (callback)=" paymentCancel()"
+                            (onclose)="paymentDone($event)"
                             (init)="paymentInit(); alertMsg = null"
                             [disabled]="buttonBusy"
                         >
