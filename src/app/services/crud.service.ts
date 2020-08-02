@@ -1,29 +1,29 @@
 import { AuthService } from './auth.service';
-import { Injectable } from "@angular/core";
-import { HttpHeaders } from "@angular/common/http";
-import { HttpClient } from "@angular/common/http";
-import { UtilService } from "./util.service";
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { UtilService } from './util.service';
 
 @Injectable({
-    providedIn: "root",
+    providedIn: 'root',
 })
 export class CrudService {
     private baseUrl: string;
     private headers: HttpHeaders;
     rootUrl: string;
     constructor(private http: HttpClient, private utilService: UtilService, private auth: AuthService) {
-        // this.rootUrl = "http://172.20.10.4:8082/";
+        this.rootUrl = 'http://localhost:8083/';
         // this.rootUrl = "http://192.168.43.115:8082/";
-        this.rootUrl = "http://8c3968c37b36.ngrok.io/";
+      //  this.rootUrl = "http://8c3968c37b36.ngrok.io/";
         this.baseUrl = `${this.rootUrl}api/`;
         this.setHeaderWithToken();
     }
 
     private setHeaderWithToken() {
         this.headers = new HttpHeaders({
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: "Bearer " + this.auth.getToken(),
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + this.auth.getToken(),
         });
     }
 
