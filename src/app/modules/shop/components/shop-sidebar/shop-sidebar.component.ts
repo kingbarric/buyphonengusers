@@ -1,7 +1,8 @@
+import { CrudService } from './../../../../services/crud.service';
 import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Product } from '../../../../shared/interfaces/product';
 import { ShopSidebarService } from '../../services/shop-sidebar.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { fromMatchMedia } from '../../../../shared/functions/rxjs/fromMatchMedia';
 import { isPlatformBrowser } from '@angular/common';
@@ -18,7 +19,7 @@ export class ShopSidebarComponent implements OnInit, OnDestroy {
      * - always: https://stroyka.angular.themeforest.scompiler.ru/themes/default-ltr/classic/shop/category-grid-4-columns-full
      * - mobile: https://stroyka.angular.themeforest.scompiler.ru/themes/default-ltr/classic/shop/category-grid-3-columns-sidebar
      */
-    @Input() offcanvas: 'always'|'mobile' = 'mobile';
+    @Input() offcanvas: 'always' | 'mobile' = 'mobile';
 
     destroy$: Subject<void> = new Subject<void>();
     bestsellers$: Observable<Product[]>;
@@ -27,13 +28,13 @@ export class ShopSidebarComponent implements OnInit, OnDestroy {
     constructor(
         private shop: ShopService,
         public sidebar: ShopSidebarService,
+        private crud: CrudService,
         @Inject(PLATFORM_ID)
         private platformId: any
     ) { }
 
     ngOnInit(): void {
-        this.bestsellers$ = this.shop.getBestsellers().pipe(map(x => x.slice(0, 5)));
-
+        this.getBestSellers()
         this.sidebar.isOpen$.pipe(
             takeUntil(this.destroy$)
         ).subscribe(isOpen => {
@@ -51,6 +52,15 @@ export class ShopSidebarComponent implements OnInit, OnDestroy {
                 }
             });
         }
+    }
+
+    getBestSellers() {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/5').then((res: any) => {
+            console.log(res.content);
+            this.bestsellers$ = of(res.content)
+        }).catch((err: any) => {
+            console.log(err);
+        })
     }
 
     ngOnDestroy(): void {

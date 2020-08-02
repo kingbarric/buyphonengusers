@@ -1,0 +1,21 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login,
+.register {
+    display: inline;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.textColor {
+    color: gray;
+}
+
+.tab {
+    margin-bottom: 25px;
+}

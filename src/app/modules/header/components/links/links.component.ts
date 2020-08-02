@@ -1,3 +1,4 @@
+import { CrudService } from './../../../../services/crud.service';
 import { AfterViewChecked, Component, ElementRef, NgZone, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { navigation } from '../../../../../data/header-navigation';
 import { NavigationLink } from '../../../../shared/interfaces/navigation-link';
@@ -17,7 +18,8 @@ export class LinksComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     destroy$: Subject<void> = new Subject<void>();
 
-    items: NavigationLink[] = navigation;
+    items: NavigationLink[] = navigation
+
     hoveredItem: NavigationLink = null;
 
     reCalcSubmenuPosition = false;
@@ -26,7 +28,57 @@ export class LinksComponent implements OnInit, OnDestroy, AfterViewChecked {
         private direction: DirectionService,
         private header: HeaderService,
         private zone: NgZone,
-    ) {}
+        private crud: CrudService
+    ) { this.getTopBrands() }
+
+    getTopBrands() {
+        this.crud.getRequestNoAuth('exp/findbrandwithproductmodel').then((res: any) => {
+            let spiltedBrands = this.spiltIntoEqualObj(this.arrangeMenu(res), 2);
+            spiltedBrands = spiltedBrands.map((brands) => {
+                return {
+                    size: 6, items: brands
+                }
+            })
+            this.items = this.items.map((links) => {
+                if (links.label == 'Top Brands') {
+                    links.menu["columns"] = spiltedBrands
+                }
+                return links
+            })
+           console.log( this.items);
+
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
+
+    /**
+     *
+     * @param array array of objects
+     * @param parts the number of parts you want to break the array into
+     */
+    spiltIntoEqualObj(array: any[], parts: number) {
+        let result = [];
+        for (let i = parts; i > 0; i--) {
+            result.push(array.splice(0, Math.ceil(array.length / i)));
+        }
+        return result;
+    }
+
+
+    arrangeMenu(menuList: any[]) {
+        let allMenu = menuList.map((model: any) => {
+            return {
+                label: model.name, url: '/shop/catalog', slug: model.id,
+                items: model.top5model.map((topModel: any) => {
+                    return {
+                        label: topModel.name, url: `/shop/products/${topModel.id}`
+                    }
+                })
+            }
+        })
+        return allMenu
+    }
 
     onItemMouseEnter(item: NavigationLink): void {
         if (this.hoveredItem !== item) {

@@ -1,6 +1,6 @@
 <app-page-header [breadcrumbs]="[
     {label: 'Home',         url: '/'},
-    {label: 'Screwdrivers', url: '/catalog'},
+    {label: 'Shop', url: '/catalog'},
     {label: product?.name,  url: ''}
 ]"></app-page-header>
 
@@ -9,7 +9,7 @@
         <div class="container">
             <app-product [product]="product" [layout]="layout"></app-product>
 
-            <app-product-tabs></app-product-tabs>
+            <app-product-tabs [product]="product"></app-product-tabs>
         </div>
     </div>
 

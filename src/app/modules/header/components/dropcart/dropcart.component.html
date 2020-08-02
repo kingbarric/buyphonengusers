@@ -7,13 +7,11 @@
         <div class="dropcart__products-list">
             <div *ngFor="let item of cart.items$|async" class="dropcart__product">
                 <div class="dropcart__product-image product-image">
-                    <a
-                        *ngIf="item.product.images?.length"
-                        class="product-image__body"
-                        [routerLink]="root.product(item.product)"
-                        (click)="closeMenu.emit()"
-                    >
-                        <img class="product-image__img" [src]="item.product.images[0]" alt="">
+                    <a *ngIf="item.product.images?.length" class="product-image__body" [routerLink]="root.product(item.product)" (click)="closeMenu.emit()">
+                        <img class="product-image__img" [src]="item.product.images[0].imageUrl" alt="">
+                    </a>
+                    <a *ngIf="!item.product.images?.length" class="product-image__body" [routerLink]="root.product(item.product)" (click)="closeMenu.emit()">
+                        <img class="product-image__img" src="../../../../assets/images/_dummy/32461.jpg" alt="">
                     </a>
                 </div>
                 <div class="dropcart__product-info">
@@ -26,7 +24,8 @@
                     </ul>
                     <div class="dropcart__product-meta">
                         <span class="dropcart__product-quantity">{{ item.quantity }}</span> ×
-                        <span class="dropcart__product-price">{{ item.product.price|currencyFormat }}</span>
+                        <span class="dropcart__product-price">&#8358;
+                            {{ item.product.salePrice }}</span>
                     </div>
                 </div>
 
@@ -40,15 +39,15 @@
             <table>
                 <tr *ngIf="(cart.totals$|async).length">
                     <th>Subtotal</th>
-                    <td>{{ cart.subtotal$|async|currencyFormat }}</td>
+                    <td>&#8358;{{ cart.subtotal$|async }}</td>
                 </tr>
                 <tr *ngFor="let total of cart.totals$|async">
                     <th>{{ total.title }}</th>
-                    <td>{{ total.price|currencyFormat  }}</td>
+                    <td>&#8358;{{ total.price }}</td>
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td>{{ cart.total$|async|currencyFormat }}</td>
+                    <td>&#8358;{{ cart.total$|async }}</td>
                 </tr>
             </table>
         </div>

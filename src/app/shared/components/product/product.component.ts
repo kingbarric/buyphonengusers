@@ -14,9 +14,9 @@ export type ProductLayout = 'standard' | 'sidebar' | 'columnar' | 'quickview';
     styleUrls: ['./product.component.scss']
 })
 export class ProductComponent {
-    @Input() layout: ProductLayout;
+    @Input() layout: any;
 
-    @Input() product: Product;
+    @Input() product: any;
 
     quantity: FormControl = new FormControl(1);
 

@@ -40,7 +40,7 @@ const routes: Routes = [
                     ),
             },
             {
-                path: "site",
+                path: "",
                 loadChildren: () =>
                     import("./modules/site/site.module").then(
                         (m) => m.SiteModule

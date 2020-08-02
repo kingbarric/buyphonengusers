@@ -1,16 +1,17 @@
+import { PageDashboardComponent } from './pages/page-dashboard/page-dashboard.component';
+import { CommonModule } from '@angular/common';
+import { PageNotificationComponent } from './pages/page-notification/page-notification.component';
+import { PageActivateAccountComponent } from './pages/page-activate-account/page-activate-account.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { PageLoginComponent } from "./pages/page-login/page-login.component";
 import { LayoutComponent } from "./components/layout/layout.component";
-import { PageDashboardComponent } from "./pages/page-dashboard/page-dashboard.component";
 import { PageOrdersListComponent } from "./pages/page-orders-list/page-orders-list.component";
 import { PageAddressesListComponent } from "./pages/page-addresses-list/page-addresses-list.component";
 import { PageProfileComponent } from "./pages/page-profile/page-profile.component";
 import { PagePasswordComponent } from "./pages/page-password/page-password.component";
 import { PageOrderDetailsComponent } from "./pages/page-order-details/page-order-details.component";
 import { PageEditAddressComponent } from "./pages/page-edit-address/page-edit-address.component";
-import { UserComponent } from "./user/user.component";
-import { MerchantComponent } from "./merchant/merchant.component";
 
 const routes: Routes = [
     {
@@ -24,36 +25,36 @@ const routes: Routes = [
             },
             {
                 path: "dashboard",
-                component: UserComponent,
-            },
-            {
-                path: "orders",
-                component: PageProfileComponent,
+                component: PageDashboardComponent,
             },
             {
                 path: "profile",
+                component: PageProfileComponent,
+            },
+            {
+                path: "address",
                 component: PageAddressesListComponent,
             },
             {
-                path: "notification",
+                path: "update-profile",
                 component: PageEditAddressComponent,
             },
             {
-                path: "order-tracking",
+                path: "orders",
                 component: PageOrdersListComponent,
             },
             {
-                path: "whishlist",
+                path: "order-details/:ref",
                 component: PageOrderDetailsComponent,
             },
             {
-                path: "safety",
-                component: PagePasswordComponent,
+                path: "notification",
+                component: PageNotificationComponent,
             },
             {
-                path: "user",
-                component: UserComponent,
-            },
+                path: "update-password",
+                component: PagePasswordComponent,
+            }
         ],
     },
     {
@@ -61,13 +62,17 @@ const routes: Routes = [
         component: PageLoginComponent,
     },
     {
-        path: "register-as-merchant",
-        component: MerchantComponent,
+        path: "account-activation",
+        component: PageActivateAccountComponent,
     },
+    // {
+    //     path: "register-as-merchant",
+    //     component: MerchantComponent,
+    // },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(routes),CommonModule],
     exports: [RouterModule],
 })
-export class AccountRoutingModule {}
+export class AccountRoutingModule { }

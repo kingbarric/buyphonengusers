@@ -6,6 +6,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ListOptions } from '../../../shared/api/shop.service';
 
+interface filter {
+    lowest: number,
+    highest: number,
+    touched?: boolean
+}
+
 /**
  * This service serves as a mediator between the PageCategoryComponent, ProductsViewComponent and WidgetFiltersComponent components.
  */
@@ -13,12 +19,19 @@ import { ListOptions } from '../../../shared/api/shop.service';
 export class PageCategoryService {
     // isLoading
     private isLoadingState = false;
+    private priceFilterObj: filter = {
+        lowest: 0, highest: 5000000,
+        touched: false
+    }
+    private priceFilterSource: BehaviorSubject<filter> = new BehaviorSubject<filter>(this.priceFilterObj);
+    filterObs: Observable<filter> = this.priceFilterSource.asObservable();
+
     private isLoadingSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoadingState);
 
     isLoading$: Observable<boolean> = this.isLoadingSource.asObservable();
 
     // list
-    private listState: ProductsList;
+    public listState: ProductsList;
     private listSource: BehaviorSubject<ProductsList> = new BehaviorSubject<ProductsList>(this.listState);
 
     list$: Observable<ProductsList> = this.listSource.pipe(filter(x => x !== null));
@@ -50,6 +63,11 @@ export class PageCategoryService {
         this.isLoadingSource.next(value);
     }
 
+    setFilterValue(values: filter): void {
+        this.priceFilterObj = values;
+        this.priceFilterSource.next(values);
+    }
+
     setList(list: ProductsList): void {
         this.listState = list;
         this.listSource.next(this.listState);
@@ -70,7 +88,7 @@ export class PageCategoryService {
     }
 
     updateOptions(options: ListOptions, emitEvent: boolean = true): void {
-        this.setOptions({...this.optionsState, ...options}, emitEvent);
+        this.setOptions({ ...this.optionsState, ...options }, emitEvent);
     }
 
     /**

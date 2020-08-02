@@ -12,15 +12,15 @@ export const addresses: Address[] = [
         postcode: '115302',
         address: 'ul. Varshavskaya, 15-2-178'
     },
-    {
-        default: false,
-        firstName: 'Jupiter',
-        lastName: 'Saturnov',
-        email: 'stroyka@example.com',
-        phone: 'ZX 971 972-57-26',
-        country: 'RandomLand',
-        city: 'MarsGrad',
-        postcode: '4b4f53',
-        address: 'Sun Orbit, 43.3241-85.239'
-    }
+    // {
+    //     default: false,
+    //     firstName: 'Jupiter',
+    //     lastName: 'Saturnov',
+    //     email: 'stroyka@example.com',
+    //     phone: 'ZX 971 972-57-26',
+    //     country: 'RandomLand',
+    //     city: 'MarsGrad',
+    //     postcode: '4b4f53',
+    //     address: 'Sun Orbit, 43.3241-85.239'
+    // }
 ];

@@ -2,34 +2,33 @@
     <div class="dashboard__profile card profile-card">
         <div class="card-body profile-card__body">
             <div class="profile-card__avatar">
-                <img src="./assets/images/avatars/avatar-3.jpg" alt="">
+                <img src="./assets/images/avatars/avatar-3.jpg" alt="" />
             </div>
-            <div class="profile-card__name">Helena Garcia</div>
-            <div class="profile-card__email">stroyka@example.com</div>
+            <div class="profile-card__name">{{userObj?.firstname}} {{userObj?.lastname}}</div>
+            <div class="profile-card__email">{{userObj?.username}}</div>
             <div class="profile-card__edit">
-                <a routerLink="../profile" class="btn btn-secondary btn-sm">Edit Profile</a>
+                <a (click)="navigateTo('/account/profile')" class="btn btn-secondary btn-sm">View Profile</a
+                >
             </div>
         </div>
     </div>
     <div class="dashboard__address card address-card address-card--featured">
-        <div class="address-card__badge" *ngIf="address.default">Default Address</div>
+        <div class="address-card__badge">Default Address</div>
         <div class="address-card__body">
-            <div class="address-card__name">{{ address.firstName + ' ' + address.lastName}}</div>
+            <div class="address-card__name">Account</div>
             <div class="address-card__row">
-                {{ address.country }}<br>
-                {{ address.postcode }}, {{ address.city }}<br>
-                {{ address.address }}
+                {{userObj?.state}}
             </div>
             <div class="address-card__row">
                 <div class="address-card__row-title">Phone Number</div>
-                <div class="address-card__row-content">{{ address.phone }}</div>
+                <div class="address-card__row-content">{{userObj?.phoneNumber}}</div>
             </div>
             <div class="address-card__row">
                 <div class="address-card__row-title">Email Address</div>
-                <div class="address-card__row-content">{{ address.email }}</div>
+                <div class="address-card__row-content">{{userObj?.email}}</div>
             </div>
             <div class="address-card__footer">
-                <a routerLink="/account/addresses/5">Edit Address</a>
+                <a (click)="navigateTo('/account/update-profile')" class="btn btn-secondary btn-sm">Edit Profile</a>
             </div>
         </div>
     </div>
@@ -42,23 +41,32 @@
             <div class="table-responsive-sm">
                 <table>
                     <thead>
-                    <tr>
-                        <th>Order</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                    </tr>
+                        <tr>
+                            <th>Order</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let order of orders">
-                        <td><a href="">#{{ order.id }}</a></td>
-                        <td>{{ order.date }}</td>
-                        <td>{{ order.status }}</td>
-                        <td>{{ order.total|currencyFormat }} for {{ order.quantity }} item(s)</td>
-                    </tr>
+                        <tr *ngFor="let order of orders">
+                            <td><a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a></td>
+                            <td>{{ order.dateOrdered | date:'medium' }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>&#8358;{{ order.totalPrice }} for {{ order.totalQuantity }} item(s)</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #modal>
+    <div class="quickview">
+        <button class="quickview__close" type="button" appClick (click)="modalRef.hide()">
+            <app-icon name="cross-20" size="20"></app-icon>
+        </button>
+        <app-page-order-details [orderDetails]="orderDetails"></app-page-order-details>
+    </div>
+</ng-template>

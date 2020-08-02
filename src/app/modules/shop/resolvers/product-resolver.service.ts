@@ -1,7 +1,8 @@
+import { CrudService } from './../../../services/crud.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Product } from '../../../shared/interfaces/product';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RootService } from '../../../shared/services/root.service';
@@ -15,19 +16,12 @@ export class ProductResolverService implements Resolve<Product> {
         private root: RootService,
         private router: Router,
         private shop: ShopService,
+        private crud: CrudService
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product> {
-        const productSlug = route.params.productSlug || route.data.productSlug;
+        const productSlug = route.params.productSlug
 
-        return this.shop.getProduct(productSlug).pipe(
-            catchError(error => {
-                if (error instanceof HttpErrorResponse && error.status === 404) {
-                    this.router.navigate([this.root.notFound()]).then();
-                }
-
-                return EMPTY;
-            })
-        );
+        return productSlug
     }
 }

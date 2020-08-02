@@ -17,15 +17,15 @@ export class RootService {
         return `/shop/catalog`;
     }
 
-    category(category: Partial<Category>): string {
+    category(category:any): string {
         if (category.type === 'shop') {
             const basePath = this.shop();
 
             if ('slug' in category) {
-                return `${basePath}/${category.slug}`;
+                return `${basePath}`;
             }
             if ('id' in category) {
-                return `${basePath}/${category.id}`;
+                return `${basePath}`;
             }
 
             throw Error('Provide category with "path", "slug" or "id".');
@@ -37,7 +37,7 @@ export class RootService {
         throw Error('Provided category with unknown type.');
     }
 
-    product(product: Partial<Product>): string {
+    product(product:any): string {
         const basePath = '/shop/products';
 
         if ('slug' in product) {
@@ -79,10 +79,10 @@ export class RootService {
     }
 
     terms(): string {
-        return '/site/terms';
+        return '/terms';
     }
 
     notFound(): string {
-        return `/site/not-found`;
+        return `/not-found`;
     }
 }

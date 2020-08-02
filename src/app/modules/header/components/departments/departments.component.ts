@@ -353,7 +353,8 @@ export class DepartmentsComponent implements OnInit, OnDestroy, AfterViewInit, A
     getCategories() {
         this.crud.getRequestNoAuth('exp/categorieswithsubs').then((res: any[]) => {
             this.items = this.arrangeMenu(res)
-            console.log(res);
+            console.log(this.items);
+
         }).catch((err: any) =>
             console.log(err)
         )
@@ -364,25 +365,27 @@ export class DepartmentsComponent implements OnInit, OnDestroy, AfterViewInit, A
             let item = {}
             if (menu.subCategories.length > 0 && menu.subCategories) {
                 item = {
-                    label: menu.categoryName, url: '/shop/catalog', menu: {
+                    label: menu.categoryName, url: '/shop/catalog', slug: menu.categoryId, menu: {
                         type: 'megamenu',
                         size: 'nl',
+                        slug: menu.categoryId,
                         // image: 'assets/images/megamenu/megamenu-1.jpg',
                         columns: [{
                             size: 4, items: [
                                 {
-                                    label: menu.categoryName, url: '/shop/catalog?hol=hel', items: menu.subCategories.map((subs:any) => {
+                                    label: menu.categoryName, url: '/shop/catalog', slug: menu.categoryId, items: menu.subCategories.map((subs: any) => {
                                         return item = {
-                                            label: subs.name, url: '/shop/catalog'
+                                            label: subs.name, url: '/shop/catalog',
+                                            slug: menu.id
                                         }
                                     })
                                 },
-                                    ]
+                            ]
                         }]
                     }
                 }
             } else {
-                item = { label: menu.categoryName, url: '/shop/catalog' }
+                item = { label: menu.categoryName, url: '/shop/catalog', slug: menu.categoryId }
             }
             return item
         })

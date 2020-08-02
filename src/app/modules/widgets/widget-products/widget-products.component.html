@@ -5,21 +5,31 @@
             <div class="widget-products__image">
                 <div *ngIf="product.images?.length" class="product-image">
                     <a [routerLink]="root.product(product)" class="product-image__body">
-                        <img class="product-image__img" [src]="product.images[0]" alt="">
+                        <img class="product-image__img" [src]="product.images[0].imageUrl" alt="" />
+                    </a>
+                </div>
+                <div *ngIf="!product.images?.length" class="product-image">
+                    <a [routerLink]="root.product(product)" class="product-image__body">
+                        <img class="product-image__img" src="../../../../assets/images/_dummy/32461.jpg" alt="" />
                     </a>
                 </div>
             </div>
             <div class="widget-products__info">
                 <div class="widget-products__name">
-                    <a [routerLink]="root.product(product)">{{ product.name }}</a>
+                    <a [routerLink]="root.product(product)">{{
+                        product.name
+                    }}</a>
                 </div>
                 <div class="widget-products__prices">
-                    <ng-container *ngIf="product.compareAtPrice">
-                        <span class="widget-products__new-price">{{ product.price|currencyFormat }}</span>{{ ' ' }}
-                        <span class="widget-products__old-price">{{ product.compareAtPrice|currencyFormat }}</span>
+                    <ng-container *ngIf="product.saleDiscountPrice">
+                        <span class="widget-products__new-price">&#8358;{{ product.salePrice }}</span
+                        >{{ " " }}
+                        <span class="widget-products__old-price">&#8358;{{
+                            product.saleDiscountPrice 
+                        }}</span>
                     </ng-container>
-                    <ng-container *ngIf="!product.compareAtPrice">
-                        {{ product.price|currencyFormat }}
+                    <ng-container *ngIf="!product.saleDiscountPrice">
+                        &#8358;{{ product.salePrice }}
                     </ng-container>
                 </div>
             </div>
