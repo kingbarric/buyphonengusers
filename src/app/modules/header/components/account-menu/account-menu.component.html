@@ -30,17 +30,21 @@
             <a routerLink="/account/login" (click)="closeMenu.emit()">Create An Account</a
             >
         </div>
-    </form>
-    <app-alert
+        <app-alert
         *ngIf="showAlert"
-        class="mb-3 mt-3"
+        class="mb-2 mt-3"
         [type]="alertType"
-        size="lg"
+        size="sm"
         [dismissible]="true"
-        (close)="showAlert = null"
+        (close)="showAlert = null; activateAccount = false"
     >
         {{ showAlert }}
     </app-alert>
+    <div *ngIf="activateAccount"class="account-menu__form-link">
+        <a routerLink="/account/account-activation" (click)="closeMenu.emit()">Activate Account</a
+        >
+    </div>
+    </form>
     <div class="account-menu__divider"></div>
     <div *ngIf="loggedIn" class="">
         <a
@@ -59,7 +63,7 @@
             <div class="account-menu__divider"></div>
             <ul class="account-menu__links">
                 <li>
-                    <a routerLink="/account/profile" (click)="closeMenu.emit()">Edit Profile</a
+                    <a routerLink="/account/dashboard" (click)="closeMenu.emit()">Dashboard</a
                 >
             </li>
             <li>
@@ -68,13 +72,13 @@
                 >
             </li>
             <li>
-                <a routerLink="/account/addresses" (click)="closeMenu.emit()"
-                    >Addresses</a
+                <a routerLink="/account/notification" (click)="closeMenu.emit()"
+                    >Notification</a
                 >
             </li>
             <li>
-                <a routerLink="/account/password" (click)="closeMenu.emit()"
-                    >Password</a
+                <a routerLink="/account/update-password" (click)="closeMenu.emit()"
+                    >Change Password</a
                 >
             </li>
         </ul>

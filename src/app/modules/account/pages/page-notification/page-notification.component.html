@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Notifications({{unreadNotificationCount}})</h5>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+        <div class="table-responsive-sm">
+            <table>
+                <tbody>
+                    <tr style="cursor: pointer;" (click)="showDetails(notification)" *ngFor="let notification of notifications">
+                        <td>
+                            <span *ngIf="!notification?.isRead" class="dot"></span>
+                        </td>
+                        <td>
+                            {{ notification?.dateReceived | date: "medium" }}
+                        </td>
+                        <td>
+                            {{ notification?.topic }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-footer">
+        <app-pagination [siblings]="1" (pageChange)="changePage($event)" [total]="totalPages"></app-pagination>
+    </div>
+</div>
+
+<ng-template #modal>
+    <div class="quickview">
+        <!-- <div class="card"> -->
+        <button class="quickview__close" type="button" appClick (click)="modalRef.hide()">
+                <app-icon name="cross-20" size="20"></app-icon>
+            </button>
+        <div class="">
+            <h5 class="">
+                {{ notification?.topic }}
+            </h5>
+        </div>
+        <div class="card-divider mb-4"></div>
+        <div [innerHTML]="notification?.message" class=""></div>
+    </div>
+    <!-- </div> -->
+</ng-template>

@@ -10,7 +10,7 @@ import { RootService } from '../../../shared/services/root.service';
 export class BlockCategoriesComponent {
     @Input() header = '';
     @Input() layout: 'classic'|'compact' = 'classic';
-    @Input() categories: Category[] = [];
+    @Input() categories: any[] = [];
 
     constructor(
         public root: RootService,

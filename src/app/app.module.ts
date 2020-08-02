@@ -1,3 +1,4 @@
+import { AuthInterceptor } from './services/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { UtilService } from './services/util.service';
 import { CrudService } from './services/crud.service';
@@ -32,6 +33,8 @@ import { RootComponent } from './components/root/root.component';
 // pages
 import { PageHomeOneComponent } from './pages/page-home-one/page-home-one.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 @NgModule({
     declarations: [
@@ -43,6 +46,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
         PageNotFoundComponent
     ],
     imports: [
+
+
         // modules (angular)
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         BrowserAnimationsModule,
@@ -58,10 +63,16 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
         HeaderModule,
         MobileModule,
         SharedModule,
-        WidgetsModule
+        WidgetsModule,
+
     ],
     providers: [
         // { provide: LOCALE_ID, useValue: 'it' }
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        },
         CrudService,
         UtilService,
         AuthService,

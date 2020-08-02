@@ -1,3 +1,4 @@
+import { CrudService } from './../../../services/crud.service';
 import {
     Component,
     ElementRef, EventEmitter,
@@ -24,7 +25,7 @@ import { CartService } from '../../services/cart.service';
 
 export type SearchLocation = 'header' | 'indicator' | 'mobile-header';
 
-export type CategoryWithDepth = Category & {depth: number};
+export type CategoryWithDepth = Category & { depth: number };
 
 @Component({
     selector: 'app-search',
@@ -77,6 +78,7 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
         private shop: ShopService,
         private cart: CartService,
         public root: RootService,
+        private crud: CrudService
     ) { }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -94,19 +96,21 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
         });
 
         this.form.get('query').valueChanges.pipe(
-            throttleTime(250, async, {leading: true, trailing: true}),
+            throttleTime(250, async, { leading: true, trailing: true }),
             map(query => query.trim()),
             switchMap(query => {
-                if (query) {
-                    const categorySlug = this.form.value.category !== 'all' ? this.form.value.category : null;
+                console.log(query);
 
-                    return this.shop.getSuggestions(query, 5, categorySlug);
+                if (query) {
+
+                    return this.crud.getRequestNoAuthObservables(`exp/search/${query}/0/10`)
                 }
 
-                return of([]);
+                return of({ content: [] });
             }),
             takeUntil(this.destroy$),
-        ).subscribe(products => {
+        ).subscribe(result => {
+            let products: any[] = result.content;
             this.hasSuggestions = products.length > 0;
 
             if (products.length > 0) {
@@ -180,7 +184,7 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
     private getCategoriesWithDepth(categories: Category[], depth = 0): CategoryWithDepth[] {
         return categories.reduce<CategoryWithDepth[]>((acc, category) => [
             ...acc,
-            {...category, depth},
+            { ...category, depth },
             ...this.getCategoriesWithDepth(category.children || [], depth + 1),
         ], []);
     }

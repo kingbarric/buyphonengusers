@@ -85,12 +85,20 @@
                             *ngIf="showAlert"
                             class="mb-3 mt-3"
                             [type]="alertType"
-                            size="lg"
+                            size="sm"
                             [dismissible]="true"
                             (close)="showAlert = null; toggle('login')"
                         >
                             {{ showAlert }}
                         </app-alert>
+                        <div
+                        *ngIf="activateAccount"
+                        class="account-menu__form-link"
+                    >
+                        <a routerLink="/account/account-activation"
+                            >Activate Account</a
+                        >
+                    </div>
                     </div>
                 </div>
             </div>
@@ -104,11 +112,11 @@
                         <form [formGroup]="registerForm" (submit)="register()">
                             <div class="form-group">
                                 <label>First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" />
+                <input type="text" class="form-control" placeholder="First Name" formControlName="firstname" />
             </div>
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" />
+                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastname" />
             </div>
             <div class="form-group">
                 <label>Username</label>
@@ -137,7 +145,7 @@
                                 Register
                             </button>
             </form>
-            <app-alert *ngIf="showAlert" class="mb-3 mt-3" [type]="alertType" size="lg" [dismissible]="true" (close)="showAlert = null; toggle('login')">
+            <app-alert *ngIf="showAlert" class="mb-3 mt-3" [type]="alertType" size="sm" [dismissible]="true" (close)="showAlert = null; toggle('login')">
                 {{ showAlert }}
             </app-alert>
         </div>

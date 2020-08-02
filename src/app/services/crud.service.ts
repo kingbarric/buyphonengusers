@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
@@ -14,7 +15,7 @@ export class CrudService {
     constructor(private http: HttpClient, private utilService: UtilService, private auth: AuthService) {
         this.rootUrl = 'http://localhost:8083/';
         // this.rootUrl = "http://192.168.43.115:8082/";
-      //  this.rootUrl = "http://8c3968c37b36.ngrok.io/";
+        this.rootUrl = "http://feb725e4f33e.ngrok.io/";
         this.baseUrl = `${this.rootUrl}api/`;
         this.setHeaderWithToken();
     }
@@ -49,9 +50,14 @@ export class CrudService {
     }
 
     getRequestNoAuth(url) {
-              return this.http
+        return this.http
             .get(`${this.rootUrl}${url}`, { headers: this.headers })
             .toPromise();
+    }
+
+    getRequestNoAuthObservables(url): Observable<any> {
+        return this.http
+            .get(`${this.rootUrl}${url}`, { headers: this.headers })
     }
 
 }

@@ -8,7 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 interface CartTotal {
     title: string;
     price: number;
-    type: 'shipping'|'fee'|'tax'|'other';
+    type: 'shipping' | 'fee' | 'tax' | 'other';
 }
 
 interface CartData {
@@ -64,7 +64,7 @@ export class CartService {
         }
     }
 
-    add(product: Product, quantity: number, options: {name: string; value: string}[] = []): Observable<CartItem> {
+    add(product: Product, quantity: number, options: { name: string; value: string }[] = []): Observable<CartItem> {
         // timer only for demo
         return timer(1000).pipe(map(() => {
             this.onAddingSubject$.next(product);
@@ -88,7 +88,7 @@ export class CartService {
             if (item) {
                 item.quantity += quantity;
             } else {
-                item = {product, quantity, options};
+                item = { product, quantity, options };
 
                 this.data.items.push(item);
             }
@@ -100,7 +100,7 @@ export class CartService {
         }));
     }
 
-    update(updates: {item: CartItem, quantity: number}[]): Observable<void> {
+    update(updates: { item: CartItem, quantity: number }[]): Observable<void> {
         // timer only for demo
         return timer(1000).pipe(map(() => {
             updates.forEach(update => {
@@ -118,6 +118,8 @@ export class CartService {
 
     remove(item: CartItem): Observable<void> {
         // timer only for demo
+        console.log(item);
+
         return timer(1000).pipe(map(() => {
             this.data.items = this.data.items.filter(eachItem => eachItem !== item);
 
@@ -126,25 +128,33 @@ export class CartService {
         }));
     }
 
+    emptyCart() {
+        this.items$.subscribe((items: any[]) => {
+            items.map(async (item) => {
+                await this.remove(item).toPromise()
+            })
+        })
+    }
+
     private calc(): void {
         let quantity = 0;
         let subtotal = 0;
 
         this.data.items.forEach(item => {
             quantity += item.quantity;
-            subtotal += item.product.price * item.quantity;
+            subtotal += item.product.salePrice * item.quantity;
         });
 
         const totals: CartTotal[] = [];
 
         totals.push({
             title: 'Shipping',
-            price: 25,
+            price: 1000,
             type: 'shipping'
         });
         totals.push({
             title: 'Tax',
-            price: subtotal * 0.20,
+            price: subtotal * 0.075,
             type: 'tax'
         });
 

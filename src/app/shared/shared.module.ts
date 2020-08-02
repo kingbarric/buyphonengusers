@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 // modules (angular)
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 // modules (third-party)
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -42,6 +41,10 @@ import { ColorTypePipe } from './pipes/color-type.pipe';
 import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
 import { ProductGalleryComponent } from './components/product-gallery/product-gallery.component';
 
+// payment gateways
+import { AngularRaveModule } from 'angular-rave';
+import { Angular4PaystackModule } from 'angular4-paystack';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
     declarations: [
@@ -76,6 +79,7 @@ import { ProductGalleryComponent } from './components/product-gallery/product-ga
         ColorTypePipe,
         CurrencyFormatPipe,
         ProductGalleryComponent,
+        LoadingSpinnerComponent,
     ],
     imports: [
         // modules (angular)
@@ -86,7 +90,14 @@ import { ProductGalleryComponent } from './components/product-gallery/product-ga
         RouterModule,
         // modules (third-party)
         CarouselModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+
+        // payment gateway
+        Angular4PaystackModule.forRoot('pk_test_aaa309b3d565cd77e0dbddc094111958ad01fc92'),
+        AngularRaveModule.forRoot({
+            key: 'FLWPUBK-46c6083ab64817e431df77b3c92a24cc-X',
+            isTest: false,
+        }),
     ],
     exports: [
         // directives
@@ -118,7 +129,14 @@ import { ProductGalleryComponent } from './components/product-gallery/product-ga
         AbsoluteUrlPipe,
         ColorTypePipe,
         CurrencyFormatPipe,
-        ShareButtonsComponent, FormsModule, ReactiveFormsModule
-    ]
+        ShareButtonsComponent, FormsModule, ReactiveFormsModule,
+           // payment gateway
+        Angular4PaystackModule,
+        AngularRaveModule,
+        LoadingSpinnerComponent,
+        CommonModule,
+        // BrowserModule
+    ],
+    schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

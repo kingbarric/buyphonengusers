@@ -1,11 +1,15 @@
 <div class="card">
     <div class="order-header">
-        <div class="order-header__actions">
-            <a routerLink="/account/orders" class="btn btn-xs btn-secondary">Back to list</a>
-        </div>
-        <h5 class="order-header__title">Order #{{ order.id }}</h5>
+        <h5 class="order-header__title">
+            Order {{ orderDetails?.transactionRef }}
+        </h5>
         <div class="order-header__subtitle">
-            Was placed on <mark class="order-header__date">{{ order.date }}</mark> and is currently <mark class="order-header__status">{{ order.status }}</mark>.
+            Was placed on
+            <mark class="order-header__date">{{
+                orderDetails.dateOrdered | date: "medium"
+            }}</mark> and is currently
+            <mark class="order-header__status">{{ orderDetails.status }}</mark
+            >.
         </div>
     </div>
     <div class="card-divider"></div>
@@ -19,25 +23,29 @@
                     </tr>
                 </thead>
                 <tbody class="card-table__body card-table__body--merge-rows">
-                    <tr *ngFor="let item of order.items">
-                        <td>{{ item.name }} × {{ item.quantity }}</td>
-                        <td>{{ item.total|currencyFormat }}</td>
+                    <tr *ngFor="let item of orderDetails.orderDetails">
+                        <td>{{ item.product.name }} × {{ item.quantity }}</td>
+                        <td>&#8358;{{ item.price * item.quantity }}</td>
                     </tr>
                 </tbody>
-                <tbody *ngIf="order.additionalLines.length > 0" class="card-table__body card-table__body--merge-rows">
+                <tbody class="card-table__body card-table__body--merge-rows">
                     <tr>
                         <th>Subtotal</th>
-                        <td>{{ order.subtotal|currencyFormat }}</td>
+                        <td>&#8358;{{ orderDetails?.totalPrice - (orderDetails.shippingFee + orderDetails.vat) }}</td>
                     </tr>
-                    <tr *ngFor="let line of order.additionalLines">
-                        <th>{{ line.label }}</th>
-                        <td>{{ line.total|currencyFormat }}</td>
+                    <tr>
+                        <th>Shipping Fees</th>
+                        <td>&#8358;{{ orderDetails.shippingFee }}</td>
+                    </tr>
+                    <tr>
+                        <th>VAT</th>
+                        <td>&#8358;{{ orderDetails.vat }}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th>Total</th>
-                        <td>{{ order.total|currencyFormat }}</td>
+                        <td>&#8358;{{ orderDetails.totalPrice }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -49,18 +57,31 @@
     <div class="col-sm-6 col-12 px-2">
         <div class="card address-card address-card--featured">
             <div class="address-card__body">
-                <div class="address-card__badge address-card__badge--muted">Shipping Address</div>
-                <div class="address-card__name">{{ order.shippingAddress.firstName + ' ' + order.shippingAddress.lastName}}</div>
+                <div class="address-card__badge address-card__badge--muted">
+                    Shipping Address
+                </div>
+                <div class="address-card__name">
+                    {{
+                        orderDetails.userId.profile.firstname
+                    }} {{ orderDetails.userId.profile.lastname}}
+                </div>
                 <div class="address-card__row">
-                    {{ order.shippingAddress.country }}<br> {{ order.shippingAddress.postcode }}, {{ order.shippingAddress.city }}<br> {{ order.shippingAddress.address }}
+                    {{ orderDetails.userId.profile.state }}<br />
+                    {{ orderDetails.userId.profile.postalCode }},
+                    {{ orderDetails.userId.profile.city }}<br />
+                    {{ orderDetails.userId.profile.fullAddress }}
                 </div>
                 <div class="address-card__row">
                     <div class="address-card__row-title">Phone Number</div>
-                    <div class="address-card__row-content">{{ order.shippingAddress.phone }}</div>
+                    <div class="address-card__row-content">
+                        {{ orderDetails.userId.profile.phoneNumber }}
+                    </div>
                 </div>
                 <div class="address-card__row">
                     <div class="address-card__row-title">Email Address</div>
-                    <div class="address-card__row-content">{{ order.shippingAddress.email }}</div>
+                    <div class="address-card__row-content">
+                        {{ orderDetails.userId.profile.email }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,18 +89,31 @@
     <div class="col-sm-6 col-12 px-2 mt-sm-0 mt-3">
         <div class="card address-card address-card--featured">
             <div class="address-card__body">
-                <div class="address-card__badge address-card__badge--muted">Billing Address</div>
-                <div class="address-card__name">{{ order.billingAddress.firstName + ' ' + order.billingAddress.lastName}}</div>
+                <div class="address-card__badge address-card__badge--muted">
+                    Billing Address
+                </div>
+                <div class="address-card__name">
+                    {{
+                        orderDetails.userId.profile.firstname
+                    }} {{ orderDetails.userId.profile.lastname}}
+                </div>
                 <div class="address-card__row">
-                    {{ order.billingAddress.country }}<br> {{ order.billingAddress.postcode }}, {{ order.billingAddress.city }}<br> {{ order.billingAddress.address }}
+                    {{ orderDetails.userId.profile.state }}<br />
+                    {{ orderDetails.userId.profile.postalCode }},
+                    {{ orderDetails.userId.profile.city }}<br />
+                    {{ orderDetails.userId.profile.fullAddress }}
                 </div>
                 <div class="address-card__row">
                     <div class="address-card__row-title">Phone Number</div>
-                    <div class="address-card__row-content">{{ order.billingAddress.phone }}</div>
+                    <div class="address-card__row-content">
+                        {{ orderDetails.userId.profile.phoneNumber }}
+                    </div>
                 </div>
                 <div class="address-card__row">
                     <div class="address-card__row-title">Email Address</div>
-                    <div class="address-card__row-content">{{ order.billingAddress.email }}</div>
+                    <div class="address-card__row-content">
+                        {{ orderDetails.userId.profile.email }}
+                    </div>
                 </div>
             </div>
         </div>
