@@ -7,25 +7,21 @@
                 </div>
                 <div class="col-6 col-md-3 col-lg-2">
                     <app-footer-links header="Information" [links]="[
-                        {label: 'About Us',             url: '/about-us'},
-                        {label: 'Delivery Information', url: '/terms'},
-                        {label: 'Privacy Policy',       url: '/terms'},
-                        {label: 'Brands',               url: ''},
-                        {label: 'Contact Us',           url: '/contact-us'},
-                        {label: 'Returns',              url: ''},
-                        {label: 'Site Map',             url: ''}
-                    ]"></app-footer-links>
+                            { label: 'About Us', url: '/about-us' },
+                            { label: 'Delivery Information', url: '/terms' },
+                            { label: 'Privacy Policy', url: '/terms' },
+                            { label: 'Contact Us', url: '/contact-us' },
+                            { label: 'Order Tracking', url: '' }
+                        ]"></app-footer-links>
                 </div>
                 <div class="col-6 col-md-3 col-lg-2">
                     <app-footer-links header="My Account" [links]="[
-                        {label: 'Store Location', url: ''},
-                        {label: 'Order History',  url: ''},
-                        {label: 'Wish List',      url: '/shop/wishlist'},
-                        {label: 'Newsletter',     url: ''},
-                        {label: 'Specials',       url: ''},
-                        {label: 'Gift Cards',     url: ''},
-                        {label: 'Affiliate',      url: ''}
-                    ]"></app-footer-links>
+                            { label: 'Store Location', url: '/contact-us' },
+                            { label: 'Wish List', url: '/shop/wishlist' },
+                            { label: 'Blog',external:true ,url: 'https://blog.buyphoneng.ng' },
+                            { label: 'Coupons', url: '' },
+                            { label: 'Sell on Buyphoneng',external:true, url: 'https://office.buyphone.com.ng' }
+                        ]"></app-footer-links>
                 </div>
                 <div class="col-12 col-md-12 col-lg-4">
                     <app-footer-newsletter class="site-footer__widget"></app-footer-newsletter>
@@ -34,11 +30,10 @@
         </div>
 
         <div class="site-footer__bottom">
-            <div class="site-footer__copyright">
-                Powered by <a href="https://angular.io/" target="_blank">Angular</a> — Design by <a [href]="theme.author.profile_url" target="_blank">{{ theme.author.name }}</a>
-            </div>
-            <div class="site-footer__payments">
-                <img src="assets/images/payments.png" alt="">
+            <div class="site-footer__copyright text-center">
+                <p class="text-center">
+                    Copyright (C) Buyphone, 2020 | All Right Reserved
+                </p>
             </div>
         </div>
     </div>

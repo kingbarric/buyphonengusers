@@ -18,11 +18,11 @@ export class SocialLinksComponent {
     theme = theme;
 
     items: SocialLinksItem[] = [
-        {type: 'facebook', url: this.theme.author.profile_url, icon: 'fab fa-facebook-f'},
-        {type: 'twitter', url: this.theme.author.profile_url, icon: 'fab fa-twitter'},
-        {type: 'youtube', url: this.theme.author.profile_url, icon: 'fab fa-youtube'},
-        {type: 'instagram', url: this.theme.author.profile_url, icon: 'fab fa-instagram'},
-        {type: 'rss', url: this.theme.author.profile_url, icon: 'fas fa-rss'},
+        {type: 'facebook', url: 'https://facebook.com/BuyPhoneng-104723187982532', icon: 'fab fa-facebook-f'},
+        {type: 'twitter', url: 'https://twitter.com/BuyphoneN', icon: 'fab fa-twitter'},
+        {type: 'youtube', url: 'https://www.youtube.com/channel/UCWNIHN7rpQSkJTKEU2sb_Zg?view_as=subscriber', icon: 'fab fa-youtube'},
+        {type: 'instagram', url: 'https://www.instagram.com/buyphoneng', icon: 'fab fa-instagram'},
+        // {type: 'rss', url: this.theme.author.profile_url, icon: 'fas fa-rss'},
     ];
 
     @Input() shape: SocialLinksShape;
