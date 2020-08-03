@@ -48,7 +48,7 @@
         <div class="product-card__prices">
             <ng-container *ngIf="product?.saleDiscountPrice">
                 <span class="product-card__new-price">&#8358;{{ product?.salePrice }}</span>{{ ' ' }}
-                <span class="product-card__old-price">&#8358;{{ product?.saleDiscountPrice }}</span>
+                <span class="product-card__old-price">&#8358;{{ product?.price }}</span>
             </ng-container>
             <ng-container *ngIf="!product?.saleDiscountPrice">
                 &#8358;{{ product?.salePrice }}

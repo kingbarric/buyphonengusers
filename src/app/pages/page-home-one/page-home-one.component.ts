@@ -44,9 +44,7 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     constructor(
         private shop: ShopService,
         private crud: CrudService
-    ) { }
-
-    ngOnInit(): void {
+    ) {
         this.getFeaturedProduct();
         this.getBestsellers();
         this.getLastestProduct()
@@ -54,10 +52,14 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
         this.getColumnSpecialOffers()
         this.getColumnTopRated()
         this.getCategories();
+        this.getTopBrands();
+    }
+
+    ngOnInit(): void {
         this.bestsellers$ = of([]);
-        this.brands$ = this.shop.getPopularBrands();
-        this.popularCategories$ =of([]);
-             this.columnTopRated$ = of([]);
+        this.brands$ = of([]);
+        this.popularCategories$ = of([]);
+        this.columnTopRated$ = of([]);
         this.columnSpecialOffers$ = of([])
         this.columnBestsellers$ = of([]);
 
@@ -95,8 +97,18 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
         });
     }
 
+    getTopBrands() {
+        this.crud.getRequestNoAuth('exp/findallbrand').then((res: any) => {
+            console.log(res);
+            this.brands$ = of(res)
+        }).catch((err: any) => {
+            console.log(err);
+        })
+    }
+
+
     getColumnTopRated() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/3').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/5').then((res: any) => {
             console.log(res.content);
             this.columnTopRated$ = of(res.content)
         }).catch((err: any) => {
@@ -105,7 +117,7 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     }
 
     getColumnSpecialOffers() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/3').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/5').then((res: any) => {
             console.log(res.content);
             this.columnSpecialOffers$ = of(res.content)
         }).catch((err: any) => {
@@ -114,7 +126,7 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     }
 
     getColumnBestSellers() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/3').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/5').then((res: any) => {
             console.log(res.content);
             this.columnBestsellers$ = of(res.content)
         }).catch((err: any) => {
@@ -123,7 +135,7 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     }
 
     getBestsellers() {
-        this.crud.getRequestNoAuth('exp/featuredproduct/0/20').then((res: any) => {
+        this.crud.getRequestNoAuth('exp/featuredproduct/0/7').then((res: any) => {
             console.log(res.content);
             this.bestsellers$ = of(res.content)
         }).catch((err: any) => {
@@ -180,21 +192,21 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     getCategories() {
         this.crud.getRequestNoAuth('exp/categorieswithsubs').then((res: any[]) => {
             console.log(res);
-                    this.popularCategories$ = of(this.popularCatStructure(res))
+            this.popularCategories$ = of(this.popularCatStructure(res))
         }).catch((err: any) =>
             console.log(err)
         )
     }
 
     popularCatStructure(cats: any[]) {
-       return cats.map((cat) => {
+        return cats.map((cat) => {
             return {
                 name: cat.categoryName,
                 image: "assets/images/_dummy/mobile-phone.svg",
                 path: "",
                 type: "shop",
-                id:cat.categoryId,
-                slug:cat.categoryId,
+                id: cat.categoryId,
+                slug: cat.categoryId,
                 children: cat.subCategories.map((subCat) => {
                     return {
                         image: null,
@@ -202,8 +214,8 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
                         parents: null,
                         path: "",
                         type: "shop",
-                        id:subCat.id,
-                        slug:subCat.id,
+                        id: subCat.id,
+                        slug: subCat.id,
                     }
                 })
             }
