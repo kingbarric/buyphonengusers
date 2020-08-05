@@ -51,6 +51,6 @@ export class AuthService {
         this.isLoggedIn.next(false);
         this.user.next(null)
         localStorage.removeItem("session")
-        // window.location.reload()
+        window.location.reload()
     }
 }

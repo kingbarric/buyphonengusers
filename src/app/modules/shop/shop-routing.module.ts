@@ -1,3 +1,4 @@
+import { AuthGuard } from './../../guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Data, ResolveData } from '@angular/router';
 import { PageCategoryComponent } from './pages/page-category/page-category.component';
@@ -65,11 +66,12 @@ const routes: Routes = [
     {
         path: 'cart/checkout',
         component: PageCheckoutComponent,
-        canActivate: [CheckoutGuard],
+        canActivate: [CheckoutGuard,AuthGuard],
     },
     {
         path: 'cart/checkout/success',
         component: PageOrderSuccessComponent,
+        canActivate:[AuthGuard],
     },
     {
         path: 'wishlist',
