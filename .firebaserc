@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "buyphoneng-test"
+    "default": "buyphoneng-test",
+    "main": "buyphoneng-3c307"
   }
 }
