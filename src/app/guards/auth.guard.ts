@@ -9,16 +9,15 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
 
-    constructor(private auth: AuthService, private router: Router,private route:ActivatedRoute) {
-      console.log(this.auth.isLoggedIn)
-
+    constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
     }
 
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (!this.auth.isLoggedIn) {
-            this.router.navigate(["/login"]);
+        if (!this.auth.getToken()) {
+            setState(state.url)
+            this.router.navigate(["/account/login"]);
             return false;
         }
         return true;
@@ -26,8 +25,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     canActivateChild(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (!this.auth.isLoggedIn) {
-            this.router.navigate(["/login"]);
+        if (!this.auth.getToken()) {
+            setState(state.url)
+            this.router.navigate(["/account/login"]);
             return false;
         }
         return true;
@@ -37,8 +37,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
         currentRoute: ActivatedRouteSnapshot,
         currentState: RouterStateSnapshot,
         nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (!this.auth.isLoggedIn) {
-            this.router.navigate(["/login"]);
+        if (!this.auth.getToken()) {
+            this.router.navigate(["/account/login"]);
             return false;
         }
         return true;
@@ -46,10 +46,17 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     canLoad(
         route: Route,
         segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-        if (!this.auth.isLoggedIn) {
-            this.router.navigate(["/login"]);
+        if (!this.auth.getToken()) {
+            this.router.navigate(["/account/login"]);
             return false;
         }
         return true;
     }
+}
+
+/***
+ * @param state accepts router url as params
+ */
+function setState(state:any) {
+    localStorage.setItem("urlState",state)
 }
