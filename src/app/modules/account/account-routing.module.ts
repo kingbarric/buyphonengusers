@@ -1,3 +1,4 @@
+import { AuthGuard } from './../../guards/auth.guard';
 import { PageDashboardComponent } from './pages/page-dashboard/page-dashboard.component';
 import { CommonModule } from '@angular/common';
 import { PageNotificationComponent } from './pages/page-notification/page-notification.component';
@@ -17,6 +18,8 @@ const routes: Routes = [
     {
         path: "",
         component: LayoutComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         children: [
             {
                 path: "",
@@ -72,7 +75,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes),CommonModule],
+    imports: [RouterModule.forChild(routes), CommonModule],
     exports: [RouterModule],
 })
 export class AccountRoutingModule { }

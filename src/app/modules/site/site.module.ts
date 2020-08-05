@@ -20,6 +20,7 @@ import { PageFaqComponent } from './pages/page-faq/page-faq.component';
 import { PageTermsComponent } from './pages/page-terms/page-terms.component';
 import { PageTypographyComponent } from './pages/page-typography/page-typography.component';
 import { BecomeAMerchantComponent } from './pages/become-a-merchant/become-a-merchant.component';
+import { PageDeliveryInformationComponent } from './pages/page-delivery-information/page-delivery-information.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { BecomeAMerchantComponent } from './pages/become-a-merchant/become-a-mer
         PageFaqComponent,
         PageTermsComponent,
         PageTypographyComponent,
-        BecomeAMerchantComponent
+        BecomeAMerchantComponent,
+        PageDeliveryInformationComponent
     ],
     imports: [
         // modules (angular)

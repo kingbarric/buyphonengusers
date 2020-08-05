@@ -78,7 +78,11 @@ export class PageLoginComponent {
             if (res.code == 0) {
                 this.auth.setLoginStatus(true)
                 this.auth.setUserObj(res)
-                window.location.reload()
+                if (this.getLastUrl()) {
+                    this.router.navigate([this.getLastUrl()]).then(()=> localStorage.removeItem("urlState"))
+                } else {
+                    window.location.reload();
+                }
                 this.alertType = "primary"
                 this.showAlert = res.message
             } if (res.code == 2) {
@@ -120,5 +124,9 @@ export class PageLoginComponent {
             this.showAlert = err.message
 
         })
+    }
+
+    getLastUrl() {
+        return localStorage.getItem("urlState")
     }
 }

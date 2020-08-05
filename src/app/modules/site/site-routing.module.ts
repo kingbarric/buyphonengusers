@@ -1,3 +1,4 @@
+import { PageDeliveryInformationComponent } from './pages/page-delivery-information/page-delivery-information.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageAboutUsComponent } from './pages/page-about-us/page-about-us.component';
@@ -20,11 +21,11 @@ const routes: Routes = [
         component: PageAboutUsComponent
     },
     {
-        path: 'contact-us',
+        path: 'contact-us-alt',
         component: PageContactUsComponent
     },
     {
-        path: 'contact-us-alt',
+        path: 'contact-us',
         component: PageContactUsAltComponent
     },
     {
@@ -42,6 +43,10 @@ const routes: Routes = [
     {
         path: 'typography',
         component: PageTypographyComponent
+    },
+    {
+        path: 'delivery-information',
+        component: PageDeliveryInformationComponent
     },
     {
         path: 'become-a-merchant',
