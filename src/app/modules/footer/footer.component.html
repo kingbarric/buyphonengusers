@@ -8,19 +8,29 @@
                 <div class="col-6 col-md-3 col-lg-2">
                     <app-footer-links header="Information" [links]="[
                             { label: 'About Us', url: '/about-us' },
-                            { label: 'Delivery Information', url: '/terms' },
-                            { label: 'Privacy Policy', url: '/terms' },
-                            { label: 'Contact Us', url: '/contact-us' },
-                            { label: 'Order Tracking', url: '' }
+                            { label: 'Delivery Information', url: '/delivery-information' },
+                            { label: 'Terms and Conditions', url: '/terms' },
+                            { label: 'Contact Us', url: '/contact-us' }
                         ]"></app-footer-links>
                 </div>
                 <div class="col-6 col-md-3 col-lg-2">
-                    <app-footer-links header="My Account" [links]="[
-                            { label: 'Store Location', url: '/contact-us' },
+                    <app-footer-links header="More" [links]="[
+                            {
+                                label: 'Order Tracking',
+                                url: '/shop/track-order'
+                            },
                             { label: 'Wish List', url: '/shop/wishlist' },
-                            { label: 'Blog',external:true ,url: 'https://blog.buyphoneng.ng' },
-                            { label: 'Coupons', url: '' },
-                            { label: 'Sell on Buyphoneng',external:true, url: 'https://office.buyphone.com.ng' }
+                            {
+                                label: 'Blog',
+                                external: true,
+                                url: 'https://blog.buyphoneng.ng'
+                            },
+                            { label: 'FAQ', url: '/faq' },
+                            {
+                                label: 'Sell on Buyphoneng',
+                                external: true,
+                                url: 'https://office.buyphone.com.ng'
+                            }
                         ]"></app-footer-links>
                 </div>
                 <div class="col-12 col-md-12 col-lg-4">

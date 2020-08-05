@@ -10,6 +10,7 @@ export const navigation: NavigationLink[] = [
         }
     },
     { label: 'Shop', url: '/shop/catalog' },
+    { label: 'Track Order', url: '/shop/track-order' },
     { label: 'Blog', url: 'https://blog.buyphoneng.ng', external: true,target:"_blank" },
     { label: 'FAQ', url: '/faq', target: "_blank" }
 ];
