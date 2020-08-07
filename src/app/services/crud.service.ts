@@ -13,9 +13,8 @@ export class CrudService {
     private headers: HttpHeaders;
     rootUrl: string;
     constructor(private http: HttpClient, private utilService: UtilService, private auth: AuthService) {
-        // this.rootUrl = "http://172.20.10.4:8082/";
-        // this.rootUrl = "http://192.168.43.115:8082/";
-        this.rootUrl = "http://fbe03abdd6af.ngrok.io/";
+        // this.rootUrl = "http://778ca5274a33.ngrok.io/";
+        this.rootUrl = "https://buyphonengstaging.herokuapp.com/";
         this.baseUrl = `${this.rootUrl}api/`;
         this.setHeaderWithToken();
     }

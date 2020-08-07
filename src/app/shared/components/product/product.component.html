@@ -39,7 +39,7 @@
                     <span *ngIf="product.quantity > 0" class="text-success">In Stock</span>
                     <span *ngIf="product.quantity < 0" class="text-success">Out Of Stock</span>
                 </li>
-                <li>Brand: <a href="" appClick>{{product.brand}}</a></li>
+                <li>Brand: <a href="javascript:void(0)" appClick>{{product.brand.name}}</a></li>
                 <li>{{product.model}}</li>
             </ul>
         </div>
@@ -53,11 +53,11 @@
 
             <div class="product__prices">
                 <ng-container *ngIf="product.saleDiscountPrice">
-                    <span class="product__new-price">&#8358;{{ product.salePrice }}</span>{{ ' ' }}
-                    <span class="product__old-price">&#8358;{{ product.price }}</span>
+                    <span class="product__new-price">{{ product.salePrice| currency:'NGN':'symbol-narrow' :'3.0' }}</span>{{ ' ' }}
+                    <span class="product__old-price">{{ product.saleDiscountPrice | currency:'NGN':'symbol-narrow' :'3.0'  }}</span>
                 </ng-container>
                 <ng-container *ngIf="!product.saleDiscountPrice">
-                    &#8358;{{ product.salePrice }}
+                    {{ product.salePrice | currency:'NGN':'symbol-narrow' :'3.0' }}
                 </ng-container>
             </div>
             <!-- .product__options -->
@@ -132,8 +132,8 @@
         <div class="product__footer">
             <div class="product__tags tags">
                 <div class="tags__list">
-                    <a href="" appClick>{{product.brand}}</a>
-                    <a href="" appClick>{{product?.category.name}}</a>
+                    <a href="javascript:void(0)" appClick>{{product.brand.name}}</a>
+                    <a href="javascript:void(0)" appClick>{{product?.category.name}}</a>
                     <!-- <a href="" appClick>Chainsaws</a> -->
                 </div>
             </div>

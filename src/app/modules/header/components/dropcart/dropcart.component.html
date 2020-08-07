@@ -24,8 +24,8 @@
                     </ul>
                     <div class="dropcart__product-meta">
                         <span class="dropcart__product-quantity">{{ item.quantity }}</span> ×
-                        <span class="dropcart__product-price">&#8358;
-                            {{ item.product.salePrice }}</span>
+                        <span class="dropcart__product-price">
+                            {{ item.product.salePrice | currency:'NGN':'symbol-narrow' :'3.0' }}</span>
                     </div>
                 </div>
 
@@ -39,15 +39,15 @@
             <table>
                 <tr *ngIf="(cart.totals$|async).length">
                     <th>Subtotal</th>
-                    <td>&#8358;{{ cart.subtotal$|async }}</td>
+                    <td>{{ cart.subtotal$|async | currency:'NGN':'symbol-narrow' :'3.0' }}</td>
                 </tr>
                 <tr *ngFor="let total of cart.totals$|async">
                     <th>{{ total.title }}</th>
-                    <td>&#8358;{{ total.price }}</td>
+                    <td>{{ total.price | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td>&#8358;{{ cart.total$|async }}</td>
+                    <td>{{ cart.total$|async | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                 </tr>
             </table>
         </div>

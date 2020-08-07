@@ -81,19 +81,19 @@
                             </div>
                             <div class="filter-price__title">
                                 <span class="filter-price__min-value"
-                                    >&#8358;
+                                    >
                                     {{
                                         rightToLeft
                                             ? slider.highValue
-                                            : slider.value
+                                            : slider.value | currency:'NGN':'symbol-narrow' :'3.0'
                                     }}</span
                                 >
                                 –
                                 <span class="filter-price__max-value"
-                                    >&#8358;{{
+                                    >{{
                                         rightToLeft
                                             ? slider.value
-                                            : slider.highValue
+                                            : slider.highValue | currency:'NGN':'symbol-narrow' :'3.0'
                                     }}</span
                                 >
                             </div>

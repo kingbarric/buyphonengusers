@@ -22,14 +22,14 @@
                 </div>
                 <div class="widget-products__prices">
                     <ng-container *ngIf="product.saleDiscountPrice">
-                        <span class="widget-products__new-price">&#8358;{{ product.salePrice }}</span
+                        <span class="widget-products__new-price">{{ product.salePrice | currency:'NGN':'symbol-narrow' :'3.0' }}</span
                         >{{ " " }}
-                        <span class="widget-products__old-price">&#8358;{{
-                            product.saleDiscountPrice 
+                        <span class="widget-products__old-price">{{
+                            product.saleDiscountPrice | currency:'NGN':'symbol-narrow' :'3.0'
                         }}</span>
                     </ng-container>
                     <ng-container *ngIf="!product.saleDiscountPrice">
-                        &#8358;{{ product.salePrice }}
+                        {{ product.salePrice| currency:'NGN':'symbol-narrow' :'3.0' }}
                     </ng-container>
                 </div>
             </div>

@@ -37,6 +37,8 @@ export class CartService {
     private totalsSubject$: BehaviorSubject<CartTotal[]> = new BehaviorSubject(this.data.totals);
     private totalSubject$: BehaviorSubject<number> = new BehaviorSubject(this.data.total);
     private onAddingSubject$: Subject<Product> = new Subject();
+    private modalProduct:  BehaviorSubject<any> = new BehaviorSubject(null);
+    private closeModalProduct:  BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     get items(): ReadonlyArray<CartItem> {
         return this.data.items;
@@ -62,6 +64,26 @@ export class CartService {
             this.load();
             this.calc();
         }
+    }
+
+    closeModal(){
+        this.closeModalProduct.next(true)
+    }
+
+    getModalStat(){
+       return this.closeModalProduct.asObservable()
+    }
+
+    addProductModal(product) {
+        this.modalProduct.next(product)
+    }
+
+    removeModalProduct() {
+        this.modalProduct.next(null);
+    }
+
+    getProductModal() {
+        return this.modalProduct.asObservable()
     }
 
     add(product: Product, quantity: number, options: { name: string; value: string }[] = []): Observable<CartItem> {

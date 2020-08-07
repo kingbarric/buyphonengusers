@@ -50,7 +50,7 @@
                         <div *ngIf="product.quantity> 0" class="badge badge-success">In Stock</div>
                         <div *ngIf="product.quantity < 1" class="badge badge-danger">Out of Stock</div>
                     </td>
-                    <td class="wishlist__column wishlist__column--price">&#8358;{{ product.salePrice }}</td>
+                    <td class="wishlist__column wishlist__column--price">{{ product.salePrice | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                     <td class="wishlist__column wishlist__column--tocart">
                         <button type="button" class="btn btn-primary btn-sm" (click)="addToCart(product)" [ngClass]="{'btn-loading': addedToCartProducts.includes(product)}">Add To Cart</button>
                     </td>

@@ -1,3 +1,5 @@
+import { ProductChekoutDialogComponent } from './modules/shop/components/product-chekout-dialog/product-chekout-dialog.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from './shared/services/cart.service';
@@ -14,6 +16,9 @@ import { filter, first } from 'rxjs/operators';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+    modalRef: BsModalRef;
+
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
         private router: Router,
@@ -24,6 +29,7 @@ export class AppComponent implements OnInit {
         private zone: NgZone,
         private scroller: ViewportScroller,
         private currency: CurrencyService,
+        private modalService: BsModalService,
     ) {
         if (isPlatformBrowser(this.platformId)) {
             this.zone.runOutsideAngular(() => {
@@ -39,6 +45,7 @@ export class AppComponent implements OnInit {
                 });
             });
         }
+        this.checkModalStatus()
     }
 
     ngOnInit(): void {
@@ -66,6 +73,7 @@ export class AppComponent implements OnInit {
         });
         this.cart.onAdding$.subscribe(product => {
             this.toastr.success(`Product "${product.name}" added to cart!`);
+            this.showDetails(product)
         });
         this.compare.onAdding$.subscribe(product => {
             this.toastr.success(`Product "${product.name}" added to compare!`);
@@ -73,5 +81,23 @@ export class AppComponent implements OnInit {
         this.wishlist.onAdding$.subscribe(product => {
             this.toastr.success(`Product "${product.name}" added to wish list!`);
         });
+    }
+
+    showDetails(product:any) {
+        if (this.modalRef) {
+            this.modalRef.hide();
+            // this.cart.removeModalProduct()
+        }
+
+ this.cart.addProductModal(product)
+        this.modalRef = this.modalService.show(ProductChekoutDialogComponent, { class: 'modal-dialog-centered modal-md' });
+    }
+
+    checkModalStatus(){
+        this.cart.getModalStat().subscribe((stat)=>{
+            if (stat) {
+                this.modalRef.hide();
+            }
+        })
     }
 }
