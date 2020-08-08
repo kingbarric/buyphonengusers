@@ -32,6 +32,7 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
     otherFees: any[] = []
     vat: number = 0;
     shipping: number = 0;
+    placingOrder: boolean = false
     constructor(
         public root: RootService,
         public cart: CartService,
@@ -48,6 +49,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             if (this.loggedIn) {
                 this.userObj = obs
                 this.getFullProfile()
+                console.log(obs);
+
             } else {
                 this.userObj = null;
             }
@@ -71,6 +74,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
     getFullProfile() {
         this.crud.getRequest('profile/getuserprofile').then((res) => {
             res = this.userObj
+            console.log(this.userObj);
+
         }).catch((err: any) => {
             console.log(err);
         })
@@ -112,35 +117,47 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
 
     paymentInit() {
         console.log('Payment initialized');
+        this.placingOrder = true
+        setTimeout(() => {
+            this.placingOrder = false
+        }, 3000);
     }
 
-    paymentDone(ref: any) {
+    paymentDone(ref: any, channel) {
         console.log(ref);
+        console.log(channel);
 
-        // this.paymentInstance.close();
-        this.makeOrder()
+        if (channel == 'paystack' && ref.status == 'success') {
+            this.makeOrder()
+        } if (channel == 'flutterwave' && ref.respcode == '00') {
+            this.makeOrder()
+        }
+        this.placingOrder = false
     }
 
     paymentCancel() {
+        this.placingOrder = false
         console.log('payment failed');
     }
 
     makeOrder() {
+        this.placingOrder = true
         const data = {
             totalPrice: this.total,
             totalQuantity: this.totalQuantity,
             transactionRef: this.ref,
             orderProfile: this.userObj,
             orderDetails: this.orderDetails,
-            vat:this.vat,
+            vat: this.vat,
             shippingFee: this.shipping
         }
         this.crud.postRequest('order/makeorder', data).then((res: any) => {
             this.router.navigateByUrl('shop/cart/checkout/success', { state: { orderInfo: res, otherFees: this.otherFees } })
             this.cart.emptyCart()
+            this.placingOrder = false
         }).catch((err: any) => {
             console.log(err);
-
+            this.placingOrder = false
         })
     }
 

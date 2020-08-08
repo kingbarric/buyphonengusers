@@ -26,7 +26,7 @@
                                     >
                                     <input
                                         required
-                                        [(ngModel)]="userObj.firstName"
+                                        [(ngModel)]="userObj.firstname"
                                         name="firstName"
                                         type="text"
                                         class="form-control"
@@ -40,7 +40,7 @@
                                     >
                                     <input
                                         required
-                                        [(ngModel)]="userObj.lastName"
+                                        [(ngModel)]="userObj.lastname"
                                         name="lastName"
                                         type="text"
                                         class="form-control"
@@ -396,6 +396,7 @@
                                 agreement &&
                                 checkoutForm.valid
                             "
+                            [ngClass]="{'btn-loading': placingOrder}"
                             class="btn btn-primary btn-xl btn-block"
                             angular-rave
                                                      [customer_email]="userObj?.email"
@@ -405,7 +406,7 @@
                             [txref]="ref"
                             [currency]="'NGN'"
                             (callback)=" paymentCancel()"
-                            (onclose)="paymentDone($event)"
+                            (onclose)="paymentDone($event,'flutterwave')"
                             (init)="paymentInit(); alertMsg = null"
                             [disabled]="buttonBusy"
                         >
@@ -420,13 +421,14 @@
                             "
                             [disabled]="buttonBusy"
                             angular4-paystack
+                            [ngClass]="{'btn-loading': placingOrder}"
                             class="btn btn-primary btn-xl btn-block"
                             [email]="userObj?.email"
                             [amount]="total * 100"
                             [ref]="ref"
                             (paymentInit)="paymentInit(); alertMsg = null"
                             (close)="paymentCancel()"
-                            (callback)="paymentDone($event)"
+                            (callback)="paymentDone($event,'paystack')"
                         >
                             Place Order
                         </button>

@@ -88,7 +88,7 @@ export class CartService {
 
     add(product: Product, quantity: number, options: { name: string; value: string }[] = []): Observable<CartItem> {
         // timer only for demo
-        return timer(1000).pipe(map(() => {
+        return timer(500).pipe(map(() => {
             this.onAddingSubject$.next(product);
 
             let item = this.items.find(eachItem => {
@@ -124,7 +124,7 @@ export class CartService {
 
     update(updates: { item: CartItem, quantity: number }[]): Observable<void> {
         // timer only for demo
-        return timer(1000).pipe(map(() => {
+        return timer(500).pipe(map(() => {
             updates.forEach(update => {
                 const item = this.items.find(eachItem => eachItem === update.item);
 
@@ -142,7 +142,7 @@ export class CartService {
         // timer only for demo
         console.log(item);
 
-        return timer(1000).pipe(map(() => {
+        return timer(500).pipe(map(() => {
             this.data.items = this.data.items.filter(eachItem => eachItem !== item);
 
             this.save();
@@ -155,7 +155,7 @@ export class CartService {
             items.map(async (item) => {
                 await this.remove(item).toPromise()
             })
-        })
+        }).unsubscribe()
     }
 
     private calc(): void {
@@ -171,12 +171,12 @@ export class CartService {
 
         totals.push({
             title: 'Shipping',
-            price: 1000,
+            price: 500,
             type: 'shipping'
         });
         totals.push({
             title: 'Tax',
-            price: subtotal * 0.075,
+            price: subtotal * 0.0075,
             type: 'tax'
         });
 

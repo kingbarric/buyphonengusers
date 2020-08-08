@@ -25,6 +25,6 @@ modalRef: BsModalRef;
   }
 
   goto(){
-this.router.navigate(["/shop/cart/checkout"]).then(()=> this.closeModal())
+this.router.navigate(["shop/cart/checkout"]).then(()=> this.closeModal())
   }
 }
