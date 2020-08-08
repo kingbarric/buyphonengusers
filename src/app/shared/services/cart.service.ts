@@ -37,6 +37,8 @@ export class CartService {
     private totalsSubject$: BehaviorSubject<CartTotal[]> = new BehaviorSubject(this.data.totals);
     private totalSubject$: BehaviorSubject<number> = new BehaviorSubject(this.data.total);
     private onAddingSubject$: Subject<Product> = new Subject();
+    private modalProduct:  BehaviorSubject<any> = new BehaviorSubject(null);
+    private closeModalProduct:  BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     get items(): ReadonlyArray<CartItem> {
         return this.data.items;
@@ -64,9 +66,29 @@ export class CartService {
         }
     }
 
+    closeModal(){
+        this.closeModalProduct.next(true)
+    }
+
+    getModalStat(){
+       return this.closeModalProduct.asObservable()
+    }
+
+    addProductModal(product) {
+        this.modalProduct.next(product)
+    }
+
+    removeModalProduct() {
+        this.modalProduct.next(null);
+    }
+
+    getProductModal() {
+        return this.modalProduct.asObservable()
+    }
+
     add(product: Product, quantity: number, options: { name: string; value: string }[] = []): Observable<CartItem> {
         // timer only for demo
-        return timer(1000).pipe(map(() => {
+        return timer(500).pipe(map(() => {
             this.onAddingSubject$.next(product);
 
             let item = this.items.find(eachItem => {
@@ -102,7 +124,7 @@ export class CartService {
 
     update(updates: { item: CartItem, quantity: number }[]): Observable<void> {
         // timer only for demo
-        return timer(1000).pipe(map(() => {
+        return timer(500).pipe(map(() => {
             updates.forEach(update => {
                 const item = this.items.find(eachItem => eachItem === update.item);
 
@@ -120,7 +142,7 @@ export class CartService {
         // timer only for demo
         console.log(item);
 
-        return timer(1000).pipe(map(() => {
+        return timer(500).pipe(map(() => {
             this.data.items = this.data.items.filter(eachItem => eachItem !== item);
 
             this.save();
@@ -133,7 +155,7 @@ export class CartService {
             items.map(async (item) => {
                 await this.remove(item).toPromise()
             })
-        })
+        }).unsubscribe()
     }
 
     private calc(): void {
@@ -149,12 +171,12 @@ export class CartService {
 
         totals.push({
             title: 'Shipping',
-            price: 1000,
+            price: 500,
             type: 'shipping'
         });
         totals.push({
             title: 'Tax',
-            price: subtotal * 0.075,
+            price: subtotal * 0.0075,
             type: 'tax'
         });
 
