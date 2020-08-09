@@ -101,8 +101,8 @@
                         class="cart-table__column cart-table__column--total"
                         data-title="Total"
                     >
-                        &#8358;{{
-                            item.cartItem.product.salePrice * item.quantity
+                       {{
+                            item.cartItem.product.salePrice * item.quantity | currency:'NGN':'symbol-narrow' :'3.0'
                         }}
                     </td>
                     <td class="cart-table__column cart-table__column--remove">
@@ -154,14 +154,14 @@
                         <thead *ngIf="(cart.totals$ | async).length" class="cart__totals-header">
                             <tr>
                                 <th>Subtotal</th>
-                                <td>&#8358;{{ cart.subtotal$ | async }}</td>
+                                <td>{{ cart.subtotal$ | async | currency:'NGN':'symbol-narrow' :'3.0' }}</td>
                             </tr>
                         </thead>
                         <tbody *ngIf="(cart.totals$ | async).length" class="cart__totals-body">
                             <tr *ngFor="let total of cart.totals$ | async">
                                 <th>{{ total.title }}</th>
                                 <td>
-                                    &#8358; {{ total.price }}
+                                    {{ total.price | currency:'NGN':'symbol-narrow' :'3.0'}}
                                     <div *ngIf="total.type === 'shipping'" class="cart__calc-shipping">
                                         <a href="" (click)="
                                                     $event.preventDefault()
@@ -174,7 +174,7 @@
                             <tfoot class="cart__totals-footer">
                                 <tr>
                                     <th>Total</th>
-                                    <td>&#8358;{{ cart.total$ | async }}</td>
+                                    <td>{{ cart.total$ | async | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                                 </tr>
                             </tfoot>
                         </table>

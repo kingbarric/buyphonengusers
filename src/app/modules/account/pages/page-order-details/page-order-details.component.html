@@ -25,27 +25,27 @@
                 <tbody class="card-table__body card-table__body--merge-rows">
                     <tr *ngFor="let item of orderDetails.orderDetails">
                         <td>{{ item.product.name }} × {{ item.quantity }}</td>
-                        <td>&#8358;{{ item.price * item.quantity }}</td>
+                        <td>{{ item.price * item.quantity | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                     </tr>
                 </tbody>
                 <tbody class="card-table__body card-table__body--merge-rows">
                     <tr>
                         <th>Subtotal</th>
-                        <td>&#8358;{{ orderDetails?.totalPrice - (orderDetails.shippingFee + orderDetails.vat) }}</td>
+                        <td>{{ orderDetails?.totalPrice - (orderDetails.shippingFee + orderDetails.vat) | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                     </tr>
                     <tr>
                         <th>Shipping Fees</th>
-                        <td>&#8358;{{ orderDetails.shippingFee }}</td>
+                        <td>{{ orderDetails.shippingFee| currency:'NGN':'symbol-narrow' :'3.0' }}</td>
                     </tr>
                     <tr>
                         <th>VAT</th>
-                        <td>&#8358;{{ orderDetails.vat }}</td>
+                        <td>{{ orderDetails.vat | currency:'NGN':'symbol-narrow' :'3.0'}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th>Total</th>
-                        <td>&#8358;{{ orderDetails.totalPrice }}</td>
+                        <td>{{ orderDetails.totalPrice| currency:'NGN':'symbol-narrow' :'3.0' }}</td>
                     </tr>
                 </tfoot>
             </table>

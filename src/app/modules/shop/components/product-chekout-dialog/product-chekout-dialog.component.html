@@ -1,0 +1,20 @@
+<!-- <div class="card"> -->
+<div class="container pt-4 pb-4">
+    <div class="mx-4">
+        <button class="quickview__close float-right" type="button" appClick (click)="closeModal()">
+            <app-icon name="cross-20" size="20"></app-icon>
+        </button>
+        <h5 class="h5 col">Added to Cart</h5>
+        <div class="">
+            <p class="p col">
+                {{ product.name }}
+            </p>
+            <div class="col">
+                <a (click)="closeModal()" class="btn btn-secondary btn-sm btn-lg btn btn-block">CONTINUE SHOPPING</a
+                >
+                <a (click)="goto()" class="btn btn-primary btn-block">CHECKOUT</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

@@ -53,7 +53,7 @@
                             <td><a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a></td>
                             <td>{{ order.dateOrdered | date:'medium' }}</td>
                             <td>{{ order.status }}</td>
-                            <td>&#8358;{{ order.totalPrice }} for {{ order.totalQuantity }} item(s)</td>
+                            <td>{{ order.totalPrice| currency:'NGN':'symbol-narrow' :'3.0' }} for {{ order.totalQuantity }} item(s)</td>
                         </tr>
                     </tbody>
                 </table>

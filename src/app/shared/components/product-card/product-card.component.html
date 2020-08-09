@@ -32,7 +32,7 @@
                 {{ product?.model }}
             </li>
             <li *ngIf="product.brand">
-                {{ product?.brand }}
+                {{ product?.brand.name }}
             </li>
             <li *ngIf="product.material">
                 {{ product?.material }}
@@ -47,11 +47,11 @@
         </div>
         <div class="product-card__prices">
             <ng-container *ngIf="product?.saleDiscountPrice">
-                <span class="product-card__new-price">&#8358;{{ product?.salePrice }}</span>{{ ' ' }}
-                <span class="product-card__old-price">&#8358;{{ product?.price }}</span>
+                <span class="product-card__new-price">{{ product?.salePrice | currency:'NGN':'symbol-narrow' :'3.0' }}</span>{{ ' ' }}
+                <span class="product-card__old-price">{{ product?.saleDiscountPrice | currency:'NGN':'symbol-narrow' :'3.0' }}</span>
             </ng-container>
             <ng-container *ngIf="!product?.saleDiscountPrice">
-                &#8358;{{ product?.salePrice }}
+                {{ product?.salePrice | currency:'NGN':'symbol-narrow' :'3.0' }}
             </ng-container>
         </div>
         <div class="product-card__buttons">

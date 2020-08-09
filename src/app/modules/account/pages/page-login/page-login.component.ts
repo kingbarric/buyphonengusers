@@ -19,7 +19,8 @@ export class PageLoginComponent {
     registerForm: FormGroup
     showAlert: string = null
     activateAccount: boolean = false
-    alertType: string
+    alertType: string;
+    buttonBusy: string = null
     constructor(private crudService: CrudService, private auth: AuthService, private router: Router) {
         this.auth.isLoggedIn.subscribe((obs: any) => {
             if (obs) {
@@ -69,6 +70,7 @@ export class PageLoginComponent {
     }
 
     login() {
+        this.buttonBusy = 'login';
         const data = {
             email: this.email,
             password: this.password
@@ -79,7 +81,7 @@ export class PageLoginComponent {
                 this.auth.setLoginStatus(true)
                 this.auth.setUserObj(res)
                 if (this.getLastUrl()) {
-                    this.router.navigate([this.getLastUrl()]).then(()=> localStorage.removeItem("urlState"))
+                    this.router.navigate([this.getLastUrl()]).then(() => localStorage.removeItem("urlState"))
                 } else {
                     window.location.reload();
                 }
@@ -93,10 +95,12 @@ export class PageLoginComponent {
                 this.alertType = "danger"
                 this.showAlert = res.message
             }
+            this.buttonBusy = null;
         }).catch((err: any) => {
             console.log(err);
             this.alertType = "danger"
             this.showAlert = err.error.message
+            this.buttonBusy = null;
         })
     }
 
@@ -107,7 +111,9 @@ export class PageLoginComponent {
         if (!this.MustMatch(password, conPassword)) {
             return
         }
-
+        this.buttonBusy = 'signup';
+        delete this.registerForm.value.confirmPassword
+        console.log(this.registerForm.value);
         this.crudService.postRequestNoAuth('users/register', this.registerForm.value).then((res: any) => {
             console.log(res);
             if (res.code == 0) {
@@ -119,10 +125,14 @@ export class PageLoginComponent {
                 this.alertType = "danger"
                 this.showAlert = res.message
             }
+            this.buttonBusy = null;
         }).catch((err: any) => {
             this.alertType = "danger"
-            this.showAlert = err.message
-
+            this.buttonBusy = null
+            if (err.status == 0) {
+                return this.showAlert = err.message
+            }
+this.showAlert = err.error.message
         })
     }
 

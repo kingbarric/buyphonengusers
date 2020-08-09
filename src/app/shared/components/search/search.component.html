@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="suggestions__item-price">
-                    &#8358;{{ product.salePrice }}
+                    {{ product.salePrice| currency:'NGN':'symbol-narrow' :'3.0' }}
                 </div>
 
                 <div *ngIf="location === 'header'" class="suggestions__item-actions">

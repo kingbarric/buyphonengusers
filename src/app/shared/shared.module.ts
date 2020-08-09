@@ -96,6 +96,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         Angular4PaystackModule.forRoot('pk_test_aaa309b3d565cd77e0dbddc094111958ad01fc92'),
         AngularRaveModule.forRoot({
             key: 'FLWPUBK-46c6083ab64817e431df77b3c92a24cc-X',
+            // key:'FLWPUBK_TEST-298bbf8186414e7b05313e45bfe82115-X',
             isTest: false,
         }),
     ],
