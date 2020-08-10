@@ -24,13 +24,13 @@ export class BlockSlideshowComponent {
     };
 
     slides = [
-        // {
-        //     title: 'Big choice of<br>Plumbing products',
-        //     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
-        //     image_classic: 'assets/images/_home/slider1.png',
-        //     image_full: 'assets/images/_home/slider1.png',
-        //     image_mobile: 'assets/images/_home/slider1.png'
-        // },
+        {
+            title: 'Big choice of<br>Plumbing products',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
+            image_classic: 'assets/images/_home/buyphoneSlider1.png',
+            image_full: 'assets/images/_home/buyphoneSlider1.png',
+            image_mobile: 'assets/images/_home/buyphoneSlider1.png'
+        },
         {
             title: 'Screwdrivers<br>Professional Tools',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
@@ -46,6 +46,13 @@ export class BlockSlideshowComponent {
             image_mobile: 'assets/images/_home/buyphoneSlider3.jpg'
         },
         {
+            title: 'One more<br>Unique header',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
+            image_classic: 'assets/images/_home/slider1.png',
+            image_full: 'assets/images/_home/slider1.png',
+            image_mobile: 'assets/images/_home/slider1.png'
+        },
+        {
             title: 'Big choice of<br>Plumbing products',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
             image_classic: 'assets/images/_home/slider3.png',
@@ -55,9 +62,9 @@ export class BlockSlideshowComponent {
         // {
         //     title: 'Big choice of<br>Plumbing products',
         //     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Etiam pharetra laoreet dui quis molestie.',
-        //     image_classic: 'assets/images/_home/slider2.png',
-        //     image_full: 'assets/images/_home/slider2.png',
-        //     image_mobile: 'assets/images/_home/slider2.png'
+        //     image_classic: 'assets/images/_home/buyphoneSlider4.png',
+        //     image_full: 'assets/images/_home/buyphoneSlider4.png',
+        //     image_mobile: 'assets/images/_home/buyphoneSlider4.png'
         // },
     ];
 
