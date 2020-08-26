@@ -45,6 +45,7 @@ import { ProductGalleryComponent } from './components/product-gallery/product-ga
 import { AngularRaveModule } from 'angular-rave';
 import { Angular4PaystackModule } from 'angular4-paystack';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { ProductShimmerCardComponent } from './components/product-shimmer-card/product-shimmer-card.component';
 
 @NgModule({
     declarations: [
@@ -80,6 +81,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         CurrencyFormatPipe,
         ProductGalleryComponent,
         LoadingSpinnerComponent,
+        ProductShimmerCardComponent,
     ],
     imports: [
         // modules (angular)
@@ -93,7 +95,11 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         ModalModule.forRoot(),
 
         // payment gateway
-        Angular4PaystackModule.forRoot('pk_test_aaa309b3d565cd77e0dbddc094111958ad01fc92'),
+        /* paystack credentails */
+        // pk_test_aaa309b3d565cd77e0dbddc094111958ad01fc92
+        // pk_live_6364424379edc6711fbdf0545bd44d27d613a1df
+        Angular4PaystackModule.forRoot('pk_live_6364424379edc6711fbdf0545bd44d27d613a1df'),
+        // flutterwave credentails
         AngularRaveModule.forRoot({
             key: 'FLWPUBK-46c6083ab64817e431df77b3c92a24cc-X',
             // key:'FLWPUBK_TEST-298bbf8186414e7b05313e45bfe82115-X',
@@ -126,6 +132,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         RatingComponent,
         SearchComponent,
         SocialLinksComponent,
+        ProductShimmerCardComponent,
         // pipes
         AbsoluteUrlPipe,
         ColorTypePipe,

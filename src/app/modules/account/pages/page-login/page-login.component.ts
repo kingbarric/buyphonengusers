@@ -52,7 +52,6 @@ export class PageLoginComponent {
             password: new FormControl("", [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl("", [Validators.required]),
             phoneNumber: new FormControl("", [Validators.required]),
-            username: new FormControl("", [Validators.required]),
             userType: new FormControl("USER", [Validators.required]),
         }, {
             // validator: this.MustMatch('password', 'confirmPassword')
@@ -78,7 +77,7 @@ export class PageLoginComponent {
         this.crudService.postRequestNoAuth('auth/login', data).then((res: any) => {
             console.log(res);
             if (res.code == 0) {
-                this.auth.setLoginStatus(true)
+                this.auth.setLoginStatus(true),this.registerForm.controls["email"].value
                 this.auth.setUserObj(res)
                 if (this.getLastUrl()) {
                     this.router.navigate([this.getLastUrl()]).then(() => localStorage.removeItem("urlState"))
@@ -117,6 +116,7 @@ export class PageLoginComponent {
         this.crudService.postRequestNoAuth('users/register', this.registerForm.value).then((res: any) => {
             console.log(res);
             if (res.code == 0) {
+                this.router.navigate(["account/account-activation",this.registerForm.controls["email"].value])
                 this.showAlert = res.message
                 this.alertType = "primary"
                 this.registerForm.reset()

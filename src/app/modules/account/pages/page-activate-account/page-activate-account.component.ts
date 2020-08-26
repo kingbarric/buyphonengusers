@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../../../services/auth.service';
 import { CrudService } from './../../../../services/crud.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -18,12 +18,22 @@ export class PageActivateAccountComponent implements OnInit {
     email: string = ''
     showAlert: string = null
     alertType: string
-    constructor(private crudService: CrudService, private auth: AuthService, private router: Router) {
+    constructor(private crudService: CrudService, private auth: AuthService, private router: Router,private route:ActivatedRoute) {
         this.auth.isLoggedIn.subscribe((obs: any) => {
             if (obs) {
                 this.router.navigate(['/'])
             }
         })
+        this.route.params.subscribe(
+            params => {
+                if (params.email) {
+                   this.email =params.email
+                }else{
+                    this.router.navigate(["account/login"])
+                }
+            },
+            err=> console.log(err)
+        )
     }
     ngOnInit() { }
 
@@ -47,11 +57,12 @@ export class PageActivateAccountComponent implements OnInit {
     activate() {
         const data = {
             activationCode: this.activationCode,
-            email: localStorage.getItem("email")
+            email: this.email
         }
         this.crudService.postRequestNoAuth('users/activate', data).then((res: any) => {
             console.log(res);
             if (res.code == 0) {
+                this.router.navigate(["account/login"])
                 this.alertType = "primary"
                 this.showAlert = res.message
             } else {
@@ -66,7 +77,6 @@ export class PageActivateAccountComponent implements OnInit {
     }
 
     resendCode() {
-        localStorage.setItem("email", this.email)
         this.crudService.getRequestNoAuth(`users/sendactivationcode/${this.email}`).then((res: any) => {
             console.log(res);
             if (res.code == 0) {

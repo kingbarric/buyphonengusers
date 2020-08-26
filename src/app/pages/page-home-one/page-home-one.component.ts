@@ -199,10 +199,10 @@ export class PageHomeOneComponent implements OnInit, OnDestroy {
     }
 
     popularCatStructure(cats: any[]) {
-        return cats.map((cat) => {
+           return cats.map((cat) => {
             return {
                 name: cat.categoryName,
-                image: "assets/images/_dummy/mobile-phone.svg",
+                image: cat.categoryImage ? cat.categoryImage: "assets/images/_dummy/mobile-phone.svg",
                 path: "",
                 type: "shop",
                 id: cat.categoryId,

@@ -7,12 +7,12 @@
 <div class="checkout block">
     <div class="container">
         <div class="row">
-            <div class="col-12 mb-3">
+            <!-- <div class="col-12 mb-3">
                 <app-alert *ngIf="!loggedIn" type="primary" size="lg">Returning customer?
                     <a [routerLink]="root.login()">Click here to login</a
                     ></app-alert
                 >
-            </div>
+            </div> -->
 
             <div class="col-12 col-lg-6 col-xl-7">
                 <form #checkoutForm="ngForm">
@@ -21,8 +21,7 @@
                             <h3 class="card-title">Billing details</h3>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="checkout-first-name"
-                                        >First Name</label
+                                    <label for="checkout-first-name">First Name</label
                                     >
                                     <input
                                         required
@@ -97,18 +96,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="checkout-city">Town / City</label>
-                                <input
-                                    required
-                                    [(ngModel)]="userObj.city"
-                                    name="city"
-                                    type="text"
-                                    class="form-control"
-                                    id="checkout-city"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="checkout-state"
-                                    >State</label
+                                    <input required [(ngModel)]="userObj.city" name="city" type="text" class="form-control" id="checkout-city" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkout-state">State</label
                                 >
                                 <select
                                     required
@@ -156,15 +147,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="checkout-phone">Phone</label>
-                                    <input
-                                        required
-                                        [(ngModel)]="userObj.phoneNumber"
-                                        name="phoneNumber"
-                                        type="text"
-                                        class="form-control"
-                                        id="checkout-phone"
-                                        placeholder="Phone"
-                                    />
+                                    <input required [(ngModel)]="userObj.phoneNumber" name="phoneNumber" type="text" class="form-control" id="checkout-phone" placeholder="Phone" />
                                 </div>
                             </div>
                         </div>
@@ -174,8 +157,7 @@
                             <h3 class="card-title">Shipping Details</h3>
 
                             <div class="form-group">
-                                <label for="checkout-comment"
-                                    >Order notes
+                                <label for="checkout-comment">Order notes
                                     <span class="text-muted"
                                         >(Optional)</span
                                     ></label
@@ -252,11 +234,11 @@
                                             </span>
                                         <span class="payment-methods__item-title">Direct bank transfer</span>
                                     </label>
-                                    <div class="payment-methods__item-container">
-                                        <div class="payment-methods__item-description text-muted">
-                                            Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
-                                        </div>
+                                <div class="payment-methods__item-container">
+                                    <div class="payment-methods__item-description text-muted">
+                                        Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
                                     </div>
+                                </div>
                                 </li> -->
                                 <li class="payment-methods__item">
                                     <label class="payment-methods__item-header">
@@ -288,12 +270,8 @@
                                             >Paystack</span
                                         >
                                     </label>
-                                    <div
-                                        class="payment-methods__item-container"
-                                    >
-                                        <div
-                                            class="payment-methods__item-description text-muted"
-                                        >
+                                    <div class="payment-methods__item-container">
+                                        <div class="payment-methods__item-description text-muted">
                                             Pay cash paystack gateway.
                                         </div>
                                     </div>
@@ -328,22 +306,18 @@
                                             >Flutterwave</span
                                         >
                                     </label>
-                                    <div
-                                        class="payment-methods__item-container"
-                                    >
-                                        <div
-                                            class="payment-methods__item-description text-muted"
-                                        >
+                                    <div class="payment-methods__item-container">
+                                        <div class="payment-methods__item-description text-muted">
                                             Pay via Flutterwave
                                         </div>
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
 
-                        <div class="checkout__agree form-group">
-                            <div class="form-check">
-                                <span class="form-check-input input-check">
+                            <div class="checkout__agree form-group">
+                                <div class="form-check">
+                                    <span class="form-check-input input-check">
                                     <span class="input-check__body">
                                         <input
                                             class="input-check__input"
@@ -352,21 +326,14 @@
                                             [(ngModel)]="agreement"
                                         />
                                         <span class="input-check__box"></span>
-                                        <svg
-                                            class="input-check__icon"
-                                            width="9px"
-                                            height="7px"
-                                        >
+                                    <svg class="input-check__icon" width="9px" height="7px">
                                             <use
                                                 xlink:href="assets/images/sprite.svg#check-9x7"
                                             ></use>
                                         </svg>
                                     </span>
-                                </span>
-                                <label
-                                    class="form-check-label"
-                                    for="checkout-terms"
-                                >
+                                    </span>
+                                    <label class="form-check-label" for="checkout-terms">
                                     I have read and agree to the website
                                     <a
                                         target="_blank"
@@ -374,76 +341,38 @@
                                         >terms and conditions</a
                                     >*
                                 </label>
+                                </div>
                             </div>
-                        </div>
-                        <!-- payment gateway -->
-                        <button
-                            *ngIf="
+                            <!-- payment gateway -->
+                            <button *ngIf="
                                 !paymentType ||
                                 !agreement ||
                                 checkoutForm.invalid
-                            "
-                            type="submit"
-                            class="btn btn-primary btn-xl btn-block"
-                            (click)="placeOrder()"
-                        >
+                            " type="submit" class="btn btn-primary btn-xl btn-block" (click)="placeOrder()">
                             Place Order
                         </button>
 
-                        <button
-                            *ngIf="
+                            <button *ngIf="
                                 paymentType == 'flutterwave' &&
                                 agreement &&
                                 checkoutForm.valid
-                            "
-                            [ngClass]="{'btn-loading': placingOrder}"
-                            class="btn btn-primary btn-xl btn-block"
-                            angular-rave
-                                                     [customer_email]="userObj?.email"
-                            [customer_phone]="userObj.phoneNumber"
-                            [amount]="total"
-                            [custom_title]="userObj?.orderNote"
-                            [txref]="ref"
-                            [currency]="'NGN'"
-                            (callback)=" paymentCancel()"
-                            (onclose)="paymentDone($event,'flutterwave')"
-                            (init)="paymentInit(); alertMsg = null"
-                            [disabled]="buttonBusy"
-                        >
+                            " [ngClass]="{'btn-loading': placingOrder}" class="btn btn-primary btn-xl btn-block" angular-rave [customer_email]="userObj?.email" [customer_phone]="userObj.phoneNumber" [amount]="total" [custom_title]="userObj?.orderNote"
+                                [txref]="ref" [currency]="'NGN'" (callback)=" paymentCancel()" (onclose)="paymentDone($event,'flutterwave')" (init)="paymentInit(); alertMsg = null" [disabled]="buttonBusy">
                             Place Order
                         </button>
 
-                        <button
-                            *ngIf="
+                            <button *ngIf="
                                 paymentType == 'paystack' &&
                                 agreement &&
                                 checkoutForm.valid
-                            "
-                            [disabled]="buttonBusy"
-                            angular4-paystack
-                            [ngClass]="{'btn-loading': placingOrder}"
-                            class="btn btn-primary btn-xl btn-block"
-                            [email]="userObj?.email"
-                            [amount]="total * 100"
-                            [ref]="ref"
-                            (paymentInit)="paymentInit(); alertMsg = null"
-                            (close)="paymentCancel()"
-                            (callback)="paymentDone($event,'paystack')"
-                        >
+                            " [disabled]="buttonBusy" angular4-paystack [ngClass]="{'btn-loading': placingOrder}" class="btn btn-primary btn-xl btn-block" [email]="userObj?.email" [amount]="total * 100" [ref]="ref" (paymentInit)="paymentInit(); alertMsg = null"
+                                (close)="paymentCancel()" (callback)="paymentDone($event,'paystack')">
                             Place Order
                         </button>
-                        <!-- payment gateway -->
-                        <app-alert
-                            *ngIf="alertMsg"
-                            class="mb-3 mt-3"
-                            [type]="alertType"
-                            size="sm"
-                            [dismissible]="true"
-                            (close)="alertMsg = null"
-                            >{{ alertMsg }}</app-alert
-                        >
+                            <!-- payment gateway -->
+                            <app-alert *ngIf="alertMsg" class="mb-3 mt-3" [type]="alertType" size="sm" [dismissible]="true" (close)="alertMsg = null">{{ alertMsg }}</app-alert>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

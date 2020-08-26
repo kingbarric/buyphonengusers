@@ -65,7 +65,7 @@ const routes: Routes = [
         component: PageLoginComponent,
     },
     {
-        path: "account-activation",
+        path: "account-activation/:email",
         component: PageActivateAccountComponent,
     },
     // {

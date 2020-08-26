@@ -145,25 +145,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" placeholder="Username" formControlName="username" />
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" placeholder="Password" formControlName="password" />
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label>Repeat Password</label>
                 <input type="password" class="form-control" placeholder="Password" formControlName="confirmPassword" />
             </div>
         </div>
-        <div class="col-md-6"></div>
     </div>
     <button type="submit" [disabled]=" buttonBusy" [ngClass]="{'btn-loading': buttonBusy == 'signup'}" class="btn btn-primary mt-2 mt-md-3 mt-lg-4">
                                 Register
