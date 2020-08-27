@@ -8,8 +8,10 @@
                     Your order has been received
                 </div>
                 <div class="order-success__actions">
-                    <a routerLink="/" class="btn btn-xs btn-secondary">Go To Homepage</a
+                    <a routerLink="/shop/catalog" class="btn btn-xs btn-secondary mr-2">Continue Shopping</a
                     >
+                    <a routerLink="/account/dashboard" class="btn btn-xs btn-secondary ml-2">Go to Dashboard</a
+                        >
                 </div>
             </div>
 
@@ -20,7 +22,7 @@
                             >Order number:</span
                         >
                         <span class="order-success__meta-value"
-                            >#{{ order?.transactions.transactionRef }}</span
+                            >{{ order?.transactions.transactionRef }}</span
                         >
                     </li>
                     <li class="order-success__meta-item">
@@ -147,7 +149,7 @@
                                     Subtotal
                                 </th>
                                 <td class="order-list__column-total">
-                                    {{ cart.subtotal$ | async | currency:'NGN':'symbol-narrow' :'3.0'}}
+                                    {{ order?.productOrder.totalPrice - (order?.productOrder.shippingFee + order?.productOrder.vat) | currency:'NGN':'symbol-narrow' :'3.0'}}
                                 </td>
                             </tr>
                             <tr *ngFor="let fee of otherFees">

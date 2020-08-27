@@ -50,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let order of orders">
-                            <td><a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a></td>
+                            <td><a href="javascript:void(0)" (click)="showDetails(order)">{{ order.transactionRef }}</a></td>
                             <td>{{ order.dateOrdered | date:'medium' }}</td>
                             <td>{{ order.status }}</td>
                             <td>{{ order.totalPrice| currency:'NGN':'symbol-narrow' :'3.0' }} for {{ order.totalQuantity }} item(s)</td>
