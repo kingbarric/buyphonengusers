@@ -41,7 +41,7 @@
         {{ showAlert }}
     </app-alert>
     <div *ngIf="activateAccount"class="account-menu__form-link">
-        <a routerLink="/account/account-activation" (click)="closeMenu.emit()">Activate Account</a
+        <a [routerLink]="'/account/account-activation/'+email" (click)="closeMenu.emit()">Activate Account</a
         >
     </div>
     </form>
@@ -53,7 +53,7 @@
             (click)="closeMenu.emit()"
         >
             <div class="account-menu__user-avatar">
-                <img src="assets/images/avatars/avatar-3.jpg" alt="" />
+                <img src="assets/images/avatars/avatar.svg" alt="" />
             </div>
             <div class="account-menu__user-info">
                 <div class="account-menu__user-name">{{userObj?.firstname}} {{userObj?.lastname}}</div>

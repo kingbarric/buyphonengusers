@@ -42,18 +42,10 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         private crud: CrudService,
         // private paymentInstance: PaymentInstance
     ) {
-        this.subscription = this.auth.isLoggedIn.subscribe((obs) => {
-            this.loggedIn = obs
-        })
         this.subscription = this.auth.user.subscribe((obs: any) => {
-            if (this.loggedIn) {
                 this.userObj = obs
                 this.getFullProfile()
                 console.log(obs);
-
-            } else {
-                this.userObj = null;
-            }
         })
         this.cart.total$.subscribe((total) => {
             this.total = total
@@ -72,8 +64,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
     }
 
     getFullProfile() {
-        this.crud.getRequest('profile/getuserprofile').then((res) => {
-            res = this.userObj
+        this.crud.getRequest('profile/getuserprofile').then((res:any) => {
+            this.userObj= res.profile
             console.log(this.userObj);
 
         }).catch((err: any) => {
@@ -127,9 +119,9 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         console.log(ref);
         console.log(channel);
 
-        if (channel == 'paystack' && ref.status == 'success') {
+        if (channel == 'paystack' && ref?.status == 'success') {
             this.makeOrder()
-        } if (channel == 'flutterwave' && ref.respcode == '00') {
+        } if (channel == 'flutterwave' && ref?.respcode == '00') {
             this.makeOrder()
         }
         this.placingOrder = false

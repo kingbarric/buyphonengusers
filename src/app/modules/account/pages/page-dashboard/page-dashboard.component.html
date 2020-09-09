@@ -2,10 +2,10 @@
     <div class="dashboard__profile card profile-card">
         <div class="card-body profile-card__body">
             <div class="profile-card__avatar">
-                <img src="./assets/images/avatars/avatar-3.jpg" alt="" />
+                <img src="./assets/images/avatars/avatar.svg" alt="" />
             </div>
             <div class="profile-card__name">{{userObj?.firstname}} {{userObj?.lastname}}</div>
-            <div class="profile-card__email">{{userObj?.username}}</div>
+            <!-- <div class="profile-card__email">{{userObj?.username}}</div> -->
             <div class="profile-card__edit">
                 <a (click)="navigateTo('/account/profile')" class="btn btn-secondary btn-sm">View Profile</a
                 >
@@ -50,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let order of orders">
-                            <td><a href="javascript:void(0)" (click)="showDetails(order)">#{{ order.transactionRef }}</a></td>
+                            <td><a href="javascript:void(0)" (click)="showDetails(order)">{{ order.transactionRef }}</a></td>
                             <td>{{ order.dateOrdered | date:'medium' }}</td>
                             <td>{{ order.status }}</td>
                             <td>{{ order.totalPrice| currency:'NGN':'symbol-narrow' :'3.0' }} for {{ order.totalQuantity }} item(s)</td>

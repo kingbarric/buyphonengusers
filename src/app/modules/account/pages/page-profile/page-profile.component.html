@@ -6,7 +6,7 @@
             <div class="address-card__body">
                 <div class="address-card__name">{{ userObj?.firstname }} {{userObj?.lastname}}</div>
                 <div class="address-card__row">
-                    {{ userObj.state }}<br> {{ userObj.postalCode }}, {{ userObj.city }}<br> {{ userObj.fullAddress }}
+                    {{ userObj.state }}<br> {{ userObj.postalCode }}<span *ngIf="userObj.city">, </span> {{ userObj.city }}<br> {{ userObj.fullAddress }}
                 </div>
                 <div class="address-card__row">
                     <div class="address-card__row-title">Phone Number</div>

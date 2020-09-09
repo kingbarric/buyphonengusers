@@ -21,7 +21,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     @Input() offcanvas: 'always' | 'mobile' = 'mobile';
 
     destroy$: Subject<void> = new Subject<void>();
-
+loadingProduct:boolean = false
     listOptionsForm: FormGroup;
     filtersCount = 0;
     products: any[] = [];
@@ -32,6 +32,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     filterObj: any = null
     brandId: string = null;
     categoryId: string = null;
+    emptyProducts:any[]=new Array(20).fill(null)
     constructor(
         private fb: FormBuilder,
         public sidebar: ShopSidebarService,
@@ -107,33 +108,38 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     }
 
     getProductbetweenRange(highest, lowest) {
+        
         if (this.queryType != 'price') {
             this.page = 0;
             this.queryType = 'price'
         }
         this.pageService.setIsLoading(true)
+        this.loadingProduct =true
         this.crud.getRequestNoAuth(`exp/searchpricebetween/${lowest}/${highest}/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res);
             this.products = res.content
             this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
+        }).finally(() => {     
+            this.loadingProduct =false;
+               window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     getProducts() {
+        this.loadingProduct =true
         if (this.queryType != 'all') {
             this.page = 0;
             this.queryType = 'all'
         }
         this.pageService.setIsLoading(true)
-        this.crud.getRequestNoAuth(`exp/featuredproduct/${this.page}/${this.limit}`).then((res: any) => {
+        this.crud.getRequestNoAuth(`exp/findallactiveproduct/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res);
             this.products = res.content;
             this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
+        }).finally(() => {      this.loadingProduct =false ;  window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     getProductByBrandId(brandId) {
@@ -143,13 +149,14 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
         }
         this.brandId = brandId
         this.pageService.setIsLoading(true)
+        this.loadingProduct =true
         this.crud.getRequestNoAuth(`exp/productbybrandid/${brandId}/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res);
             this.products = res.content
             this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
+        }).finally(() => {       this.loadingProduct =false;  window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     getProductByCatId(catId) {
@@ -159,13 +166,14 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
         }
         this.categoryId = catId
         this.pageService.setIsLoading(true)
+        this.loadingProduct =true
         this.crud.getRequestNoAuth(`exp/productbycategoryid/${catId}/${this.page}/${this.limit}`).then((res: any) => {
             console.log(res);
             this.products = res.content;
             this.totalPages = res.totalPages
         }).catch((err: any) => {
             console.log(err);
-        }).finally(() => {        window.scroll(0, 0);this.pageService.setIsLoading(false)})
+        }).finally(() => {    this.loadingProduct =false;     window.scroll(0, 0);this.pageService.setIsLoading(false)})
     }
 
     ngOnDestroy(): void {

@@ -44,7 +44,7 @@ export class RootService {
             return `${basePath}/${product.slug}`;
         }
         if ('id' in product) {
-            return `${basePath}/${product.id}`;
+            return `${basePath}/${product.title}`;
         }
 
         throw Error('Provide product with "slug" or "id".');

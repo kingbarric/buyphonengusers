@@ -1,11 +1,11 @@
 <!-- .block-brands -->
 <div class="block block-brands" *ngIf="brands?.length">
     <div class="container">
-        <div class="block-brands__slider">
+        <div class="block-brands__slider text-center">
             <owl-carousel-o [options]="carouselOptions" appOwlPreventClick>
                 <ng-template *ngFor="let brand of brands" carouselSlide>
                     <div class="block-brands__item">
-                        <a href="javascript:void(0)"><img [src]="brand.image" class="img-fluid" onError="this.src='assets/images/_dummy/buyphone_logomailatest.png'" [alt]="brand.name"></a>
+                        <a href="javascript:void(0)"><img [src]="brand.image" class="img-fluid img-fit" onError="this.src='assets/images/_dummy/buyphone_logomailatest.png'" [alt]="brand.name"></a>
                     </div>
                 </ng-template>
             </owl-carousel-o>

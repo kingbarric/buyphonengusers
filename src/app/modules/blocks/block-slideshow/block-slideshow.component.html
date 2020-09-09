@@ -14,7 +14,7 @@
                     <owl-carousel-o *ngIf="slides?.length" [options]="options" appOwlPreventClick>
                         <ng-template *ngFor="let slide of slides" carouselSlide>
                             <a class="block-slideshow__slide" href="" appClick>
-                                <div style="background-position: center; background-size:contain;" class="block-slideshow__slide-image block-slideshow__slide-image--desktop" [ngStyle]="{
+                                <div style="background-size:cover;" class="block-slideshow__slide-image block-slideshow__slide-image--desktop" [ngStyle]="{
                                         'background-image':
                                             'url(' +
                                             (withDepartments

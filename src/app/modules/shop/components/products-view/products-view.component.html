@@ -87,6 +87,9 @@
                 <div *ngFor="let product of products" class="products-list__item">
                     <app-product-card [product]="product"></app-product-card>
                 </div>
+                <!-- <div *ngIf="loadingProduct" class="products-list__item">
+                    <app-product-shimmer-card *ngFor="let emptyProduct of emptyProducts"></app-product-shimmer-card>
+                </div> -->
             </div>
         </div>
 
@@ -95,7 +98,7 @@
         </div>
     </div>
 
-    <div *ngIf="!products?.length" class="products-view__empty">
+    <div *ngIf="!products?.length && !loadingProduct" class="products-view__empty">
         <div class="products-view__empty-title">No product found</div>
         <div class="products-view__empty-subtitle">
             Try resetting the filters or Refreshing the page
@@ -105,3 +108,6 @@
         </button>
     </div>
 </div>
+
+
+<!-- </div> -->

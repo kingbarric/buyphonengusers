@@ -11,14 +11,14 @@ export const postComments: PostCommentsList = {
                   'Nulla nec tellus pellentesque.',
             children: [
                 {
-                    avatar: 'assets/images/avatars/avatar-2',
+                    avatar: 'assets/images/avatars/avatar-1',
                     author: 'Adam Taylor',
                     date: 'December 4, 2018',
                     text: 'Ut vitae finibus nisl, suscipit porttitor urna. Integer efficitur efficitur velit non pulvinar. ' +
                           'Aliquam blandit volutpat arcu vel tristique. Integer commodo ligula id augue tincidunt faucibus.'
                 },
                 {
-                    avatar: 'assets/images/avatars/avatar-3',
+                    avatar: 'assets/images/avatars/avatar-1',
                     author: 'Helena Garcia',
                     date: 'December 12, 2018',
                     text: 'Suspendisse dignissim luctus metus vitae aliquam. Vestibulum sem odio, ullamcorper a imperdiet a, ' +
@@ -27,7 +27,7 @@ export const postComments: PostCommentsList = {
             ]
         },
         {
-            avatar: 'assets/images/avatars/avatar-4',
+            avatar: 'assets/images/avatars/avatar-1',
             author: 'Ryan Ford',
             date: 'December 5, 2018',
             text: 'Nullam at varius sapien. Sed sit amet condimentum elit.'

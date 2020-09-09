@@ -15,18 +15,15 @@
                         <p class="mb-4 pt-2">
                             Buyphoneng gives you the opportunity to track your orders with just a few clicks.
                         </p>
-                        <form>
+                        <form #refForm="ngForm" (ngSubmit)="track()">
                             <div class="form-group">
-                                <label for="track-order-id">Order ID</label>
-                                <input id="track-order-id" type="text" class="form-control" placeholder="Order ID">
-                            </div>
-                            <div class="form-group">
-                                <label for="track-email">Email address</label>
-                                <input id="track-email" type="email" class="form-control" placeholder="Email address">
+                                <label for="track-order-id">Order ID/Transaction Ref</label>
+                                <input id="track-order-id" type="text" [(ngModel)]="ref" required minlength="10" name="ref" class="form-control" placeholder="Order ID / Transaction Ref">
                             </div>
                             <div class="pt-3">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Track</button>
+                                <button type="submit" [ngClass]="{'btn-loading': buttonBusy}" [disabled]="refForm.invalid || buttonBusy" class="btn btn-primary btn-lg btn-block">Track</button>
                             </div>
+                            <app-alert (close)="alertMsg = null" class="mt-4" *ngIf="alertMsg" [type]="alertType" [size]="'sm'" [dismissible]="'true'">{{alertMsg}}</app-alert>
                         </form>
                     </div>
                 </div>

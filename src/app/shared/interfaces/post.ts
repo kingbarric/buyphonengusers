@@ -3,4 +3,5 @@ export interface Post {
     image: string;
     categories: string[];
     date: string;
+    body?:string
 }

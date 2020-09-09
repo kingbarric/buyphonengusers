@@ -10,7 +10,7 @@ export const reviews: Review[] = [
               'scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum.'
     },
     {
-        avatar: 'assets/images/avatars/avatar-2.jpg',
+        avatar: 'assets/images/avatars/avatar-1.jpg',
         author: 'Adam Taylor',
         rating: 3,
         date: '12 April, 2018',
@@ -19,7 +19,7 @@ export const reviews: Review[] = [
               'diam. Nulla ut ex mollis, volutpat tellus vitae, accumsan ligula.'
     },
     {
-        avatar: 'assets/images/avatars/avatar-3.jpg',
+        avatar: 'assets/images/avatars/avatar-1.jpg',
         author: 'Helena Garcia',
         rating: 5,
         date: '2 January, 2018',
