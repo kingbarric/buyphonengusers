@@ -41,9 +41,7 @@ export class PageProductComponent implements OnInit {
     }
 
     getProduct(title: string) {
-        let splitedTitle = title.split('-');
-        let id = splitedTitle[splitedTitle.length - 1];
-        this.crud.getRequestNoAuth(`exp/findproductbyid/${id}`).then((res: any) => {
+        this.crud.getRequestNoAuth(`exp/findproductbytitle/${title}`).then((res: any) => {
             this.product = res;
         }).catch((err: any) => {
             console.log(err);

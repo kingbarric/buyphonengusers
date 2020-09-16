@@ -34,6 +34,13 @@ export class PageOrderSuccessComponent implements OnInit {
         this.order = history.state.orderInfo
         this.otherFees = history.state.otherFees
         console.log(history.state);
-
+        script()
     }
+}
+
+function script() {
+    gtag('event', 'conversion', {
+        'send_to': 'AW-603238443/LHkECIXZxt0BEKvg0p8C',
+        'transaction_id': ''
+    });
 }

@@ -87,9 +87,9 @@
                 <div *ngFor="let product of products" class="products-list__item">
                     <app-product-card [product]="product"></app-product-card>
                 </div>
-                <!-- <div *ngIf="loadingProduct" class="products-list__item">
-                    <app-product-shimmer-card *ngFor="let emptyProduct of emptyProducts"></app-product-shimmer-card>
-                </div> -->
+                <div *ngIf="loadingProduct" class="site-preloader">
+                    <!-- <app-product-shimmer-card *ngFor="let emptyProduct of emptyProducts"></app-product-shimmer-card> -->
+                </div>
             </div>
         </div>
 
